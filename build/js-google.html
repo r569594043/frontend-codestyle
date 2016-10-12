@@ -29,122 +29,243 @@
 <body>
     <div class="container">
         <article class="markdown-body">
-            <p><a href="https://google.github.io/styleguide/javascriptguide.xml">Direct Link</a> Background
-            </p>
+            <h1 id="google-javascript-style-guide">Google JavaScript Style Guide</h1>
+            <h2 id="background">Background</h2>
             <p>JavaScript is the main client-side scripting language used by many of Google&#39;s open-source projects. This style guide is a list of dos and don&#39;ts for JavaScript programs.</p>
-            <p>JavaScript Language Rules</p>
-            <p>var</p>
-            <p>Declarations with var: Always Decision: When you fail to specify var, the variable gets placed in the global context, potentially clobbering existing values. Also, if there&#39;s no declaration, it&#39;s hard to tell in what scope a variable lives
-                (e.g., it could be in the Document or Window just as easily as in the local scope). So always declare with var.</p>
-            <p>Constants</p>
-            <p>Use NAMES_LIKE_THIS for constant values. Use @const to indicate a constant (non-overwritable) pointer (a variable or property). Never use the const keyword as it&#39;s not supported in Internet Explorer. Decision: Constant values</p>
-            <p>If a value is intended to be constant and immutable, it should be given a name in CONSTANT_VALUE_CASE. ALL_CAPS additionally implies @const (that the value is not overwritable).</p>
-            <p>Primitive types (number, string, boolean) are constant values.</p>
-            <p>Objects&#39; immutability is more subjective — objects should be considered immutable only if they do not demonstrate observable state change. This is not enforced by the compiler.</p>
-            <p>Constant pointers (variables and properties)</p>
-            <p>The @const annotation on a variable or property implies that it is not overwritable. This is enforced by the compiler at build time. This behavior is consistent with the const keyword (which we do not use due to the lack of support in Internet Explorer).</p>
-            <p>A @const annotation on a method additionally implies that the method cannot not be overridden in subclasses.</p>
-            <p>A @const annotation on a constructor implies the class cannot be subclassed (akin to final in Java).</p>
-            <p>Examples</p>
-            <p>Note that @const does not necessarily imply CONSTANT_VALUES_CASE. However, CONSTANT_VALUES_CASE does imply @const.</p>
-            <p>/**</p>
+            <h2 id="javascript-language-rules">JavaScript Language Rules</h2>
+            <h3 id="var">var</h3>
+            <p>Declarations with <code>var</code>: Always</p>
+            <h4 id="decision-">Decision:</h4>
+            <p>When you fail to specify <code>var</code>, the variable gets placed in the global context, potentially clobbering existing values. Also, if there&#39;s no declaration, it&#39;s hard to tell in what scope a variable lives (e.g., it could be in the
+                Document or Window just as easily as in the local scope). So always declare with <code>var</code>.</p>
+            <h3 id="constants">Constants</h3>
             <ul>
-                <li>Request timeout in milliseconds.</li>
-                <li>@type {number} */ goog.example.TIMEOUT_IN_MILLISECONDS = 60; The number of seconds in a minute never changes. It is a constant value. ALL_CAPS also implies @const, so the constant cannot be overwritten.</li>
+                <li>Use <code>NAMES_LIKE_THIS</code> for constant values.</li>
+                <li>Use <code>@const</code> to indicate a constant (non-overwritable) pointer (a variable or property).</li>
+                <li>Never use the <a href="#"><code>const</code> keyword</a> as it&#39;s not supported in Internet Explorer.</li>
             </ul>
-            <p>The open source compiler will allow the symbol to be overwritten because the constant is not marked as @const.</p>
-            <p>/**</p>
-            <ul>
-                <li>Map of URL to response string.</li>
-                <li>@const
-                    <em>/
-MyClass.fetchedUrlCache_ = new goog.structs.Map();
-/*</em></li>
-                <li>Class that cannot be subclassed.</li>
-                <li>@const</li>
-                <li>@constructor */ sloth.MyFinalClass = function() {}; In this case, the pointer can never be overwritten, but value is highly mutable and not constant (and thus in camelCase, not ALL_CAPS).</li>
-            </ul>
-            <p>Semicolons</p>
-            <p>Always use semicolons. Relying on implicit insertion can cause subtle, hard to debug problems. Don&#39;t do it. You&#39;re better than that.</p>
+            <h4 id="decision-">Decision:</h4>
+            <h5 id="constant-values">Constant values</h5>
+            <p>If a value is intended to be constant and immutable, it should be given a name in <code>CONSTANT_VALUE_CASE</code>. <code>ALL_CAPS</code> additionally implies <code>@const</code> (that the value is not overwritable).</p>
+            <p>Primitive types (<code>number</code>, <code>string</code>, <code>boolean</code>) are constant values.</p>
+            <p><code>Objects&#39;</code> immutability is more subjective — objects should be considered immutable only if they do not demonstrate observable state change. This is not enforced by the compiler.</p>
+            <h5 id="constant-pointers-variables-and-properties-">Constant pointers (variables and properties)</h5>
+            <p>The <code>@const</code> annotation on a variable or property implies that it is not overwritable. This is enforced by the compiler at build time. This behavior is consistent with the <a href="#"><code>const</code> keyword</a> (which we do not use
+                due to the lack of support in Internet Explorer).</p>
+            <p>A <code>@const</code> annotation on a method additionally implies that the method cannot not be overridden in subclasses.</p>
+            <p>A <code>@const</code> annotation on a constructor implies the class cannot be subclassed (akin to <code>final</code> in Java).</p>
+            <h5 id="examples">Examples</h5>
+            <p>Note that <code>@const</code> does not necessarily imply <code>CONSTANT_VALUES_CASE</code>. However, <code>CONSTANT_VALUES_CASE</code> <em>does</em> imply <code>@const</code>.</p>
+            <pre><code class="lang-javascript">/**
+ * <span class="hljs-type">Request</span> timeout <span class="hljs-keyword">in</span> milliseconds.
+ * @<span class="hljs-keyword">type</span> {number}
+ */
+<span class="hljs-title">goog</span>.example.<span class="hljs-type">TIMEOUT_IN_MILLISECONDS</span> = <span class="hljs-number">60</span>;
+</code></pre>
+            <p>The number of seconds in a minute never changes. It is a constant value. <code>ALL_CAPS</code> also implies <code>@const</code>, so the constant cannot be overwritten.</p>
+            <p>The open source compiler will allow the symbol to be overwritten because the constant is not marked as <code>@const</code>.</p>
+            <pre><code class="lang-javascript"><span class="hljs-comment">/**
+ * Map of URL to response string.
+ * <span class="hljs-doctag">@const</span>
+ */</span>
+MyClass.fetchedUrlCache_ = <span class="hljs-keyword">new</span> goog.structs.Map();
+<span class="hljs-comment">/**
+ * Class that cannot be subclassed.
+ * <span class="hljs-doctag">@const</span>
+ * <span class="hljs-doctag">@constructor</span>
+ */</span>
+sloth.MyFinalClass = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{};
+</code></pre>
+            <p>In this case, the pointer can never be overwritten, but value is highly mutable and not constant (and thus in <code>camelCase</code>, not <code>ALL_CAPS</code>).</p>
+            <h3 id="semicolons">Semicolons</h3>
+            <p>Always use semicolons.</p>
+            <p>Relying on implicit insertion can cause subtle, hard to debug problems. Don&#39;t do it. You&#39;re better than that.</p>
             <p>There are a couple places where missing semicolons are particularly dangerous:</p>
-            <p>// 1. MyClass.prototype.myMethod = function() { return 42; } // No semicolon here.</p>
-            <p>(function() { // Some initialization code wrapped in a function to create a scope for locals. })();
-            </p>
-            <p>var x = { &#39;i&#39;: 1, &#39;j&#39;: 2 } // No semicolon here.</p>
-            <p>// 2. Trying to do one thing on Internet Explorer and another on Firefox. // I know you&#39;d never write code like this, but throw me a bone. [ffVersion, ieVersion]<a href="">isIE</a>;</p>
-            <p>var THINGS_TO_EAT = [apples, oysters, sprayOnCheese] // No semicolon here.</p>
-            <p>// 3. conditional execution a la bash -1 == resultOfOperation() || die(); So what happens?</p>
-            <p>JavaScript error - first the function returning 42 is called with the second function as a parameter, then the number 42 is &quot;called&quot; resulting in an error. You will most likely get a &#39;no such property in undefined&#39; error at runtime
-                as it tries to call x[ffVersion, ieVersion]<a href="">isIE</a>. die is always called since the array minus 1 is NaN which is never equal to anything (not even if resultOfOperation() returns NaN) and THINGS_TO_EAT gets assigned the result of
-                die(). Why?
-            </p>
+            <pre><code class="lang-javascript"><span class="hljs-comment">// 1.</span>
+MyClass.prototype.myMethod = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-number">42</span>;
+}  <span class="hljs-comment">// No semicolon here.</span>
+
+(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// Some initialization code wrapped in a function to create a scope for locals.</span>
+})();
+
+
+<span class="hljs-keyword">var</span> x = {
+  <span class="hljs-string">'i'</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-string">'j'</span>: <span class="hljs-number">2</span>
+}  <span class="hljs-comment">// No semicolon here.</span>
+
+<span class="hljs-comment">// 2.  Trying to do one thing on Internet Explorer and another on Firefox.</span>
+<span class="hljs-comment">// I know you'd never write code like this, but throw me a bone.</span>
+[ffVersion, ieVersion][isIE]();
+
+
+<span class="hljs-keyword">var</span> THINGS_TO_EAT = [apples, oysters, sprayOnCheese]  <span class="hljs-comment">// No semicolon here.</span>
+
+<span class="hljs-comment">// 3. conditional execution a la bash</span>
+<span class="hljs-number">-1</span> == resultOfOperation() || <span class="hljs-keyword">die</span>();
+</code></pre>
+            <h5 id="so-what-happens-">So what happens?</h5>
+            <ol>
+                <li>JavaScript error - first the function returning 42 is called with the second function as a parameter, then the number 42 is &quot;called&quot; resulting in an error.</li>
+                <li>You will most likely get a &#39;no such property in undefined&#39; error at runtime as it tries to call <code>x[ffVersion, ieVersion][isIE]()</code>.</li>
+                <li><code>die</code> is always called since the array minus 1 is <code>NaN</code> which is never equal to anything (not even if <code>resultOfOperation()</code> returns <code>NaN</code>) and <code>THINGS_TO_EAT</code> gets assigned the result of
+                    <code>die()</code>.</li>
+            </ol>
+            <h5 id="why-">Why?</h5>
             <p>JavaScript requires statements to end with a semicolon, except when it thinks it can safely infer their existence. In each of these examples, a function declaration or object or array literal is used inside a statement. The closing brackets are
                 not enough to signal the end of the statement. Javascript never ends a statement if the next token is an infix or bracket operator.</p>
             <p>This has really surprised people, so make sure your assignments end with semicolons.</p>
-            <p>Clarification: Semicolons and functions</p>
+            <h5 id="clarification-semicolons-and-functions">Clarification: Semicolons and functions</h5>
             <p>Semicolons should be included at the end of function expressions, but not at the end of function declarations. The distinction is best illustrated with an example:</p>
-            <p>var foo = function() { return true; }; // semicolon here.</p>
-            <p>function foo() { return true; } // no semicolon here. Nested functions</p>
-            <p>Yes Nested functions can be very useful, for example in the creation of continuations and for the task of hiding helper functions. Feel free to use them.</p>
-            <p>Function Declarations Within Blocks</p>
-            <p>No Do not do this:</p>
-            <p>if (x) { function foo() {} } While most script engines support Function Declarations within blocks it is not part of ECMAScript (see ECMA-262, clause 13 and 14). Worse implementations are inconsistent with each other and with future EcmaScript proposals.
-                ECMAScript only allows for Function Declarations in the root statement list of a script or function. Instead use a variable initialized with a Function Expression to define a function within a block:</p>
-            <p>if (x) { var foo = function() {}; } Exceptions
-            </p>
-            <p>Yes You basically can&#39;t avoid exceptions if you&#39;re doing something non-trivial (using an application development framework, etc.). Go for it.</p>
-            <p>Custom exceptions</p>
-            <p>Yes Without custom exceptions, returning error information from a function that also returns a value can be tricky, not to mention inelegant. Bad solutions include passing in a reference type to hold error information or always returning Objects
-                with a potential error member. These basically amount to a primitive exception handling hack. Feel free to use custom exceptions when appropriate.</p>
-            <p>Standards features</p>
-            <p>Always preferred over non-standards features For maximum portability and compatibility, always prefer standards features over non-standards features (e.g., string.charAt(3) over string[3] and element access with DOM functions instead of using an
-                application-specific shorthand).</p>
-            <p>Wrapper objects for primitive types</p>
-            <p>No There&#39;s no reason to use wrapper objects for primitive types, plus they&#39;re dangerous:</p>
-            <p>var x = new Boolean(false); if (x) { alert(&#39;hi&#39;); // Shows &#39;hi&#39;. } Don&#39;t do it!</p>
+            <pre><code class="lang-JavaScript"><span class="hljs-keyword">var</span> foo = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+};  <span class="hljs-comment">// semicolon here.</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}  <span class="hljs-comment">// no semicolon here.</span>
+</code></pre>
+            <h3 id="nested-functions">Nested functions</h3>
+            <p>Yes</p>
+            <p>Nested functions can be very useful, for example in the creation of continuations and for the task of hiding helper functions. Feel free to use them.</p>
+            <h3 id="function-declarations-within-blocks">Function Declarations Within Blocks</h3>
+            <p>No</p>
+            <p>Do not do this:</p>
+            <pre><code class="lang-javascript"><span class="hljs-keyword">if</span> (x) {
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span> </span>{}
+}
+</code></pre>
+            <p>While most script engines support Function Declarations within blocks it is not part of ECMAScript (see <a href="">ECMA-262</a>, clause 13 and 14). Worse implementations are inconsistent with each other and with future EcmaScript proposals. ECMAScript
+                only allows for Function Declarations in the root statement list of a script or function. Instead use a variable initialized with a Function Expression to define a function within a block:</p>
+            <pre><code class="lang-javascript"><span class="hljs-keyword">if</span> (x) {
+  <span class="hljs-keyword">var</span> foo = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{};
+}
+</code></pre>
+            <h3 id="exceptions">Exceptions</h3>
+            <p>Yes</p>
+            <p>You basically can&#39;t avoid exceptions if you&#39;re doing something non-trivial (using an application development framework, etc.). Go for it.</p>
+            <h3 id="custom-exceptions">Custom exceptions</h3>
+            <p>Yes</p>
+            <p>Without custom exceptions, returning error information from a function that also returns a value can be tricky, not to mention inelegant. Bad solutions include passing in a reference type to hold error information or always returning Objects with
+                a potential error member. These basically amount to a primitive exception handling hack. Feel free to use custom exceptions when appropriate.</p>
+            <h3 id="standards-features">Standards features</h3>
+            <p>Always preferred over non-standards features</p>
+            <p>For maximum portability and compatibility, always prefer standards features over non-standards features (e.g., <code>string.charAt(3)</code> over <code>string[3]</code> and element access with DOM functions instead of using an application-specific
+                shorthand).</p>
+            <h3 id="wrapper-objects-for-primitive-types">Wrapper objects for primitive types</h3>
+            <p>No</p>
+            <p>There&#39;s no reason to use wrapper objects for primitive types, plus they&#39;re dangerous:</p>
+            <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> x = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Boolean</span>(<span class="hljs-literal">false</span>);
+<span class="hljs-keyword">if</span> (x) {
+  alert(<span class="hljs-string">'hi'</span>);  <span class="hljs-comment">// Shows 'hi'.</span>
+}
+</code></pre>
+            <p>Don&#39;t do it!</p>
             <p>However type casting is fine.</p>
-            <p>var x = Boolean(0); if (x) { alert(&#39;hi&#39;); // This will never be alerted. } typeof Boolean(0) == &#39;boolean&#39;; typeof new Boolean(0) == &#39;object&#39;; This is very useful for casting things to number, string and boolean.</p>
-            <p>Multi-level prototype hierarchies</p>
-            <p>Not preferred Multi-level prototype hierarchies are how JavaScript implements inheritance. You have a multi-level hierarchy if you have a user-defined class D with another user-defined class B as its prototype. These hierarchies are much harder
-                to get right than they first appear!</p>
-            <p>For that reason, it is best to use goog.inherits() from the Closure Library or a similar library function.</p>
-            <p>function D() { goog.base(this) } goog.inherits(D, B);</p>
-            <p>D.prototype.method = function() { ... }; Method and property definitions</p>
-            <p>/<em>* @constructor </em>/ function SomeConstructor() { this.someProperty = 1; } Foo.prototype.someMethod = function() { ... }; While there are several ways to attach methods and properties to an object created via &quot;new&quot;, the preferred
-                style for methods is:</p>
-            <p>Foo.prototype.bar = function() { /
-                <em> ... </em>/ }; The preferred style for other properties is to initialize the field in the constructor:</p>
-            <p>/<em>* @constructor </em>/ function Foo() { this.bar = value; } Why?
-            </p>
-            <p>Current JavaScript engines optimize based on the &quot;shape&quot; of an object, adding a property to an object (including overriding a value set on the prototype) changes the shape and can degrade performance.</p>
-            <p>delete</p>
-            <p>Prefer this.foo = null. Foo.prototype.dispose = function() { this.property_ = null; }; Instead of:</p>
-            <p>Foo.prototype.dispose = function() { delete this.property_; }; In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary
-                to remove a property from an object&#39;s iterated list of keys, or to change the result of if (key in obj).</p>
-            <p>Closures</p>
-            <p>Yes, but be careful. The ability to create closures is perhaps the most useful and often overlooked feature of JS. Here is a good description of how closures work.</p>
+            <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> x = <span class="hljs-built_in">Boolean</span>(<span class="hljs-number">0</span>);
+<span class="hljs-keyword">if</span> (x) {
+  alert(<span class="hljs-string">'hi'</span>);  <span class="hljs-comment">// This will never be alerted.</span>
+}
+<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Boolean</span>(<span class="hljs-number">0</span>) == <span class="hljs-string">'boolean'</span>;
+<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Boolean</span>(<span class="hljs-number">0</span>) == <span class="hljs-string">'object'</span>;
+</code></pre>
+            <p>This is very useful for casting things to <code>number</code>, <code>string</code> and <code>boolean</code>.</p>
+            <h3 id="multi-level-prototype-hierarchies">Multi-level prototype hierarchies</h3>
+            <p>Not preferred</p>
+            <p>Multi-level prototype hierarchies are how JavaScript implements inheritance. You have a multi-level hierarchy if you have a user-defined class D with another user-defined class B as its prototype. These hierarchies are much harder to get right than
+                they first appear!</p>
+            <p>For that reason, it is best to use <code>goog.inherits()</code> from <a href="#">the Closure Library</a> or a similar library function.</p>
+            <pre><code class="lang-JavaScript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">D</span><span class="hljs-params">()</span> </span>{
+  goog.base(<span class="hljs-keyword">this</span>)
+}
+goog.inherits(D, B);
+
+D.prototype.method = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  ...
+};
+</code></pre>
+            <h3 id="method-and-property-definitions">Method and property definitions</h3>
+            <p><code>/** @constructor */ function SomeConstructor() { this.someProperty = 1; } Foo.prototype.someMethod = function() { ... };</code></p>
+            <p>While there are several ways to attach methods and properties to an object created via &quot;new&quot;, the preferred style for methods is:</p>
+            <pre><code class="lang-javascript">Foo.prototype.bar = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">/* ... */</span>
+};
+</code></pre>
+            <p>The preferred style for other properties is to initialize the field in the constructor:</p>
+            <pre><code class="lang-javascript"><span class="hljs-comment">/** @constructor */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Foo</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">this</span>.bar = value;
+}
+</code></pre>
+            <h5 id="why-">Why?</h5>
+            <p>Current JavaScript engines optimize based on the &quot;shape&quot; of an object, <a href="#">adding a property to an object (including overriding a value set on the prototype) changes the shape and can degrade performance.</a></p>
+            <h3 id="delete">delete</h3>
+            <p>Prefer <code>this.foo = null</code>.</p>
+            <pre><code class="lang-javascript"> Foo.prototype.dispose = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">this</span>.property_ = <span class="hljs-literal">null</span>;
+};
+</code></pre>
+            <p>Instead of:</p>
+            <pre><code class="lang-javascript">Foo.prototype.dispose = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">delete</span> <span class="hljs-keyword">this</span>.property_;
+};
+</code></pre>
+            <p>In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object&#39;s iterated list of
+                keys, or to change the result of <code>if (key in obj)</code>.</p>
+            <h3 id="closures">Closures</h3>
+            <p>Yes, but be careful.</p>
+            <p>The ability to create closures is perhaps the most useful and often overlooked feature of JS. Here is <a href="#">a good description of how closures work</a>.</p>
             <p>One thing to keep in mind, however, is that a closure keeps a pointer to its enclosing scope. As a result, attaching a closure to a DOM element can create a circular reference and thus, a memory leak. For example, in the following code:</p>
-            <p>function foo(element, a, b) { element.onclick = function() { /<em> uses a and b </em>/ }; } the function closure keeps a reference to element, a, and b even if it never uses element. Since element also keeps a reference to the closure, we have a
-                cycle that won&#39;t be cleaned up by garbage collection. In these situations, the code can be structured as follows:</p>
-            <p>function foo(element, a, b) { element.onclick = bar(a, b); }
-            </p>
-            <p>function bar(a, b) { return function() { /<em> uses a and b </em>/ }; } eval()
-            </p>
-            <p>Only for code loaders and REPL (Read–eval–print loop) eval() makes for confusing semantics and is dangerous to use if the string being eval()&#39;d contains user input. There&#39;s usually a better, clearer, and safer way to write your code, so
-                its use is generally not permitted.</p>
-            <p>For RPC you can always use JSON and read the result using JSON.parse() instead of eval().</p>
+            <pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span><span class="hljs-params">(element, a, b)</span> </span>{
+  element.onclick = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">/* uses a and b */</span> };
+}
+</code></pre>
+            <p>the function closure keeps a reference to <code>element</code>, <code>a</code>, and <code>b</code> even if it never uses <code>element</code>. Since <code>element</code> also keeps a reference to the closure, we have a cycle that won&#39;t be cleaned
+                up by garbage collection. In these situations, the code can be structured as follows:</p>
+            <pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span><span class="hljs-params">(element, a, b)</span> </span>{
+  element.onclick = bar(a, b);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bar</span><span class="hljs-params">(a, b)</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">/* uses a and b */</span> };
+}
+</code></pre>
+            <h3 id="eval-">eval()</h3>
+            <p>Only for code loaders and REPL (Read–eval–print loop)</p>
+            <p><code>eval()</code> makes for confusing semantics and is dangerous to use if the string being <code>eval()</code>&#39;d contains user input. There&#39;s usually a better, clearer, and safer way to write your code, so its use is generally not permitted.</p>
+            <p>For RPC you can always use JSON and read the result using <code>JSON.parse()</code> instead of <code>eval()</code>.</p>
             <p>Let&#39;s assume we have a server that returns something like this:</p>
-            <p>{ &quot;name&quot;: &quot;Alice&quot;, &quot;id&quot;: 31502, &quot;email&quot;: &quot;looking_glass@example.com&quot; } var userInfo = eval(feed); var email = userInfo[&#39;email&#39;]; If the feed was modified to include malicious JavaScript code,
-                then if we use eval then that code will be executed.</p>
-            <p>var userInfo = JSON.parse(feed); var email = userInfo[&#39;email&#39;]; With JSON.parse, invalid JSON (including all executable JavaScript) will cause an exception to be thrown.</p>
-            <p>with() {}</p>
-            <p>No Using with clouds the semantics of your program. Because the object of the with can have properties that collide with local variables, it can drastically change the meaning of your program. For example, what does this do?</p>
-            <p>with (foo) { var x = 3; return x; } Answer: anything. The local variable x could be clobbered by a property of foo and perhaps it even has a setter, in which case assigning 3 could cause lots of other code to execute. Don&#39;t use with.</p>
-            <p>this</p>
+            <pre><code class="lang-javascript">{
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Alice"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-number">31502</span>,
+  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"looking_glass@example.com"</span>
+}
+</code></pre>
+            <pre><code class="lang-javascript"><span class="hljs-attribute">var userInfo</span> = eval(feed);
+<span class="hljs-attribute">var email</span> = userInfo[<span class="hljs-string">'email'</span>];
+</code></pre>
+            <p>If the feed was modified to include malicious JavaScript code, then if we use <code>eval</code> then that code will be executed.</p>
+            <pre><code class="lang-javascript"><span class="hljs-attribute">var userInfo</span> = JSON.parse(feed);
+<span class="hljs-attribute">var email</span> = userInfo[<span class="hljs-string">'email'</span>];
+</code></pre>
+            <p>With <code>JSON.parse</code>, invalid JSON (including all executable JavaScript) will cause an exception to be thrown.</p>
+            <h3 id="with-">with() {}</h3>
+            <p>No</p>
+            <p>Using <code>with</code> clouds the semantics of your program. Because the object of the <code>with</code> can have properties that collide with local variables, it can drastically change the meaning of your program. For example, what does this do?</p>
+            <pre><code class="lang-javascript"><span class="hljs-keyword">with</span> (foo) {
+  <span class="hljs-keyword">var</span> x = <span class="hljs-number">3</span>;
+  <span class="hljs-keyword">return</span> x;
+}
+</code></pre>
+            <p>Answer: anything. The local variable <code>x</code> could be clobbered by a property of <code>foo</code> and perhaps it even has a setter, in which case assigning <code>3</code> could cause lots of other code to execute. Don&#39;t use <code>with</code>.</p>
+            <h3 id="this">this</h3>
             <p>Only in object constructors, methods, and in setting up closures The semantics of this can be tricky. At times it refers to the global object (in most places), the scope of the caller (in eval), a node in the DOM tree (when attached using an event
                 handler HTML attribute), a newly created object (in a constructor), or some other object (if function was call()ed or apply()ed).</p>
             <p>Because this is so easy to get wrong, limit its use to those places where it is required:</p>
-            <p>in constructors in methods of objects (including in the creation of closures) for-in loop</p>
+            <p>in constructors in methods of objects (including in the creation of closures)</p>
+            <h3 id="for-in-loop">for-in loop</h3>
             <p>Only for iterating over keys in an object/map/hash for-in loops are often incorrectly used to loop over the elements in an Array. This is however very error prone because it does not loop from 0 to length - 1 but over all the present keys in the
                 object and its prototype chain. Here are a few cases where it fails:</p>
             <p>function printArray(arr) { for (var key in arr) { print(arr[key]); } }
@@ -154,16 +275,19 @@ MyClass.fetchedUrlCache_ = new goog.structs.Map();
             <p>a = document.getElementsByTagName(&#39;*&#39;); printArray(a); // This is wrong.</p>
             <p>a = [0,1,2,3]; a.buhu = &#39;wine&#39;; printArray(a); // This is wrong again.</p>
             <p>a = new Array; a[3] = 3; printArray(a); // This is wrong again. Always use normal for loops when using arrays.</p>
-            <p>function printArray(arr) { var l = arr.length; for (var i = 0; i &lt; l; i++) { print(arr[i]); } } Associative Arrays</p>
+            <p>function printArray(arr) { var l = arr.length; for (var i = 0; i &lt; l; i++) { print(arr[i]); } }
+            </p>
+            <h3 id="associative-arrays">Associative Arrays</h3>
             <p>Never use Array as a map/hash/associative array Associative Arrays are not allowed... or more precisely you are not allowed to use non number indexes for arrays. If you need a map/hash use Object instead of Array in these cases because the features
                 that you want are actually features of Object and not of Array. Array just happens to extend Object (like any other object in JS and therefore you might as well have used Date, RegExp or String).</p>
-            <p>Multiline string literals</p>
+            <h3 id="multiline-string-literals">Multiline string literals</h3>
             <p>No Do not do this:</p>
             <p>var myString = &#39;A rather long string of English text, an error message \ actually that just keeps going and going -- an error \ message to make the Energizer bunny blush (right through \ those Schwarzenegger shades)! Where was I? Oh yes, \ you\&#39;ve
                 got an error and all the extraneous whitespace is \ just gravy. Have a nice day.&#39;; The whitespace at the beginning of each line can&#39;t be safely stripped at compile time; whitespace after the slash will result in tricky errors.</p>
             <p>Use string concatenation instead:</p>
             <p>var myString = &#39;A rather long string of English text, an error message &#39; + &#39;actually that just keeps going and going -- an error &#39; + &#39;message to make the Energizer bunny blush (right through &#39; + &#39;those Schwarzenegger
-                shades)! Where was I? Oh yes, &#39; + &#39;you\&#39;ve got an error and all the extraneous whitespace is &#39; + &#39;just gravy. Have a nice day.&#39;; Array and Object literals</p>
+                shades)! Where was I? Oh yes, &#39; + &#39;you\&#39;ve got an error and all the extraneous whitespace is &#39; + &#39;just gravy. Have a nice day.&#39;;</p>
+            <h3 id="array-and-object-literals">Array and Object literals</h3>
             <p>Yes Use Array and Object literals instead of Array and Object constructors.</p>
             <p>Array constructors are error-prone due to their arguments.</p>
             <p>// Length is 3. var a1 = new Array(x1, x2, x3);</p>
@@ -175,14 +299,16 @@ MyClass.fetchedUrlCache_ = new goog.structs.Map();
             <p>var o = new Object();</p>
             <p>var o2 = new Object(); o2.a = 0; o2.b = 1; o2.c = 2; o2[&#39;strange key&#39;] = 3; Should be written as:</p>
             <p>var o = {};</p>
-            <p>var o2 = { a: 0, b: 1, c: 2, &#39;strange key&#39;: 3 }; Modifying prototypes of builtin objects</p>
+            <p>var o2 = { a: 0, b: 1, c: 2, &#39;strange key&#39;: 3 };
+            </p>
+            <h3 id="modifying-prototypes-of-builtin-objects">Modifying prototypes of builtin objects</h3>
             <p>No Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided.</p>
-            <p>Internet Explorer&#39;s Conditional Comments</p>
+            <h3 id="internet-explorer-s-conditional-comments">Internet Explorer&#39;s Conditional Comments</h3>
             <p>No Don&#39;t do this:</p>
             <p>var f = function () { /
                 <em>@cc_on if (@_jscript) { return 2</em> @<em>/  3; /</em>@ } @*/ }; Conditional Comments hinder automated tools as they can vary the JavaScript syntax tree at runtime.</p>
-            <p>JavaScript Style Rules</p>
-            <p>Naming</p>
+            <h2 id="javascript-style-rules">JavaScript Style Rules</h2>
+            <h3 id="naming">Naming</h3>
             <p>In general, use functionNamesLikeThis, variableNamesLikeThis, ClassNamesLikeThis, EnumNamesLikeThis, methodNamesLikeThis, CONSTANT_VALUES_LIKE_THIS, foo.namespaceNamesLikeThis.bar, and filenameslikethis.js.</p>
             <p>Properties and methods</p>
             <p>Private properties and methods should be named with a trailing underscore. Protected properties and methods should be named without a trailing underscore (like public ones). For more information on private and protected, read the section on visibility.</p>
@@ -247,15 +373,15 @@ MyClass.fetchedUrlCache_ = new goog.structs.Map();
                 aliases in the global scope. Use them only in function blocks.</p>
             <p>Filenames</p>
             <p>Filenames should be all lowercase in order to avoid confusion on case-sensitive platforms. Filenames should end in .js, and should contain no punctuation except for - or <em> (prefer - to </em>).</p>
-            <p>Custom toString() methods</p>
+            <h3 id="custom-tostring-methods">Custom toString() methods</h3>
             <p>Must always succeed without side effects. You can control how your objects string-ify themselves by defining a custom toString() method. This is fine, but you need to ensure that your method (1) always succeeds and (2) does not have side-effects.
                 If your method doesn&#39;t meet these criteria, it&#39;s very easy to run into serious problems. For example, if toString() calls a method that does an assert, assert might try to output the name of the object in which it failed, which of course
                 requires calling toString().</p>
-            <p>Deferred initialization</p>
+            <h3 id="deferred-initialization">Deferred initialization</h3>
             <p>OK It isn&#39;t always possible to initialize variables at the point of declaration, so deferred initialization is fine.</p>
-            <p>Explicit scope</p>
+            <h3 id="explicit-scope">Explicit scope</h3>
             <p>Always Always use explicit scope - doing so increases portability and clarity. For example, don&#39;t rely on window being in the scope chain. You might want to use your function in another application for which window is not the content window.</p>
-            <p>Code formatting</p>
+            <h3 id="code-formatting">Code formatting</h3>
             <p>Expand for more information. We follow the C++ formatting rules in spirit, with the following additional clarifications.</p>
             <p>Curly Braces</p>
             <p>Because of implicit semicolon insertion, always start your curly braces on the same line as whatever they&#39;re opening. For example:</p>
@@ -264,11 +390,11 @@ MyClass.fetchedUrlCache_ = new goog.structs.Map();
             <p>var arr = [1, 2, 3]; // No space after [ or before ]. var obj = {a: 1, b: 2, c: 3}; // No space after { or before }. Multiline array initializers and object initializers are indented 2 spaces, with the braces on their own line, just like blocks.</p>
             <p>// Object initializer. var inset = { top: 10, right: 20, bottom: 15, left: 12 };
             </p>
-            <p>// Array initializer. this.rows_ = [ &#39;&quot;Slartibartfast&quot; <a href="&#x6d;&#97;&#x69;&#108;&#116;&#x6f;&#58;&#x66;&#x6a;&#x6f;&#x72;&#x64;&#x6d;&#97;&#x73;&#x74;&#101;&#114;&#64;&#x6d;&#97;&#103;&#114;&#x61;&#116;&#104;&#x65;&#97;&#x2e;&#x63;&#x6f;&#109;">&#x66;&#x6a;&#x6f;&#x72;&#x64;&#x6d;&#97;&#x73;&#x74;&#101;&#114;&#64;&#x6d;&#97;&#103;&#114;&#x61;&#116;&#104;&#x65;&#97;&#x2e;&#x63;&#x6f;&#109;</a>&#39;,
-                &#39;&quot;Zaphod Beeblebrox&quot; <a href="&#109;&#97;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x74;&#104;&#x65;&#112;&#114;&#101;&#122;&#x40;&#x75;&#x6e;&#x69;&#x76;&#x65;&#114;&#115;&#101;&#x2e;&#103;&#111;&#x76;">&#x74;&#104;&#x65;&#112;&#114;&#101;&#122;&#x40;&#x75;&#x6e;&#x69;&#x76;&#x65;&#114;&#115;&#101;&#x2e;&#103;&#111;&#x76;</a>&#39;,
-                &#39;&quot;Ford Prefect&quot; <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x66;&#111;&#114;&#x64;&#64;&#x74;&#x68;&#x65;&#x67;&#117;&#105;&#100;&#101;&#46;&#x63;&#111;&#109;">&#x66;&#111;&#114;&#x64;&#64;&#x74;&#x68;&#x65;&#x67;&#117;&#105;&#100;&#101;&#46;&#x63;&#111;&#109;</a>&#39;,
-                &#39;&quot;Arthur Dent&quot; <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#58;&#104;&#x61;&#115;&#x2e;&#x6e;&#111;&#46;&#x74;&#x65;&#97;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;">&#104;&#x61;&#115;&#x2e;&#x6e;&#111;&#46;&#x74;&#x65;&#97;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a>&#39;,
-                &#39;&quot;Marvin the Paranoid Android&quot; <a href="&#109;&#x61;&#105;&#108;&#116;&#x6f;&#58;&#109;&#97;&#114;&#118;&#64;&#x67;&#111;&#111;&#103;&#x6c;&#101;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;">&#109;&#97;&#114;&#118;&#64;&#x67;&#111;&#111;&#103;&#x6c;&#101;&#x6d;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;</a>&#39;,
+            <p>// Array initializer. this.rows_ = [ &#39;&quot;Slartibartfast&quot; <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#58;&#x66;&#106;&#111;&#114;&#100;&#109;&#x61;&#x73;&#x74;&#101;&#x72;&#x40;&#x6d;&#x61;&#x67;&#114;&#x61;&#x74;&#104;&#x65;&#x61;&#x2e;&#x63;&#111;&#109;">&#x66;&#106;&#111;&#114;&#100;&#109;&#x61;&#x73;&#x74;&#101;&#x72;&#x40;&#x6d;&#x61;&#x67;&#114;&#x61;&#x74;&#104;&#x65;&#x61;&#x2e;&#x63;&#111;&#109;</a>&#39;,
+                &#39;&quot;Zaphod Beeblebrox&quot; <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#116;&#x68;&#x65;&#112;&#114;&#101;&#x7a;&#x40;&#117;&#110;&#x69;&#118;&#101;&#114;&#x73;&#101;&#46;&#x67;&#111;&#118;">&#116;&#x68;&#x65;&#112;&#114;&#101;&#x7a;&#x40;&#117;&#110;&#x69;&#118;&#101;&#114;&#x73;&#101;&#46;&#x67;&#111;&#118;</a>&#39;,
+                &#39;&quot;Ford Prefect&quot; <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#x66;&#111;&#114;&#100;&#x40;&#x74;&#x68;&#x65;&#x67;&#117;&#105;&#x64;&#101;&#46;&#x63;&#x6f;&#x6d;">&#x66;&#111;&#114;&#100;&#x40;&#x74;&#x68;&#x65;&#x67;&#117;&#105;&#x64;&#101;&#46;&#x63;&#x6f;&#x6d;</a>&#39;,
+                &#39;&quot;Arthur Dent&quot; <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#104;&#x61;&#x73;&#46;&#x6e;&#x6f;&#x2e;&#x74;&#101;&#x61;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#109;">&#104;&#x61;&#x73;&#46;&#x6e;&#x6f;&#x2e;&#x74;&#101;&#x61;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#109;</a>&#39;,
+                &#39;&quot;Marvin the Paranoid Android&quot; <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#111;&#58;&#x6d;&#x61;&#114;&#x76;&#x40;&#103;&#111;&#111;&#x67;&#108;&#101;&#109;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;">&#x6d;&#x61;&#114;&#x76;&#x40;&#103;&#111;&#111;&#x67;&#108;&#101;&#109;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;</a>&#39;,
                 &#39;the.mice@magrathea.com&#39; ];
             </p>
             <p>// Used in a method call. goog.dom.createDom(goog.dom.TagName.DIV, { id: &#39;foo&#39;, className: &#39;some-css-class&#39;, style: &#39;display:none&#39; }, &#39;Hello, world!&#39;); Long identifiers or values present problems for aligned initialization
@@ -328,13 +454,15 @@ MyClass.fetchedUrlCache_ = new goog.structs.Map();
             <p>var x = a ? b : c; // All on one line if it will fit.</p>
             <p>// Indentation +4 is OK. var y = a ? longButSimpleOperandB : longButSimpleOperandC;</p>
             <p>// Indenting to the line position of the first operand is also OK. var z = a ? moreComplicatedB : moreComplicatedC; This includes the dot operator.</p>
-            <p>var x = foo.bar(). doSomething(). doSomethingElse(); Parentheses
+            <p>var x = foo.bar(). doSomething(). doSomethingElse();
             </p>
+            <h3 id="parentheses">Parentheses</h3>
             <p>Only where required Use sparingly and in general only where required by the syntax and semantics.</p>
             <p>Never use parentheses for unary operators such as delete, typeof and void or after keywords such as return, throw as well as others (case, in or new).</p>
-            <p>Strings</p>
+            <h3 id="strings">Strings</h3>
             <p>Prefer &#39; over &quot; For consistency single-quotes (&#39;) are preferred to double-quotes (&quot;). This is helpful when creating strings that include HTML:</p>
-            <p>var msg = &#39;This is some HTML&#39;; Visibility (private and protected fields)</p>
+            <p>var msg = &#39;This is some HTML&#39;;</p>
+            <h3 id="visibility-private-and-protected-fields-">Visibility (private and protected fields)</h3>
             <p>Encouraged, use JSDoc annotations @private and @protected We recommend the use of the JSDoc annotations @private and @protected to indicate visibility levels for classes, functions, and properties.</p>
             <p>The --jscomp_warning=visibility compiler flag turns on compiler warnings for visibility violations. See Closure Compiler Warnings.</p>
             <p>@private global variables and functions are only accessible to code in the same file.</p>
@@ -389,7 +517,7 @@ return this.privateProp</em> + AA<em>PublicClass.staticPrivateProp</em>; };
                     between a type (like AA<em>PrivateClass</em>) and the constructor for that type. There is no way to express both that a type is public and its constructor is private (because the constructor could easily be aliased in a way that would defeat
                     the privacy check).</li>
             </ul>
-            <p>JavaScript Types</p>
+            <h3 id="javascript-types">JavaScript Types</h3>
             <p>Encouraged and enforced by the compiler. When documenting a type in JSDoc, be as specific and accurate as possible. The types we support are based on the EcmaScript 4 spec.</p>
             <p>The JavaScript Type Language</p>
             <p>The ES4 proposal contained a language for specifying JavaScript types. We use this language in JsDoc to express the types of function parameters and return values.</p>
@@ -561,9 +689,9 @@ goog.bind = function(fn, thisObj, var_args) {
 // Possibly generates a missing property warning.
 goog.bind(function() { this.someProperty; }, new SomeClass());
 // Generates an undefined this warning.
-goog.bind(function() { this.someProperty; });
-Comments</li>
+goog.bind(function() { this.someProperty; });</li>
 </ul>
+<h3 id="comments">Comments</h3>
 <p>Use JSDoc
 We follow the C++ style for comments in spirit.</p>
 <p>All files, classes, methods and properties should be documented with JSDoc comments with the appropriate tags and types. Textual descriptions for properties, methods, method parameters and method return values should be included unless obvious from the property, method, or parameter name.</p>
@@ -1148,8 +1276,8 @@ You may also see other types of JSDoc annotations in third-party code. These ann
 @returns
 @since
 @static
-@version
-Providing Dependencies With goog.provide</p>
+@version</p>
+<h3 id="providing-dependencies-with-goog-provide">Providing Dependencies With goog.provide</h3>
 <p>Only provide top-level symbols.
 All members defined on a class should be in the same file. So, only top-level classes should be provided in a file that contains multiple members defined on the same class (e.g. enums, inner classes, etc).</p>
 <p>Do this:</p>
@@ -1164,11 +1292,11 @@ goog.provide(&#39;namespace.MyClass.staticMethod&#39;);
 Members on namespaces may also be provided:</p>
 <p>goog.provide(&#39;foo.bar&#39;);
 goog.provide(&#39;foo.bar.method&#39;);
-goog.provide(&#39;foo.bar.CONSTANT&#39;);
-Compiling</p>
+goog.provide(&#39;foo.bar.CONSTANT&#39;);</p>
+<h3 id="compiling">Compiling</h3>
 <p>Required
 Use of JS compilers such as the Closure Compiler is required for all customer-facing code.</p>
-<p>Tips and Tricks</p>
+<h3 id="tips-and-tricks">Tips and Tricks</h3>
 <p>JavaScript tidbits
 True and False Boolean Expressions</p>
 <p>The following are all false in boolean expressions:</p>
@@ -1274,9 +1402,9 @@ This works well for all collections and arrays as long as the array does not con
 <p>var parentNode = document.getElementById(&#39;foo&#39;);
 for (var child = parentNode.firstChild; child; child = child.nextSibling) {
   doSomething(child);
-}
-Parting Words</p>
-<p>BE CONSISTENT.</p>
+}</p>
+<h2 id="parting-words">Parting Words</h2>
+<p><em>BE CONSISTENT.</em></p>
 <p>If you&#39;re editing code, take a few minutes to look at the code around you and determine its style. If they use spaces around all their arithmetic operators, you should too. If their comments have little boxes of hash marks around them, make your comments have little boxes of hash marks around them too.</p>
 <p>The point of having style guidelines is to have a common vocabulary of coding so people can concentrate on what you&#39;re saying rather than on how you&#39;re saying it. We present global style rules here so people know the vocabulary, but local style is also important. If code you add to a file looks drastically different from the existing code around it, it throws readers out of their rhythm when they go to read it. Avoid this.</p>
         </article>

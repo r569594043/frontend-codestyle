@@ -1,51 +1,54 @@
-[Direct Link](https://google.github.io/styleguide/javascriptguide.xml)
-Background
+# Google JavaScript Style Guide
+## Background
 
 JavaScript is the main client-side scripting language used by many of Google's open-source projects. This style guide is a list of dos and don'ts for JavaScript programs.
 
-JavaScript Language Rules
+## JavaScript Language Rules
 
-var
+### var
 
-Declarations with var: Always
-Decision:
-When you fail to specify var, the variable gets placed in the global context, potentially clobbering existing values. Also, if there's no declaration, it's hard to tell in what scope a variable lives (e.g., it could be in the Document or Window just as easily as in the local scope). So always declare with var.
+Declarations with `var`: Always
 
-Constants
+#### Decision:
+When you fail to specify `var`, the variable gets placed in the global context, potentially clobbering existing values. Also, if there's no declaration, it's hard to tell in what scope a variable lives (e.g., it could be in the Document or Window just as easily as in the local scope). So always declare with `var`.
 
-Use NAMES_LIKE_THIS for constant values.
-Use @const to indicate a constant (non-overwritable) pointer (a variable or property).
-Never use the const keyword as it's not supported in Internet Explorer.
-Decision:
-Constant values
+### Constants
 
-If a value is intended to be constant and immutable, it should be given a name in CONSTANT_VALUE_CASE. ALL_CAPS additionally implies @const (that the value is not overwritable).
+* Use `NAMES_LIKE_THIS` for constant values.
+* Use `@const` to indicate a constant (non-overwritable) pointer (a variable or property).
+* Never use the [`const` keyword](#) as it's not supported in Internet Explorer.
 
-Primitive types (number, string, boolean) are constant values.
+#### Decision:
+##### Constant values
 
-Objects' immutability is more subjective — objects should be considered immutable only if they do not demonstrate observable state change. This is not enforced by the compiler.
+If a value is intended to be constant and immutable, it should be given a name in `CONSTANT_VALUE_CASE`. `ALL_CAPS` additionally implies `@const` (that the value is not overwritable).
 
-Constant pointers (variables and properties)
+Primitive types (`number`, `string`, `boolean`) are constant values.
 
-The @const annotation on a variable or property implies that it is not overwritable. This is enforced by the compiler at build time. This behavior is consistent with the const keyword (which we do not use due to the lack of support in Internet Explorer).
+`Objects'` immutability is more subjective — objects should be considered immutable only if they do not demonstrate observable state change. This is not enforced by the compiler.
 
-A @const annotation on a method additionally implies that the method cannot not be overridden in subclasses.
+##### Constant pointers (variables and properties)
 
-A @const annotation on a constructor implies the class cannot be subclassed (akin to final in Java).
+The `@const` annotation on a variable or property implies that it is not overwritable. This is enforced by the compiler at build time. This behavior is consistent with the [`const` keyword](#) (which we do not use due to the lack of support in Internet Explorer).
 
-Examples
+A `@const` annotation on a method additionally implies that the method cannot not be overridden in subclasses.
 
-Note that @const does not necessarily imply CONSTANT_VALUES_CASE. However, CONSTANT_VALUES_CASE does imply @const.
+A `@const` annotation on a constructor implies the class cannot be subclassed (akin to `final` in Java).
 
+##### Examples
+
+Note that `@const` does not necessarily imply `CONSTANT_VALUES_CASE`. However, `CONSTANT_VALUES_CASE` *does* imply `@const`.
+```javascript
 /**
  * Request timeout in milliseconds.
  * @type {number}
  */
 goog.example.TIMEOUT_IN_MILLISECONDS = 60;
-The number of seconds in a minute never changes. It is a constant value. ALL_CAPS also implies @const, so the constant cannot be overwritten.
+ ```
+The number of seconds in a minute never changes. It is a constant value. `ALL_CAPS` also implies `@const`, so the constant cannot be overwritten.
 
-The open source compiler will allow the symbol to be overwritten because the constant is not marked as @const.
-
+The open source compiler will allow the symbol to be overwritten because the constant is not marked as `@const`.
+```javascript
 /**
  * Map of URL to response string.
  * @const
@@ -57,15 +60,17 @@ MyClass.fetchedUrlCache_ = new goog.structs.Map();
  * @constructor
  */
 sloth.MyFinalClass = function() {};
-In this case, the pointer can never be overwritten, but value is highly mutable and not constant (and thus in camelCase, not ALL_CAPS).
+```
+In this case, the pointer can never be overwritten, but value is highly mutable and not constant (and thus in `camelCase`, not `ALL_CAPS`).
 
-Semicolons
+### Semicolons
 
 Always use semicolons.
+
 Relying on implicit insertion can cause subtle, hard to debug problems. Don't do it. You're better than that.
 
 There are a couple places where missing semicolons are particularly dangerous:
-
+```javascript
 // 1.
 MyClass.prototype.myMethod = function() {
   return 42;
@@ -90,21 +95,23 @@ var THINGS_TO_EAT = [apples, oysters, sprayOnCheese]  // No semicolon here.
 
 // 3. conditional execution a la bash
 -1 == resultOfOperation() || die();
-So what happens?
+```
+##### So what happens?
 
-JavaScript error - first the function returning 42 is called with the second function as a parameter, then the number 42 is "called" resulting in an error.
-You will most likely get a 'no such property in undefined' error at runtime as it tries to call x[ffVersion, ieVersion][isIE]().
-die is always called since the array minus 1 is NaN which is never equal to anything (not even if resultOfOperation() returns NaN) and THINGS_TO_EAT gets assigned the result of die().
-Why?
+1. JavaScript error - first the function returning 42 is called with the second function as a parameter, then the number 42 is "called" resulting in an error.
+2. You will most likely get a 'no such property in undefined' error at runtime as it tries to call `x[ffVersion, ieVersion][isIE]()`.
+3. `die` is always called since the array minus 1 is `NaN` which is never equal to anything (not even if `resultOfOperation()` returns `NaN`) and `THINGS_TO_EAT` gets assigned the result of `die()`.
+
+##### Why?
 
 JavaScript requires statements to end with a semicolon, except when it thinks it can safely infer their existence. In each of these examples, a function declaration or object or array literal is used inside a statement. The closing brackets are not enough to signal the end of the statement. Javascript never ends a statement if the next token is an infix or bracket operator.
 
 This has really surprised people, so make sure your assignments end with semicolons.
 
-Clarification: Semicolons and functions
+##### Clarification: Semicolons and functions
 
 Semicolons should be included at the end of function expressions, but not at the end of function declarations. The distinction is best illustrated with an example:
-
+```JavaScript
 var foo = function() {
   return true;
 };  // semicolon here.
@@ -112,67 +119,83 @@ var foo = function() {
 function foo() {
   return true;
 }  // no semicolon here.
-Nested functions
+```
+
+### Nested functions
 
 Yes
+
 Nested functions can be very useful, for example in the creation of continuations and for the task of hiding helper functions. Feel free to use them.
 
-Function Declarations Within Blocks
+### Function Declarations Within Blocks
 
 No
-Do not do this:
 
+Do not do this:
+```javascript
 if (x) {
   function foo() {}
 }
-While most script engines support Function Declarations within blocks it is not part of ECMAScript (see ECMA-262, clause 13 and 14). Worse implementations are inconsistent with each other and with future EcmaScript proposals. ECMAScript only allows for Function Declarations in the root statement list of a script or function. Instead use a variable initialized with a Function Expression to define a function within a block:
-
+```
+While most script engines support Function Declarations within blocks it is not part of ECMAScript (see [ECMA-262](), clause 13 and 14). Worse implementations are inconsistent with each other and with future EcmaScript proposals. ECMAScript only allows for Function Declarations in the root statement list of a script or function. Instead use a variable initialized with a Function Expression to define a function within a block:
+```javascript
 if (x) {
   var foo = function() {};
 }
-Exceptions
+```
+
+### Exceptions
 
 Yes
+
 You basically can't avoid exceptions if you're doing something non-trivial (using an application development framework, etc.). Go for it.
 
-Custom exceptions
+### Custom exceptions
 
 Yes
+
 Without custom exceptions, returning error information from a function that also returns a value can be tricky, not to mention inelegant. Bad solutions include passing in a reference type to hold error information or always returning Objects with a potential error member. These basically amount to a primitive exception handling hack. Feel free to use custom exceptions when appropriate.
 
-Standards features
+### Standards features
 
 Always preferred over non-standards features
-For maximum portability and compatibility, always prefer standards features over non-standards features (e.g., string.charAt(3) over string[3] and element access with DOM functions instead of using an application-specific shorthand).
 
-Wrapper objects for primitive types
+For maximum portability and compatibility, always prefer standards features over non-standards features (e.g., `string.charAt(3)` over `string[3]` and element access with DOM functions instead of using an application-specific shorthand).
+
+### Wrapper objects for primitive types
 
 No
-There's no reason to use wrapper objects for primitive types, plus they're dangerous:
 
+There's no reason to use wrapper objects for primitive types, plus they're dangerous:
+```javascript
 var x = new Boolean(false);
 if (x) {
   alert('hi');  // Shows 'hi'.
 }
+```
+
 Don't do it!
 
 However type casting is fine.
-
+```javascript
 var x = Boolean(0);
 if (x) {
   alert('hi');  // This will never be alerted.
 }
 typeof Boolean(0) == 'boolean';
 typeof new Boolean(0) == 'object';
-This is very useful for casting things to number, string and boolean.
+```
 
-Multi-level prototype hierarchies
+This is very useful for casting things to `number`, `string` and `boolean`.
+
+### Multi-level prototype hierarchies
 
 Not preferred
+
 Multi-level prototype hierarchies are how JavaScript implements inheritance. You have a multi-level hierarchy if you have a user-defined class D with another user-defined class B as its prototype. These hierarchies are much harder to get right than they first appear!
 
-For that reason, it is best to use goog.inherits() from the Closure Library or a similar library function.
-
+For that reason, it is best to use `goog.inherits()` from [the Closure Library](#) or a similar library function.
+```JavaScript
 function D() {
   goog.base(this)
 }
@@ -181,49 +204,60 @@ goog.inherits(D, B);
 D.prototype.method = function() {
   ...
 };
-Method and property definitions
+```
 
-/** @constructor */ function SomeConstructor() { this.someProperty = 1; } Foo.prototype.someMethod = function() { ... };
+### Method and property definitions
+
+`/** @constructor */ function SomeConstructor() { this.someProperty = 1; } Foo.prototype.someMethod = function() { ... };`
+
 While there are several ways to attach methods and properties to an object created via "new", the preferred style for methods is:
-
+```javascript
 Foo.prototype.bar = function() {
   /* ... */
 };
+```
 The preferred style for other properties is to initialize the field in the constructor:
-
+```javascript
 /** @constructor */
 function Foo() {
   this.bar = value;
 }
-Why?
+```
 
-Current JavaScript engines optimize based on the "shape" of an object, adding a property to an object (including overriding a value set on the prototype) changes the shape and can degrade performance.
+##### Why?
 
-delete
+Current JavaScript engines optimize based on the "shape" of an object, [adding a property to an object (including overriding a value set on the prototype) changes the shape and can degrade performance.](#)
 
-Prefer this.foo = null.
+### delete
+
+Prefer `this.foo = null`.
+```javascript
  Foo.prototype.dispose = function() {
   this.property_ = null;
 };
+```
 Instead of:
-
+```javascript
 Foo.prototype.dispose = function() {
   delete this.property_;
 };
-In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of if (key in obj).
+```
+In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of keys, or to change the result of `if (key in obj)`.
 
-Closures
+### Closures
 
 Yes, but be careful.
-The ability to create closures is perhaps the most useful and often overlooked feature of JS. Here is a good description of how closures work.
+
+The ability to create closures is perhaps the most useful and often overlooked feature of JS. Here is [a good description of how closures work](#).
 
 One thing to keep in mind, however, is that a closure keeps a pointer to its enclosing scope. As a result, attaching a closure to a DOM element can create a circular reference and thus, a memory leak. For example, in the following code:
-
+```javascript
 function foo(element, a, b) {
   element.onclick = function() { /* uses a and b */ };
 }
-the function closure keeps a reference to element, a, and b even if it never uses element. Since element also keeps a reference to the closure, we have a cycle that won't be cleaned up by garbage collection. In these situations, the code can be structured as follows:
-
+```
+the function closure keeps a reference to `element`, `a`, and `b` even if it never uses `element`. Since `element` also keeps a reference to the closure, we have a cycle that won't be cleaned up by garbage collection. In these situations, the code can be structured as follows:
+```javascript
 function foo(element, a, b) {
   element.onclick = bar(a, b);
 }
@@ -231,40 +265,48 @@ function foo(element, a, b) {
 function bar(a, b) {
   return function() { /* uses a and b */ };
 }
-eval()
+```
+### eval()
 
 Only for code loaders and REPL (Read–eval–print loop)
-eval() makes for confusing semantics and is dangerous to use if the string being eval()'d contains user input. There's usually a better, clearer, and safer way to write your code, so its use is generally not permitted.
 
-For RPC you can always use JSON and read the result using JSON.parse() instead of eval().
+`eval()` makes for confusing semantics and is dangerous to use if the string being `eval()`'d contains user input. There's usually a better, clearer, and safer way to write your code, so its use is generally not permitted.
+
+For RPC you can always use JSON and read the result using `JSON.parse()` instead of `eval()`.
 
 Let's assume we have a server that returns something like this:
-
+```javascript
 {
   "name": "Alice",
   "id": 31502,
   "email": "looking_glass@example.com"
 }
+```
+```javascript
 var userInfo = eval(feed);
 var email = userInfo['email'];
-If the feed was modified to include malicious JavaScript code, then if we use eval then that code will be executed.
-
+```
+If the feed was modified to include malicious JavaScript code, then if we use `eval` then that code will be executed.
+```javascript
 var userInfo = JSON.parse(feed);
 var email = userInfo['email'];
-With JSON.parse, invalid JSON (including all executable JavaScript) will cause an exception to be thrown.
+```
+With `JSON.parse`, invalid JSON (including all executable JavaScript) will cause an exception to be thrown.
 
-with() {}
+### with() {}
 
 No
-Using with clouds the semantics of your program. Because the object of the with can have properties that collide with local variables, it can drastically change the meaning of your program. For example, what does this do?
 
+Using `with` clouds the semantics of your program. Because the object of the `with` can have properties that collide with local variables, it can drastically change the meaning of your program. For example, what does this do?
+```javascript
 with (foo) {
   var x = 3;
   return x;
 }
-Answer: anything. The local variable x could be clobbered by a property of foo and perhaps it even has a setter, in which case assigning 3 could cause lots of other code to execute. Don't use with.
+```
+Answer: anything. The local variable `x` could be clobbered by a property of `foo` and perhaps it even has a setter, in which case assigning `3` could cause lots of other code to execute. Don't use `with`.
 
-this
+### this
 
 Only in object constructors, methods, and in setting up closures
 The semantics of this can be tricky. At times it refers to the global object (in most places), the scope of the caller (in eval), a node in the DOM tree (when attached using an event handler HTML attribute), a newly created object (in a constructor), or some other object (if function was call()ed or apply()ed).
@@ -273,7 +315,8 @@ Because this is so easy to get wrong, limit its use to those places where it is 
 
 in constructors
 in methods of objects (including in the creation of closures)
-for-in loop
+
+### for-in loop
 
 Only for iterating over keys in an object/map/hash
 for-in loops are often incorrectly used to loop over the elements in an Array. This is however very error prone because it does not loop from 0 to length - 1 but over all the present keys in the object and its prototype chain. Here are a few cases where it fails:
@@ -307,12 +350,13 @@ function printArray(arr) {
     print(arr[i]);
   }
 }
-Associative Arrays
+
+### Associative Arrays
 
 Never use Array as a map/hash/associative array
 Associative Arrays are not allowed... or more precisely you are not allowed to use non number indexes for arrays. If you need a map/hash use Object instead of Array in these cases because the features that you want are actually features of Object and not of Array. Array just happens to extend Object (like any other object in JS and therefore you might as well have used Date, RegExp or String).
 
-Multiline string literals
+### Multiline string literals
 
 No
 Do not do this:
@@ -333,7 +377,8 @@ var myString = 'A rather long string of English text, an error message ' +
     'those Schwarzenegger shades)! Where was I? Oh yes, ' +
     'you\'ve got an error and all the extraneous whitespace is ' +
     'just gravy.  Have a nice day.';
-Array and Object literals
+
+### Array and Object literals
 
 Yes
 Use Array and Object literals instead of Array and Object constructors.
@@ -380,12 +425,13 @@ var o2 = {
   c: 2,
   'strange key': 3
 };
-Modifying prototypes of builtin objects
+
+### Modifying prototypes of builtin objects
 
 No
 Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided.
 
-Internet Explorer's Conditional Comments
+### Internet Explorer's Conditional Comments
 
 No
 Don't do this:
@@ -395,9 +441,9 @@ var f = function () {
 };
 Conditional Comments hinder automated tools as they can vary the JavaScript syntax tree at runtime.
 
-JavaScript Style Rules
+## JavaScript Style Rules
 
-Naming
+### Naming
 
 In general, use functionNamesLikeThis, variableNamesLikeThis, ClassNamesLikeThis, EnumNamesLikeThis, methodNamesLikeThis, CONSTANT_VALUES_LIKE_THIS, foo.namespaceNamesLikeThis.bar, and filenameslikethis.js.
 
@@ -536,22 +582,22 @@ Filenames
 
 Filenames should be all lowercase in order to avoid confusion on case-sensitive platforms. Filenames should end in .js, and should contain no punctuation except for - or _ (prefer - to _).
 
-Custom toString() methods
+### Custom toString() methods
 
 Must always succeed without side effects.
 You can control how your objects string-ify themselves by defining a custom toString() method. This is fine, but you need to ensure that your method (1) always succeeds and (2) does not have side-effects. If your method doesn't meet these criteria, it's very easy to run into serious problems. For example, if toString() calls a method that does an assert, assert might try to output the name of the object in which it failed, which of course requires calling toString().
 
-Deferred initialization
+### Deferred initialization
 
 OK
 It isn't always possible to initialize variables at the point of declaration, so deferred initialization is fine.
 
-Explicit scope
+### Explicit scope
 
 Always
 Always use explicit scope - doing so increases portability and clarity. For example, don't rely on window being in the scope chain. You might want to use your function in another application for which window is not the content window.
 
-Code formatting
+### Code formatting
 
 Expand for more information.
 We follow the C++ formatting rules in spirit, with the following additional clarifications.
@@ -776,20 +822,22 @@ This includes the dot operator.
 var x = foo.bar().
     doSomething().
     doSomethingElse();
-Parentheses
+
+### Parentheses
 
 Only where required
 Use sparingly and in general only where required by the syntax and semantics.
 
 Never use parentheses for unary operators such as delete, typeof and void or after keywords such as return, throw as well as others (case, in or new).
 
-Strings
+### Strings
 
 Prefer ' over "
 For consistency single-quotes (') are preferred to double-quotes ("). This is helpful when creating strings that include HTML:
 
 var msg = 'This is some HTML';
-Visibility (private and protected fields)
+
+### Visibility (private and protected fields)
 
 Encouraged, use JSDoc annotations @private and @protected
 We recommend the use of the JSDoc annotations @private and @protected to indicate visibility levels for classes, functions, and properties.
@@ -879,7 +927,7 @@ AA_SubClass.prototype.method = function() {
 };
 Notice that in JavaScript, there is no distinction between a type (like AA_PrivateClass_) and the constructor for that type. There is no way to express both that a type is public and its constructor is private (because the constructor could easily be aliased in a way that would defeat the privacy check).
 
-JavaScript Types
+### JavaScript Types
 
 Encouraged and enforced by the compiler.
 When documenting a type in JSDoc, be as specific and accurate as possible. The types we support are based on the EcmaScript 4 spec.
@@ -899,13 +947,13 @@ An instance of Function or null.
 {EventTarget}
 An instance of a constructor that implements the EventTarget interface, or null.    An instance of a constructor or interface function.
 Constructor functions are functions defined with the @constructor JSDoc tag. Interface functions are functions defined with the @interface JSDoc tag.
-By default, instance types will accept null. This is the only type syntax that makes the type nullable. Other type syntaxes in this table will not accept null. 
+By default, instance types will accept null. This is the only type syntax that makes the type nullable. Other type syntaxes in this table will not accept null.
 Enum Type   {goog.events.EventType}
 One of the properties of the object literal initializer of goog.events.EventType.   An enum must be initialized as an object literal, or as an alias of another enum, annotated with the @enum JSDoc tag. The properties of this literal are the instances of the enum. The syntax of the enum is defined below.
 Note that this is one of the few things in our type system that were not in the ES4 spec.   
 Type Application    {Array.<string>}
 An array of strings.
-{Object.<string, number>} 
+{Object.<string, number>}
 An object in which the keys are strings and the values are numbers. Parameterizes a type, by applying a set of type arguments to that type. The idea is analogous to generics in Java.  
 Type Union  {(number|boolean)}
 A number or a boolean.  Indicates that a value might have type A OR type B.
@@ -917,7 +965,7 @@ Nullable type   {?number}
 A number or null.   Shorthand for the union of the null type with any other type. This is just syntactic sugar. {number?}
 Non-nullable type   {!Object}
 An Object, but never the null value.    Filters null out of nullable types. Most often used with instance types, which are nullable by default. {Object!}
-Record Type {{myNum: number, myObject}} 
+Record Type {{myNum: number, myObject}}
 An anonymous type with the given type members.  
 Indicates that the value has the specified members with the specified types. In this case, myNum with a type number and myObject with any type.
 
@@ -934,13 +982,13 @@ A function that takes one argument (a string), and executes in the context of a 
 Function new Type   {function(new:goog.ui.Menu, string)}
 A constructor that takes one argument (a string), and creates a new instance of goog.ui.Menu when called with the 'new' keyword.    Specifies the constructed type of a constructor.    
 Variable arguments  {function(string, ...[number]): number}
-A function that takes one argument (a string), and then a variable number of arguments that must be numbers.    Specifies variable arguments to a function. 
+A function that takes one argument (a string), and then a variable number of arguments that must be numbers.    Specifies variable arguments to a function.
 Variable arguments (in @param annotations)  @param {...number} var_args
 A variable number of arguments to an annotated function.    Specifies that the annotated function accepts a variable number of arguments.   
 Function optional arguments {function(?string=, number=)}
-A function that takes one optional, nullable string and one optional number as arguments. The = syntax is only for function type declarations.  Specifies optional arguments to a function. 
+A function that takes one optional, nullable string and one optional number as arguments. The = syntax is only for function type declarations.  Specifies optional arguments to a function.
 Function optional arguments (in @param annotations) @param {number=} opt_argument
-An optional parameter of type number.   Specifies that the annotated function accepts an optional argument. 
+An optional parameter of type number.   Specifies that the annotated function accepts an optional argument.
 The ALL type    {*} Indicates that the variable can take on any type.   
 The UNKNOWN type    {?} Indicates that the variable can take on any type, and the compiler should not type-check any uses of it.    
 Types in JavaScript
@@ -964,12 +1012,12 @@ String
 new String('Hello')
 new String(42)
 String object
-boolean 
+boolean
 true
 false
 Boolean(0)
 Boolean value
-Boolean 
+Boolean
 new Boolean(true)
 Boolean object
 RegExp  
@@ -1000,10 +1048,10 @@ Array of Arrays of strings
 Object  
 {}
 {foo: 'abc', bar: 123, baz: null}
-Object.<string> 
+Object.<string>
 {'foo': 'bar'}
 An Object in which the values are strings.
-Object.<number, string> 
+Object.<number, string>
 var obj = {};
 obj[1] = 'bar';
 An Object in which the keys are numbers and the values are strings.
@@ -1028,7 +1076,7 @@ SomeInterface
 function SomeInterface() {}
 
 SomeInterface.prototype.draw = function() {};
-project.MyClass 
+project.MyClass
 /** @constructor */
 project.MyClass = function () {}
 
@@ -1043,7 +1091,7 @@ project.MyEnum = {
 };
 Enumeration
 JSDoc comments on enum values are optional.
-Element 
+Element
 document.createElement('div')
 Elements in the DOM.
 Node    
@@ -1168,7 +1216,8 @@ goog.bind = function(fn, thisObj, var_args) {
 goog.bind(function() { this.someProperty; }, new SomeClass());
 // Generates an undefined this warning.
 goog.bind(function() { this.someProperty; });
-Comments
+
+### Comments
 
 Use JSDoc
 We follow the C++ style for comments in spirit.
@@ -1760,7 +1809,8 @@ You may also see other types of JSDoc annotations in third-party code. These ann
 @since
 @static
 @version
-Providing Dependencies With goog.provide
+
+### Providing Dependencies With goog.provide
 
 Only provide top-level symbols.
 All members defined on a class should be in the same file. So, only top-level classes should be provided in a file that contains multiple members defined on the same class (e.g. enums, inner classes, etc).
@@ -1781,12 +1831,13 @@ Members on namespaces may also be provided:
 goog.provide('foo.bar');
 goog.provide('foo.bar.method');
 goog.provide('foo.bar.CONSTANT');
-Compiling
+
+### Compiling
 
 Required
 Use of JS compilers such as the Closure Compiler is required for all customer-facing code.
 
-Tips and Tricks
+### Tips and Tricks
 
 JavaScript tidbits
 True and False Boolean Expressions
@@ -1919,9 +1970,10 @@ var parentNode = document.getElementById('foo');
 for (var child = parentNode.firstChild; child; child = child.nextSibling) {
   doSomething(child);
 }
-Parting Words
 
-BE CONSISTENT.
+## Parting Words
+
+*BE CONSISTENT.*
 
 If you're editing code, take a few minutes to look at the code around you and determine its style. If they use spaces around all their arithmetic operators, you should too. If their comments have little boxes of hash marks around them, make your comments have little boxes of hash marks around them too.
 
