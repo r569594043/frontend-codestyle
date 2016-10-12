@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Frontend Code Style</title>
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/md.css">
+    <link rel="stylesheet" href="assets/css/github.css">
+    <style>
+        .container {
+            width: 980px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
+        .markdown-body {
+            padding: 45px;
+            word-wrap: break-word;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <article class="markdown-body">
+            <h1 id="google-html-css-style-guide">Google HTML/CSS Style Guide</h1>
+            <h2 id="background">Background</h2>
+            <p>This document defines formatting and style rules for HTML and CSS. It aims at improving collaboration, code quality, and enabling supporting infrastructure. It applies to raw, working files that use HTML and CSS, including GSS files. Tools are free
+                to obfuscate, minify, and compile as long as the general code quality is maintained.</p>
+            <h2 id="general-style-rules">General Style Rules</h2>
+            <h3 id="protocol">Protocol</h3>
+            <p>Omit the protocol from embedded resources.<br>Omit the protocol portion (<code>http:</code>, <code>https:</code>) from URLs pointing to images and other media files, style sheets, and scripts unless the respective files are not available over both
+                protocols.<br>Omitting the protocol—which makes the URL relative—prevents mixed content issues and results in minor file size savings.</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Not recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://www.google.com/js/gweb/analytics/autotrack.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"//www.google.com/js/gweb/analytics/autotrack.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended */</span>
+<span class="hljs-selector-class">.example</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-built_in">url</span>(https://www.google.com/images/example);
+}
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended */</span>
+<span class="hljs-selector-class">.example</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-built_in">url</span>(//www.google.com/images/example);
+}
+</code></pre>
+            <h2 id="general-formatting-rules">General Formatting Rules</h2>
+            <h3 id="indentation">Indentation</h3>
+            <p>Indent by 2 spaces at a time.<br>Don’t use tabs or mix tabs and spaces for indentation.</p>
+            <pre><code class="lang-html"><span class="hljs-section">&lt;ul&gt;</span>
+  <span class="hljs-section">&lt;li&gt;</span><span class="hljs-attribute">Fantastic</span>
+  <span class="hljs-section">&lt;li&gt;</span><span class="hljs-attribute">Great</span>
+<span class="hljs-section">&lt;/ul&gt;</span>
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-selector-class">.example</span> {
+  <span class="hljs-attribute">color</span>: blue;
+}
+</code></pre>
+            <h3 id="capitalization">Capitalization</h3>
+            <p>Use only lowercase.<br>All code has to be lowercase: This applies to HTML element names, attributes, attribute values (unless <code>text/CDATA</code>), CSS selectors, properties, and property values (with the exception of strings).</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Not recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">A</span> <span class="hljs-attr">HREF</span>=<span class="hljs-string">"/"</span>&gt;</span>Home<span class="hljs-tag">&lt;/<span class="hljs-name">A</span>&gt;</span>
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"google.png"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">"Google"</span>&gt;</span>
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended */</span>
+<span class="hljs-attribute">color</span>: <span class="hljs-number">#E5E5E5</span>;
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended */</span>
+<span class="hljs-attribute">color</span>: <span class="hljs-number">#e5e5e5</span>;
+</code></pre>
+            <h3 id="trailing-whitespace">Trailing Whitespace</h3>
+            <p>Remove trailing white spaces.<br>Trailing white spaces are unnecessary and can complicate diffs.</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Not recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>What?_
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Yes please.
+</code></pre>
+            <h2 id="general-meta-rules">General Meta Rules</h2>
+            <h3 id="encoding">Encoding</h3>
+            <p>Use UTF-8 (no BOM).<br>Make sure your editor uses UTF-8 as character encoding, without a byte order mark.<br>Specify the encoding in HTML templates and documents via <code>&lt;meta charset=&quot;utf-8&quot;&gt;</code>. Do not specify the encoding
+                of style sheets as these assume UTF-8.<br>(More on encodings and when and how to specify them can be found in <a href="https://www.w3.org/International/tutorials/tutorial-char-enc/">Handling character encodings in HTML and CSS</a>.)</p>
+            <h3 id="comments">Comments</h3>
+            <p>Explain code as needed, where possible.<br>Use comments to explain code: What does it cover, what purpose does it serve, why is respective solution used or preferred?<br>(This item is optional as it is not deemed a realistic expectation to always
+                demand fully documented code. Mileage may vary heavily for HTML and CSS code and depends on the project’s complexity.)</p>
+            <h3 id="action-items">Action Items</h3>
+            <p>Mark todos and action items with <code>TODO</code>.<br>Highlight todos by using the keyword <code>TODO</code> only, not other common formats like <code>@@</code>.<br>Append a contact (username or mailing list) in parentheses as with the format <code>TODO(contact)</code>.<br>Append
+                action items after a colon as in <code>TODO: action item</code>.</p>
+            <pre><code class="lang-html"><span class="xml"></span><span class="hljs-template-tag">{# <span class="hljs-name">TODO</span>(john.doe): revisit centering #}</span><span class="xml">
+<span class="hljs-tag">&lt;<span class="hljs-name">center</span>&gt;</span>Test<span class="hljs-tag">&lt;/<span class="hljs-name">center</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- <span class="hljs-doctag">TODO:</span> remove optional tags --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Apples<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Oranges<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span>
+</code></pre>
+            <h2 id="html-style-rules">HTML Style Rules</h2>
+            <h3 id="document-type">Document Type</h3>
+            <p>Use HTML5. HTML5 (HTML syntax) is preferred for all HTML documents: <code>&lt;!DOCTYPE html&gt;</code>.<br>(It’s recommended to use HTML, as <code>text/html</code>. Do not use XHTML. XHTML, as <a href="https://hixie.ch/advocacy/xhtml"><code>application/xhtml+xml</code></a>,
+                lacks both browser and infrastructure support and offers less room for optimization than HTML.)<br>Although fine with HTML, do not close void elements, i.e. write <code>&lt;br&gt;</code>, not <code>&lt;br /&gt;</code>.</p>
+            <h3 id="html-validity">HTML Validity</h3>
+            <p>Use valid HTML where possible.<br>Use valid HTML code unless that is not possible due to otherwise unattainable performance goals regarding file size.<br>Use tools such as the <a href="https://validator.w3.org/nu/">W3C HTML validator</a> to test.<br>Using
+                valid HTML is a measurable baseline quality attribute that contributes to learning about technical requirements and constraints, and that ensures proper HTML usage.</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Not recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Test<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">article</span>&gt;</span>This is only a test.
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Recommended --&gt;</span>
+<span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"utf-8"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Test<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">article</span>&gt;</span>This is only a test.<span class="hljs-tag">&lt;/<span class="hljs-name">article</span>&gt;</span>
+</code></pre>
+            <h3 id="semantics">Semantics</h3>
+            <p>Use HTML according to its purpose.<br>Use elements (sometimes incorrectly called “tags”) for what they have been created for. For example, use heading elements for headings, <code>p</code> elements for paragraphs, <code>a</code> elements for anchors,
+                etc.<br>Using HTML according to its purpose is important for accessibility, reuse, and code efficiency reasons.</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Not recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">"goToRecommendations();"</span>&gt;</span>All recommendations<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"recommendations/"</span>&gt;</span>All recommendations<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+</code></pre>
+            <h3 id="multimedia-fallback">Multimedia Fallback</h3>
+            <p>Provide alternative contents for multimedia.<br>For multimedia, such as images, videos, animated objects via <code>canvas</code>, make sure to offer alternative access. For images that means use of meaningful alternative text (<code>alt</code>)
+                and for video and audio transcripts and captions, if available.<br>Providing alternative contents is important for accessibility reasons: A blind user has few cues to tell what an image is about without <code>@alt</code>, and other users may
+                have no way of understanding what video or audio contents are about either.<br>(For images whose <code>alt</code> attributes would introduce redundancy, and for images whose purpose is purely decorative which you cannot immediately use CSS for,
+                use no alternative text, as in <code>alt=&quot;&quot;</code>.)</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Not recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"spreadsheet.png"</span>&gt;</span>
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"spreadsheet.png"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">"Spreadsheet screenshot."</span>&gt;</span>
+</code></pre>
+            <h3 id="separation-of-concerns">Separation of Concerns</h3>
+            <p>Separate structure from presentation from behavior.<br>Strictly keep structure (markup), presentation (styling), and behavior (scripting) apart, and try to keep the interaction between the three to an absolute minimum.<br>That is, make sure documents
+                and templates contain only HTML and HTML that is solely serving structural purposes. Move everything presentational into style sheets, and everything behavioral into scripts.<br>In addition, keep the contact area as small as possible by linking
+                as few style sheets and scripts as possible from documents and templates.<br>Separating structure from presentation from behavior is important for maintenance reasons. It is always more expensive to change HTML documents and templates than it
+                is to update style sheets and scripts.</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Not recommended --&gt;</span>
+<span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>HTML sucks<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"base.css"</span> <span class="hljs-attr">media</span>=<span class="hljs-string">"screen"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"grid.css"</span> <span class="hljs-attr">media</span>=<span class="hljs-string">"screen"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"print.css"</span> <span class="hljs-attr">media</span>=<span class="hljs-string">"print"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"font-size: 1em;"</span>&gt;</span>HTML sucks<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>I’ve read about this on a few sites but now I’m sure:
+  <span class="hljs-tag">&lt;<span class="hljs-name">u</span>&gt;</span>HTML is stupid!!1<span class="hljs-tag">&lt;/<span class="hljs-name">u</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">center</span>&gt;</span>I can’t believe there’s no way to control the styling of
+  my website without doing everything all over again!<span class="hljs-tag">&lt;/<span class="hljs-name">center</span>&gt;</span>
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Recommended --&gt;</span>
+<span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>My first CSS-only redesign<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"default.css"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>My first CSS-only redesign<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>I’ve read about this on a few sites but today I’m actually
+  doing it: separating concerns and avoiding anything in the HTML of
+  my website that is presentational.
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>It’s awesome!
+</code></pre>
+            <h3 id="entity-references">Entity References</h3>
+            <p>Do not use entity references.<br>There is no need to use entity references like <code>&amp;mdash;</code>, <code>&amp;rdquo;</code>, or <code>&amp;#x263a;</code>, assuming the same encoding (UTF-8) is used for files and editors as well as among teams.<br>The
+                only exceptions apply to characters with special meaning in HTML (like <code>&lt;</code> and <code>&amp;</code>) as well as control or “invisible” characters (like no-break spaces).</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Not recommended --&gt;</span>
+The currency symbol for the Euro is &amp;ldquo;&amp;eur;&amp;rdquo;.
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Recommended --&gt;</span>
+The currency symbol for the Euro is “€”.
+</code></pre>
+            <h3 id="optional-tags">Optional Tags</h3>
+            <p>Omit optional tags (optional).<br>For file size optimization and scannability purposes, consider omitting optional tags. The <a href="https://whatwg.org/specs/web-apps/current-work/multipage/syntax.html#syntax-tag-omission">HTML5 specification</a>                defines what tags can be omitted.<br>(This approach may require a grace period to be established as a wider guideline as it’s significantly different from what web developers are typically taught. For consistency and simplicity reasons it’s
+                best served omitting all optional tags, not just a selection.)</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Not recommended --&gt;</span>
+<span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Spending money, spending bytes<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Sic.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Recommended --&gt;</span>
+<span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Saving money, saving bytes<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Qed.
+</code></pre>
+            <h3 id="type-attributes">type Attributes</h3>
+            <p>Omit type attributes for style sheets and scripts.<br>Do not use <code>type</code> attributes for style sheets (unless not using CSS) and scripts (unless not using JavaScript).<br>Specifying <code>type</code> attributes in these contexts is not
+                necessary as HTML5 implies <a href="https://whatwg.org/specs/web-apps/current-work/multipage/semantics.html#attr-style-type"><code>text/css</code></a> and <a href="https://whatwg.org/specs/web-apps/current-work/multipage/scripting-1.html#attr-script-type"><code>text/javascript</code></a>                as defaults. This can be safely done even for older browsers.</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Not recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"//www.google.com/css/maia.css"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/css"</span>&gt;</span>
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"//www.google.com/css/maia.css"</span>&gt;</span>
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Not recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"//www.google.com/js/gweb/analytics/autotrack.js"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"//www.google.com/js/gweb/analytics/autotrack.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+            <h2 id="html-formatting-rules">HTML Formatting Rules</h2>
+            <h3 id="general-formatting">General Formatting</h3>
+            <p>Use a new line for every block, list, or table element, and indent every such child element.<br>Independent of the styling of an element (as CSS allows elements to assume a different role per <code>display</code> property), put every block, list,
+                or table element on a new line.<br>Also, indent them if they are child elements of a block, list, or table element.<br>(If you run into issues around whitespace between list items it’s acceptable to put all <code>li</code> elements in one line.
+                A linter is encouraged to throw a warning instead of an error.)</p>
+            <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">blockquote</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">em</span>&gt;</span>Space<span class="hljs-tag">&lt;/<span class="hljs-name">em</span>&gt;</span>, the final frontier.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">blockquote</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Moe
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Larry
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Curly
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">table</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">thead</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span class="hljs-attr">scope</span>=<span class="hljs-string">"col"</span>&gt;</span>Income
+      <span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span class="hljs-attr">scope</span>=<span class="hljs-string">"col"</span>&gt;</span>Taxes
+  <span class="hljs-tag">&lt;<span class="hljs-name">tbody</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>$ 5.00
+      <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>$ 4.50
+<span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span>
+</code></pre>
+            <h3 id="html-quotation-marks">HTML Quotation Marks</h3>
+            <p>When quoting attributes values, use double quotation marks.<br>Use double (<code>&quot;&quot;</code>) rather than single quotation marks (<code>&#39;&#39;</code>) around attribute values.</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Not recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">'maia-button maia-button-secondary'</span>&gt;</span>Sign in<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+</code></pre>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Recommended --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"maia-button maia-button-secondary"</span>&gt;</span>Sign in<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+</code></pre>
+            <h2 id="css-style-rules">CSS Style Rules</h2>
+            <h3 id="css-validity">CSS Validity</h3>
+            <p>Use valid CSS where possible.<br>Unless dealing with CSS validator bugs or requiring proprietary syntax, use valid CSS code.<br>Use tools such as the <a href="https://jigsaw.w3.org/css-validator/">W3C CSS validator</a> to test.<br>Using valid CSS
+                is a measurable baseline quality attribute that allows to spot CSS code that may not have any effect and can be removed, and that ensures proper CSS usage.</p>
+            <h3 id="id-and-class-naming">ID and Class Naming</h3>
+            <p>Use meaningful or generic ID and class names.<br>Instead of presentational or cryptic names, always use ID and class names that reflect the purpose of the element in question, or that are otherwise generic.<br>Names that are specific and reflect
+                the purpose of the element should be preferred as these are most understandable and the least likely to change.<br>Generic names are simply a fallback for elements that have no particular or no meaning different from their siblings. They are
+                typically needed as “helpers.”<br>Using functional or generic names reduces the probability of unnecessary document or template changes.</p>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended: meaningless */</span>
+<span class="hljs-selector-id">#yee-1901</span> {}
+
+<span class="hljs-comment">/* Not recommended: presentational */</span>
+<span class="hljs-selector-class">.button-green</span> {}
+<span class="hljs-selector-class">.clear</span> {}
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended: specific */</span>
+<span class="hljs-selector-id">#gallery</span> {}
+<span class="hljs-selector-id">#login</span> {}
+<span class="hljs-selector-class">.video</span> {}
+
+<span class="hljs-comment">/* Recommended: generic */</span>
+<span class="hljs-selector-class">.aux</span> {}
+<span class="hljs-selector-class">.alt</span> {}
+</code></pre>
+            <h3 id="id-and-class-name-style">ID and Class Name Style</h3>
+            <p>Use ID and class names that are as short as possible but as long as necessary.<br>Try to convey what an ID or class is about while being as brief as possible.<br>Using ID and class names this way contributes to acceptable levels of understandability
+                and code efficiency.</p>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended */</span>
+<span class="hljs-selector-id">#navigation</span> {}
+<span class="hljs-selector-class">.atr</span> {}
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended */</span>
+<span class="hljs-selector-id">#nav</span> {}
+<span class="hljs-selector-class">.author</span> {}
+</code></pre>
+            <h3 id="type-selectors">Type Selectors</h3>
+            <p>Avoid qualifying ID and class names with type selectors.<br>Unless necessary (for example with helper classes), do not use element names in conjunction with IDs or classes.<br>Avoiding unnecessary ancestor selectors is useful for <a href="http://www.stevesouders.com/blog/2009/06/18/simplifying-css-selectors/">performance reasons</a>.</p>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended */</span>
+ul<span class="hljs-selector-id">#example</span> {}
+<span class="hljs-selector-tag">div</span><span class="hljs-selector-class">.error</span> {}
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended */</span>
+<span class="hljs-selector-id">#example</span> {}
+<span class="hljs-selector-class">.error</span> {}
+</code></pre>
+            <h3 id="shorthand-properties">Shorthand Properties</h3>
+            <p>Use shorthand properties where possible.<br>CSS offers a variety of <a href="https://www.w3.org/TR/CSS21/about.html#shorthand">shorthand</a> properties (like <code>font</code>) that should be used whenever possible, even in cases where only one
+                value is explicitly set.<br>Using shorthand properties is useful for code efficiency and understandability.</p>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended */</span>
+<span class="hljs-attribute">border-top-style</span>: none;
+<span class="hljs-attribute">font-family</span>: palatino, georgia, serif;
+<span class="hljs-attribute">font-size</span>: <span class="hljs-number">100%</span>;
+<span class="hljs-attribute">line-height</span>: <span class="hljs-number">1.6</span>;
+<span class="hljs-attribute">padding-bottom</span>: <span class="hljs-number">2em</span>;
+<span class="hljs-attribute">padding-left</span>: <span class="hljs-number">1em</span>;
+<span class="hljs-attribute">padding-right</span>: <span class="hljs-number">1em</span>;
+<span class="hljs-attribute">padding-top</span>: <span class="hljs-number">0</span>;
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended */</span>
+<span class="hljs-attribute">border-top</span>: <span class="hljs-number">0</span>;
+<span class="hljs-attribute">font</span>: <span class="hljs-number">100%</span>/<span class="hljs-number">1.6</span> palatino, georgia, serif;
+<span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span> <span class="hljs-number">1em</span> <span class="hljs-number">2em</span>;
+</code></pre>
+            <h3 id="0-and-units">0 and Units</h3>
+            <p>Omit unit specification after “0” values.<br>Do not use units after <code>0</code> values unless they are required.</p>
+            <pre><code class="lang-css"><span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;
+<span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;
+</code></pre>
+            <h3 id="leading-0s">Leading 0s</h3>
+            <p>Omit leading “0”s in values.<br>Do not use put <code>0</code>s in front of values or lengths between -1 and 1.</p>
+            <pre><code class="lang-css"><span class="hljs-attribute">font-size</span>: .<span class="hljs-number">8em</span>;
+</code></pre>
+            <h3 id="hexadecimal-notation">Hexadecimal Notation</h3>
+            <p>Use 3 character hexadecimal notation where possible.<br>For color values that permit it, 3 character hexadecimal notation is shorter and more succinct.</p>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended */</span>
+<span class="hljs-attribute">color</span>: <span class="hljs-number">#eebbcc</span>;
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended */</span>
+<span class="hljs-attribute">color</span>: <span class="hljs-number">#ebc</span>;
+</code></pre>
+            <h3 id="prefixes">Prefixes</h3>
+            <p>Prefix selectors with an application-specific prefix (optional).<br>In large projects as well as for code that gets embedded in other projects or on external sites use prefixes (as namespaces) for ID and class names. Use short, unique identifiers
+                followed by a dash.<br>Using namespaces helps preventing naming conflicts and can make maintenance easier, for example in search and replace operations.</p>
+            <pre><code class="lang-css"><span class="hljs-selector-class">.adw-help</span> {} <span class="hljs-comment">/* AdWords */</span>
+<span class="hljs-selector-id">#maia-note</span> {} <span class="hljs-comment">/* Maia */</span>
+</code></pre>
+            <h3 id="id-and-class-name-delimiters">ID and Class Name Delimiters</h3>
+            <p>Separate words in ID and class names by a hyphen.<br>Do not concatenate words and abbreviations in selectors by any characters (including none at all) other than hyphens, in order to improve understanding and scannability.</p>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended: does not separate the words “demo” and “image” */</span>
+<span class="hljs-selector-class">.demoimage</span> {}
+
+<span class="hljs-comment">/* Not recommended: uses underscore instead of hyphen */</span>
+<span class="hljs-selector-class">.error_status</span> {}
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended */</span>
+<span class="hljs-selector-id">#video-id</span> {}
+<span class="hljs-selector-class">.ads-sample</span> {}
+</code></pre>
+            <h3 id="hacks">Hacks</h3>
+            <p>Avoid user agent detection as well as CSS “hacks”—try a different approach first.<br>It’s tempting to address styling differences over user agent detection or special CSS filters, workarounds, and hacks. Both approaches should be considered last
+                resort in order to achieve and maintain an efficient and manageable code base. Put another way, giving detection and hacks a free pass will hurt projects in the long run as projects tend to take the way of least resistance. That is, allowing
+                and making it easy to use detection and hacks means using detection and hacks more frequently—and more frequently is too frequently.</p>
+            <h2 id="css-formatting-rules">CSS Formatting Rules</h2>
+            <h3 id="declaration-order">Declaration Order</h3>
+            <p>Alphabetize declarations.<br>Put declarations in alphabetical order in order to achieve consistent code in a way that is easy to remember and maintain.<br>Ignore vendor-specific prefixes for sorting purposes. However, multiple vendor-specific prefixes
+                for a certain CSS property should be kept sorted (e.g. -moz prefix comes before -webkit).</p>
+            <pre><code class="lang-css"><span class="hljs-attribute">background</span>: fuchsia;
+<span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid;
+-moz-<span class="hljs-attribute">border-radius</span>: <span class="hljs-number">4px</span>;
+-webkit-<span class="hljs-attribute">border-radius</span>: <span class="hljs-number">4px</span>;
+<span class="hljs-attribute">border-radius</span>: <span class="hljs-number">4px</span>;
+<span class="hljs-attribute">color</span>: black;
+<span class="hljs-attribute">text-align</span>: center;
+<span class="hljs-attribute">text-indent</span>: <span class="hljs-number">2em</span>;
+</code></pre>
+            <h3 id="block-content-indentation">Block Content Indentation</h3>
+            <p>Indent all block content.<br>Indent all <a href="https://www.w3.org/TR/CSS21/syndata.html#block">block content</a>, that is rules within rules as well as declarations, so to reflect hierarchy and improve understanding. </p>
+            <pre><code class="lang-css">@<span class="hljs-keyword">media</span> screen, projection {
+
+  <span class="hljs-selector-tag">html</span> {
+    <span class="hljs-attribute">background</span>: <span class="hljs-number">#fff</span>;
+    <span class="hljs-attribute">color</span>: <span class="hljs-number">#444</span>;
+  }
+
+}
+</code></pre>
+            <h3 id="declaration-stops">Declaration Stops</h3>
+            <p>Use a semicolon after every declaration.<br>End every declaration with a semicolon for consistency and extensibility reasons.</p>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended */</span>
+<span class="hljs-selector-class">.test</span> {
+  <span class="hljs-attribute">display</span>: block;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>
+}
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended */</span>
+<span class="hljs-selector-class">.test</span> {
+  <span class="hljs-attribute">display</span>: block;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;
+}
+</code></pre>
+            <h3 id="property-name-stops">Property Name Stops</h3>
+            <p>Use a space after a property name’s colon.<br>Always use a single space between property and value (but no space between property and colon) for consistency reasons.</p>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended */</span>
+<span class="hljs-selector-tag">h3</span> {
+  <span class="hljs-attribute">font-weight</span>:bold;
+}
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended */</span>
+<span class="hljs-selector-tag">h3</span> {
+  <span class="hljs-attribute">font-weight</span>: bold;
+}
+</code></pre>
+            <h3 id="declaration-block-separation">Declaration Block Separation</h3>
+            <p>Use a space between the last selector and the <a href="https://www.w3.org/TR/CSS21/syndata.html#rule-sets">declaration block</a>.<br>Always use a single space between the last selector and the opening brace that begins the declaration block.<br>The
+                opening brace should be on the same line as the last selector in a given rule.</p>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended: missing space */</span>
+<span class="hljs-selector-id">#video</span>{
+  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">1em</span>;
+}
+
+<span class="hljs-comment">/* Not recommended: unnecessary line break */</span>
+<span class="hljs-selector-id">#video</span>
+{
+  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">1em</span>;
+}
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended */</span>
+<span class="hljs-selector-id">#video</span> {
+  <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">1em</span>;
+}
+</code></pre>
+            <h3 id="selector-and-declaration-separation">Selector and Declaration Separation</h3>
+            <p>Separate selectors and declarations by new lines.<br>Always start a new line for each selector and declaration.</p>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended */</span>
+<span class="hljs-selector-tag">a</span><span class="hljs-selector-pseudo">:focus</span>, <span class="hljs-selector-tag">a</span><span class="hljs-selector-pseudo">:active</span> {
+  <span class="hljs-attribute">position</span>: relative; <span class="hljs-attribute">top</span>: <span class="hljs-number">1px</span>;
+}
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended */</span>
+<span class="hljs-selector-tag">h1</span>,
+<span class="hljs-selector-tag">h2</span>,
+<span class="hljs-selector-tag">h3</span> {
+  <span class="hljs-attribute">font-weight</span>: normal;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">1.2</span>;
+}
+</code></pre>
+            <h3 id="rule-separation">Rule Separation</h3>
+            <p>Separate rules by new lines.<br>Always put a blank line (two line breaks) between rules.</p>
+            <pre><code class="lang-css"><span class="hljs-selector-tag">html</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#fff</span>;
+}
+
+<span class="hljs-selector-tag">body</span> {
+  <span class="hljs-attribute">margin</span>: auto;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">50%</span>;
+}
+</code></pre>
+            <h3 id="css-quotation-marks">CSS Quotation Marks</h3>
+            <p>Use single quotation marks for attribute selectors and property values.<br>Use single (<code>&#39;&#39;</code>) rather than double (<code>&quot;&quot;</code>) quotation marks for attribute selectors or property values. Do not use quotation marks
+                in URI values (<code>url()</code>).<br>Exception: If you do need to use the <code>@charset</code> rule, use double quotation marks—<a href="https://www.w3.org/TR/CSS21/syndata.html#charset">single quotation marks are not permitted</a>.</p>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Not recommended */</span>
+@<span class="hljs-keyword">import</span> url(<span class="hljs-string">"//www.google.com/css/maia.css"</span>);
+
+<span class="hljs-selector-tag">html</span> {
+  <span class="hljs-attribute">font-family</span>: <span class="hljs-string">"open sans"</span>, arial, sans-serif;
+}
+</code></pre>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Recommended */</span>
+@<span class="hljs-keyword">import</span> url(//www.google.com/css/maia.css);
+
+<span class="hljs-selector-tag">html</span> {
+  <span class="hljs-attribute">font-family</span>: <span class="hljs-string">'open sans'</span>, arial, sans-serif;
+}
+</code></pre>
+            <h2 id="css-meta-rules">CSS Meta Rules</h2>
+            <h3 id="section-comments">Section Comments</h3>
+            <p>Group sections by a section comment (optional).<br>If possible, group style sheet sections together by using comments. Separate sections with new lines.</p>
+            <pre><code class="lang-css"><span class="hljs-comment">/* Header */</span>
+
+<span class="hljs-selector-id">#adw-header</span> {}
+
+<span class="hljs-comment">/* Footer */</span>
+
+<span class="hljs-selector-id">#adw-footer</span> {}
+
+<span class="hljs-comment">/* Gallery */</span>
+
+<span class="hljs-selector-class">.adw-gallery</span> {}
+</code></pre>
+            <h2 id="parting-words">Parting Words</h2>
+            <p><em>Be consistent.</em><br>If you’re editing code, take a few minutes to look at the code around you and determine its style. If they use spaces around all their arithmetic operators, you should too. If their comments have little boxes of hash marks
+                around them, make your comments have little boxes of hash marks around them too.<br>The point of having style guidelines is to have a common vocabulary of coding so people can concentrate on what you’re saying rather than on how you’re saying
+                it. We present global style rules here so people know the vocabulary, but local style is also important. If code you add to a file looks drastically different from the existing code around it, it throws readers out of their rhythm when they
+                go to read it. Avoid this.</p>
+        </article>
+    </div>
+</body>
+
+</html>
