@@ -15,8 +15,10 @@
 
 ## 请使用小写元素名
 
-HTML5 允许在元素名中使用混合大小写字母。  
+HTML5 允许在元素名中使用混合大小写字母。
+
 我们推荐使用小写元素名：
+
 * 混合大小写名称并不好
 * 开发者习惯使用小写名（比如在 XHTML 中）
 * 小写更起来更纯净
@@ -24,21 +26,21 @@ HTML5 允许在元素名中使用混合大小写字母。
 
 Bad:
 ```html
-<SECTION> 
+<SECTION>
   <p>This is a paragraph.</p>
 </SECTION>
 ```
 
 Very Bad:
 ```html
-<Section> 
+<Section>
   <p>This is a paragraph.</p>
 </SECTION>
 ```
 
 Good:
 ```html
-<section> 
+<section>
   <p>This is a paragraph.</p>
 </section>
 ```
@@ -46,7 +48,8 @@ Good:
 
 ## 关闭所有 HTML 元素
 
-在 HTML5 中，您不必关闭所有元素（例如 `<p>` 元素）。  
+在 HTML5 中，您不必关闭所有元素（例如 `<p>` 元素）。
+
 我们建议关闭所有 HTML 元素：
 
 Bad:
@@ -67,7 +70,8 @@ Good:
 
 
 ## 关闭空的 HTML 元素
-在 HTML5 中，关闭空元素是可选的。  
+在 HTML5 中，关闭空元素是可选的。
+
 允许这样：
 ```html
 <meta charset="utf-8">
@@ -77,8 +81,10 @@ Good:
 <meta charset="utf-8" />
 ```
 ## 使用小写属性名
-HTML5 允许大小写混合的属性名。  
-我们建议使用小写属性名：  
+HTML5 允许大小写混合的属性名。
+
+我们建议使用小写属性名：
+
 * 混合属性名并不好
 * 开发者习惯于使用小写属性名（比如在 XHTML 中）
 * 小写属性名看情况更纯净
@@ -97,13 +103,15 @@ Good:
 
 ## 属性值加引号
 
-HTML5 允许不加引号的属性值。  
+HTML5 允许不加引号的属性值。
+
 我们推荐属性值加引号：
+
 * 混合样式绝对不好
 * 加引号的值更易阅读
 * 如果属性值包含空格，则必须使用引号
 
-Very bad:
+Very bad:  
 这个属性值无效，因为值中包含空格：
 ```html
 <table class=table striped>
@@ -150,15 +158,19 @@ Good:
 
 ## 避免长代码行
 
-当使用 HTML 编辑器时，通过左右滚动来阅读 HTML 代码很不方便。  
+当使用 HTML 编辑器时，通过左右滚动来阅读 HTML 代码很不方便。
+
 请尽量避免代码行超过 80 个字符。
 
 
 ## 空行和缩进
 
-请勿毫无理由地增加空行。  
-为了提高可读性，请增加空行来分隔大型或逻辑代码块。  
-为了提高可读性，请增加两个空格的缩进。请勿使用 TAB。  
+请勿毫无理由地增加空行。
+
+为了提高可读性，请增加空行来分隔大型或逻辑代码块。
+
+为了提高可读性，请增加两个空格的缩进。请勿使用 TAB。
+
 请勿使用没有必要的空行和缩进。没有必要在短的和相关项目之间使用空行，也没有必要缩进每个元素：
 
 Unnecessary:
@@ -224,7 +236,8 @@ List Example:
 
 ## 省略 `<html>` 和 `<body>`？
 
-在 HTML5 标准中，能够省略 `<html>` 标签和 `<body>` 标签。  
+在 HTML5 标准中，能够省略 `<html>` 标签和 `<body>` 标签。
+
 以下代码作为 HTML5 进行验证：
 
 Example:
@@ -246,15 +259,19 @@ Example:
 <html lang="en-US">
 ```
 
-对于可访问应用程序（屏幕阅读器）和搜索引擎，声明语言很重要。  
-省略 `<html>` 或 `<body>` 可令 DOM 和 XML 软件崩溃。  
+对于可访问应用程序（屏幕阅读器）和搜索引擎，声明语言很重要。
+
+省略 `<html>` 或 `<body>` 可令 DOM 和 XML 软件崩溃。
+
 省略 `<body>` 会在老式浏览器（IE9）中产生错误。
 
 
 ## 省略 `<head>`？
 
-在 HTML5 标准中，`<head>` 标签也能够被省略。  
-默认地，浏览器会把 `<body>` 之前的所有元素添加到默认的 `<head>` 元素。  
+在 HTML5 标准中，`<head>` 标签也能够被省略。
+
+默认地，浏览器会把 `<body>` 之前的所有元素添加到默认的 `<head>` 元素。
+
 通过省略 `<head>` 标签，您能够降低 HTML 的复杂性：
 
 ```html
@@ -305,7 +322,7 @@ Example:
 长注释，跨越多行，应该通过 <!-- 和 --> 在独立的行中书写：
 
 ```html
-<!-- 
+<!--
   This is a long comment example. This is a long comment example.
   This is a long comment example. This is a long comment example.
 -->
@@ -360,6 +377,7 @@ body {
 ## 通过 JavaScript 访问 HTML 元素
 
 使用“不整洁”的 HTML 样式的后果，可能会导致 JavaScript 错误。
+
 这两个 JavaScript 语句会产生不同的结果：
 
 Example:
@@ -371,15 +389,21 @@ var obj = getElementById("demo")
 
 ## 使用小写文件名
 
-大多数 web 服务器（Apache、Unix）对文件名的大小写敏感：不能以 london.jpg 访问 London.jpg。  
-其他 web 服务器（微软，IIS）对大小写不敏感：能够以 london.jpg 或 London.jpg 访问 London.jpg。  
-如果使用混合大小写，那么您必须保持高度的一致性。  
-如果您从对大小写不敏感的服务器转到一台对大小写敏感的服务器上，这些小错误将破坏您的网站。  
+大多数 web 服务器（Apache、Unix）对文件名的大小写敏感：不能以 london.jpg 访问 London.jpg。
+
+其他 web 服务器（微软，IIS）对大小写不敏感：能够以 london.jpg 或 London.jpg 访问 London.jpg。
+
+如果使用混合大小写，那么您必须保持高度的一致性。
+
+如果您从对大小写不敏感的服务器转到一台对大小写敏感的服务器上，这些小错误将破坏您的网站。
+
 为了避免这些问题，请始终使用小写文件名（如果可以的话）。
 
 
 ## 文件扩展名
 
-HTML 文件名应该使用扩展名 .html（而不是 .htm）。  
-CSS 文件应该使用扩展名 .css。  
-JavaScript 文件应该使用扩展名 .js。
+HTML 文件名应该使用扩展名 **.html**（而不是 .htm）。
+
+CSS 文件应该使用扩展名 **.css**。
+
+JavaScript 文件应该使用扩展名 **.js**。

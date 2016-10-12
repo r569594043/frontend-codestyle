@@ -8,8 +8,10 @@ This document defines formatting and style rules for HTML and CSS. It aims at im
 
 ### Protocol
 
-Omit the protocol from embedded resources.  
-Omit the protocol portion (`http:`, `https:`) from URLs pointing to images and other media files, style sheets, and scripts unless the respective files are not available over both protocols.  
+Omit the protocol from embedded resources.
+
+Omit the protocol portion (`http:`, `https:`) from URLs pointing to images and other media files, style sheets, and scripts unless the respective files are not available over both protocols.
+
 Omitting the protocol—which makes the URL relative—prevents mixed content issues and results in minor file size savings.
 
 ```html
@@ -37,7 +39,8 @@ Omitting the protocol—which makes the URL relative—prevents mixed content is
 
 ### Indentation
 
-Indent by 2 spaces at a time.  
+Indent by 2 spaces at a time.
+
 Don’t use tabs or mix tabs and spaces for indentation.
 ```html
 <ul>
@@ -53,7 +56,8 @@ Don’t use tabs or mix tabs and spaces for indentation.
 
 ### Capitalization
 
-Use only lowercase.  
+Use only lowercase.
+
 All code has to be lowercase: This applies to HTML element names, attributes, attribute values (unless `text/CDATA`), CSS selectors, properties, and property values (with the exception of strings).
 
 ```html
@@ -75,7 +79,8 @@ color: #e5e5e5;
 
 ### Trailing Whitespace
 
-Remove trailing white spaces.  
+Remove trailing white spaces.
+
 Trailing white spaces are unnecessary and can complicate diffs.
 
 ```html
@@ -92,22 +97,30 @@ Trailing white spaces are unnecessary and can complicate diffs.
 
 ### Encoding
 
-Use UTF-8 (no BOM).  
-Make sure your editor uses UTF-8 as character encoding, without a byte order mark.  
-Specify the encoding in HTML templates and documents via `<meta charset="utf-8">`. Do not specify the encoding of style sheets as these assume UTF-8.  
+Use UTF-8 (no BOM).
+
+Make sure your editor uses UTF-8 as character encoding, without a byte order mark.
+
+Specify the encoding in HTML templates and documents via `<meta charset="utf-8">`. Do not specify the encoding of style sheets as these assume UTF-8.
+
 (More on encodings and when and how to specify them can be found in [Handling character encodings in HTML and CSS](https://www.w3.org/International/tutorials/tutorial-char-enc/).)
 
 ### Comments
 
-Explain code as needed, where possible.  
-Use comments to explain code: What does it cover, what purpose does it serve, why is respective solution used or preferred?  
+Explain code as needed, where possible.
+
+Use comments to explain code: What does it cover, what purpose does it serve, why is respective solution used or preferred?
+
 (This item is optional as it is not deemed a realistic expectation to always demand fully documented code. Mileage may vary heavily for HTML and CSS code and depends on the project’s complexity.)
 
 ### Action Items
 
-Mark todos and action items with `TODO`.  
-Highlight todos by using the keyword `TODO` only, not other common formats like `@@`.  
-Append a contact (username or mailing list) in parentheses as with the format `TODO(contact)`.  
+Mark todos and action items with `TODO`.
+
+Highlight todos by using the keyword `TODO` only, not other common formats like `@@`.
+
+Append a contact (username or mailing list) in parentheses as with the format `TODO(contact)`.
+
 Append action items after a colon as in `TODO: action item`.
 ```html
 {# TODO(john.doe): revisit centering #}
@@ -124,15 +137,21 @@ Append action items after a colon as in `TODO: action item`.
 ### Document Type
 
 Use HTML5.
-HTML5 (HTML syntax) is preferred for all HTML documents: `<!DOCTYPE html>`.  
-(It’s recommended to use HTML, as `text/html`. Do not use XHTML. XHTML, as [`application/xhtml+xml`](https://hixie.ch/advocacy/xhtml), lacks both browser and infrastructure support and offers less room for optimization than HTML.)  
+
+HTML5 (HTML syntax) is preferred for all HTML documents: `<!DOCTYPE html>`.
+
+(It’s recommended to use HTML, as `text/html`. Do not use XHTML. XHTML, as [`application/xhtml+xml`](https://hixie.ch/advocacy/xhtml), lacks both browser and infrastructure support and offers less room for optimization than HTML.)
+
 Although fine with HTML, do not close void elements, i.e. write `<br>`, not `<br />`.
 
 ### HTML Validity
 
-Use valid HTML where possible.  
-Use valid HTML code unless that is not possible due to otherwise unattainable performance goals regarding file size.  
-Use tools such as the [W3C HTML validator](https://validator.w3.org/nu/) to test.  
+Use valid HTML where possible.
+
+Use valid HTML code unless that is not possible due to otherwise unattainable performance goals regarding file size.
+
+Use tools such as the [W3C HTML validator](https://validator.w3.org/nu/) to test.
+
 Using valid HTML is a measurable baseline quality attribute that contributes to learning about technical requirements and constraints, and that ensures proper HTML usage.
 
 ```html
@@ -151,8 +170,10 @@ Using valid HTML is a measurable baseline quality attribute that contributes to 
 
 ### Semantics
 
-Use HTML according to its purpose.  
-Use elements (sometimes incorrectly called “tags”) for what they have been created for. For example, use heading elements for headings, `p` elements for paragraphs, `a` elements for anchors, etc.  
+Use HTML according to its purpose.
+
+Use elements (sometimes incorrectly called “tags”) for what they have been created for. For example, use heading elements for headings, `p` elements for paragraphs, `a` elements for anchors, etc.
+
 Using HTML according to its purpose is important for accessibility, reuse, and code efficiency reasons.
 
 ```html
@@ -167,9 +188,12 @@ Using HTML according to its purpose is important for accessibility, reuse, and c
 
 ### Multimedia Fallback
 
-Provide alternative contents for multimedia.  
-For multimedia, such as images, videos, animated objects via `canvas`, make sure to offer alternative access. For images that means use of meaningful alternative text (`alt`) and for video and audio transcripts and captions, if available.  
-Providing alternative contents is important for accessibility reasons: A blind user has few cues to tell what an image is about without `@alt`, and other users may have no way of understanding what video or audio contents are about either.  
+Provide alternative contents for multimedia.
+
+For multimedia, such as images, videos, animated objects via `canvas`, make sure to offer alternative access. For images that means use of meaningful alternative text (`alt`) and for video and audio transcripts and captions, if available.
+
+Providing alternative contents is important for accessibility reasons: A blind user has few cues to tell what an image is about without `@alt`, and other users may have no way of understanding what video or audio contents are about either.
+
 (For images whose `alt` attributes would introduce redundancy, and for images whose purpose is purely decorative which you cannot immediately use CSS for, use no alternative text, as in `alt=""`.)
 
 ```html
@@ -184,10 +208,14 @@ Providing alternative contents is important for accessibility reasons: A blind u
 
 ### Separation of Concerns
 
-Separate structure from presentation from behavior.  
-Strictly keep structure (markup), presentation (styling), and behavior (scripting) apart, and try to keep the interaction between the three to an absolute minimum.  
-That is, make sure documents and templates contain only HTML and HTML that is solely serving structural purposes. Move everything presentational into style sheets, and everything behavioral into scripts.  
-In addition, keep the contact area as small as possible by linking as few style sheets and scripts as possible from documents and templates.  
+Separate structure from presentation from behavior.
+
+Strictly keep structure (markup), presentation (styling), and behavior (scripting) apart, and try to keep the interaction between the three to an absolute minimum.
+
+That is, make sure documents and templates contain only HTML and HTML that is solely serving structural purposes. Move everything presentational into style sheets, and everything behavioral into scripts.
+
+In addition, keep the contact area as small as possible by linking as few style sheets and scripts as possible from documents and templates.
+
 Separating structure from presentation from behavior is important for maintenance reasons. It is always more expensive to change HTML documents and templates than it is to update style sheets and scripts.
 
 ```html
@@ -218,8 +246,10 @@ Separating structure from presentation from behavior is important for maintenanc
 
 ### Entity References
 
-Do not use entity references.  
-There is no need to use entity references like `&mdash;`, `&rdquo;`, or `&#x263a;`, assuming the same encoding (UTF-8) is used for files and editors as well as among teams.  
+Do not use entity references.
+
+There is no need to use entity references like `&mdash;`, `&rdquo;`, or `&#x263a;`, assuming the same encoding (UTF-8) is used for files and editors as well as among teams.
+
 The only exceptions apply to characters with special meaning in HTML (like `<` and `&`) as well as control or “invisible” characters (like no-break spaces).
 
 ```html
@@ -233,8 +263,10 @@ The currency symbol for the Euro is “€”.
 
 ### Optional Tags
 
-Omit optional tags (optional).  
-For file size optimization and scannability purposes, consider omitting optional tags. The [HTML5 specification](https://whatwg.org/specs/web-apps/current-work/multipage/syntax.html#syntax-tag-omission) defines what tags can be omitted.  
+Omit optional tags (optional).
+
+For file size optimization and scannability purposes, consider omitting optional tags. The [HTML5 specification](https://whatwg.org/specs/web-apps/current-work/multipage/syntax.html#syntax-tag-omission) defines what tags can be omitted.
+
 (This approach may require a grace period to be established as a wider guideline as it’s significantly different from what web developers are typically taught. For consistency and simplicity reasons it’s best served omitting all optional tags, not just a selection.)
 
 ```html
@@ -258,8 +290,10 @@ For file size optimization and scannability purposes, consider omitting optional
 
 ### type Attributes
 
-Omit type attributes for style sheets and scripts.  
-Do not use `type` attributes for style sheets (unless not using CSS) and scripts (unless not using JavaScript).  
+Omit type attributes for style sheets and scripts.
+
+Do not use `type` attributes for style sheets (unless not using CSS) and scripts (unless not using JavaScript).
+
 Specifying `type` attributes in these contexts is not necessary as HTML5 implies [`text/css`](https://whatwg.org/specs/web-apps/current-work/multipage/semantics.html#attr-style-type) and [`text/javascript`](https://whatwg.org/specs/web-apps/current-work/multipage/scripting-1.html#attr-script-type) as defaults. This can be safely done even for older browsers.
 
 ```html
@@ -283,9 +317,12 @@ Specifying `type` attributes in these contexts is not necessary as HTML5 implies
 
 ### General Formatting
 
-Use a new line for every block, list, or table element, and indent every such child element.  
-Independent of the styling of an element (as CSS allows elements to assume a different role per `display` property), put every block, list, or table element on a new line.  
-Also, indent them if they are child elements of a block, list, or table element.  
+Use a new line for every block, list, or table element, and indent every such child element.
+
+Independent of the styling of an element (as CSS allows elements to assume a different role per `display` property), put every block, list, or table element on a new line.
+
+Also, indent them if they are child elements of a block, list, or table element.
+
 (If you run into issues around whitespace between list items it’s acceptable to put all `li` elements in one line. A linter is encouraged to throw a warning instead of an error.)
 
 ```html
@@ -311,7 +348,8 @@ Also, indent them if they are child elements of a block, list, or table element.
 
 ### HTML Quotation Marks
 
-When quoting attributes values, use double quotation marks.  
+When quoting attributes values, use double quotation marks.
+
 Use double (`""`) rather than single quotation marks (`''`) around attribute values.
 
 ```html
@@ -327,17 +365,24 @@ Use double (`""`) rather than single quotation marks (`''`) around attribute val
 
 ### CSS Validity
 
-Use valid CSS where possible.  
-Unless dealing with CSS validator bugs or requiring proprietary syntax, use valid CSS code.  
-Use tools such as the [W3C CSS validator](https://jigsaw.w3.org/css-validator/) to test.  
+Use valid CSS where possible.
+
+Unless dealing with CSS validator bugs or requiring proprietary syntax, use valid CSS code.
+
+Use tools such as the [W3C CSS validator](https://jigsaw.w3.org/css-validator/) to test.
+
 Using valid CSS is a measurable baseline quality attribute that allows to spot CSS code that may not have any effect and can be removed, and that ensures proper CSS usage.
 
 ### ID and Class Naming
 
-Use meaningful or generic ID and class names.  
-Instead of presentational or cryptic names, always use ID and class names that reflect the purpose of the element in question, or that are otherwise generic.  
-Names that are specific and reflect the purpose of the element should be preferred as these are most understandable and the least likely to change.  
-Generic names are simply a fallback for elements that have no particular or no meaning different from their siblings. They are typically needed as “helpers.”  
+Use meaningful or generic ID and class names.
+
+Instead of presentational or cryptic names, always use ID and class names that reflect the purpose of the element in question, or that are otherwise generic.
+
+Names that are specific and reflect the purpose of the element should be preferred as these are most understandable and the least likely to change.
+
+Generic names are simply a fallback for elements that have no particular or no meaning different from their siblings. They are typically needed as “helpers.”
+
 Using functional or generic names reduces the probability of unnecessary document or template changes.
 
 ```css
@@ -361,8 +406,10 @@ Using functional or generic names reduces the probability of unnecessary documen
 
 ### ID and Class Name Style
 
-Use ID and class names that are as short as possible but as long as necessary.  
-Try to convey what an ID or class is about while being as brief as possible.  
+Use ID and class names that are as short as possible but as long as necessary.
+
+Try to convey what an ID or class is about while being as brief as possible.
+
 Using ID and class names this way contributes to acceptable levels of understandability and code efficiency.
 
 ```css
@@ -377,8 +424,10 @@ Using ID and class names this way contributes to acceptable levels of understand
 ```
 ### Type Selectors
 
-Avoid qualifying ID and class names with type selectors.  
-Unless necessary (for example with helper classes), do not use element names in conjunction with IDs or classes.  
+Avoid qualifying ID and class names with type selectors.
+
+Unless necessary (for example with helper classes), do not use element names in conjunction with IDs or classes.
+
 Avoiding unnecessary ancestor selectors is useful for [performance reasons](http://www.stevesouders.com/blog/2009/06/18/simplifying-css-selectors/).
 
 ```css
@@ -394,8 +443,10 @@ div.error {}
 
 ### Shorthand Properties
 
-Use shorthand properties where possible.  
-CSS offers a variety of [shorthand](https://www.w3.org/TR/CSS21/about.html#shorthand) properties (like `font`) that should be used whenever possible, even in cases where only one value is explicitly set.  
+Use shorthand properties where possible.
+
+CSS offers a variety of [shorthand](https://www.w3.org/TR/CSS21/about.html#shorthand) properties (like `font`) that should be used whenever possible, even in cases where only one value is explicitly set.
+
 Using shorthand properties is useful for code efficiency and understandability.
 
 ```css
@@ -418,7 +469,8 @@ padding: 0 1em 2em;
 
 ### 0 and Units
 
-Omit unit specification after “0” values.  
+Omit unit specification after “0” values.
+
 Do not use units after `0` values unless they are required.
 
 ```css
@@ -428,7 +480,8 @@ padding: 0;
 
 ### Leading 0s
 
-Omit leading “0”s in values.  
+Omit leading “0”s in values.
+
 Do not use put `0`s in front of values or lengths between -1 and 1.
 
 ```css
@@ -437,7 +490,8 @@ font-size: .8em;
 
 ### Hexadecimal Notation
 
-Use 3 character hexadecimal notation where possible.  
+Use 3 character hexadecimal notation where possible.
+
 For color values that permit it, 3 character hexadecimal notation is shorter and more succinct.
 
 ```css
@@ -451,8 +505,10 @@ color: #ebc;
 
 ### Prefixes
 
-Prefix selectors with an application-specific prefix (optional).  
-In large projects as well as for code that gets embedded in other projects or on external sites use prefixes (as namespaces) for ID and class names. Use short, unique identifiers followed by a dash.  
+Prefix selectors with an application-specific prefix (optional).
+
+In large projects as well as for code that gets embedded in other projects or on external sites use prefixes (as namespaces) for ID and class names. Use short, unique identifiers followed by a dash.
+
 Using namespaces helps preventing naming conflicts and can make maintenance easier, for example in search and replace operations.
 
 ```css
@@ -462,7 +518,8 @@ Using namespaces helps preventing naming conflicts and can make maintenance easi
 
 ### ID and Class Name Delimiters
 
-Separate words in ID and class names by a hyphen.  
+Separate words in ID and class names by a hyphen.
+
 Do not concatenate words and abbreviations in selectors by any characters (including none at all) other than hyphens, in order to improve understanding and scannability.
 
 ```css
@@ -480,15 +537,18 @@ Do not concatenate words and abbreviations in selectors by any characters (inclu
 
 ### Hacks
 
-Avoid user agent detection as well as CSS “hacks”—try a different approach first.  
+Avoid user agent detection as well as CSS “hacks”—try a different approach first.
+
 It’s tempting to address styling differences over user agent detection or special CSS filters, workarounds, and hacks. Both approaches should be considered last resort in order to achieve and maintain an efficient and manageable code base. Put another way, giving detection and hacks a free pass will hurt projects in the long run as projects tend to take the way of least resistance. That is, allowing and making it easy to use detection and hacks means using detection and hacks more frequently—and more frequently is too frequently.
 
 ## CSS Formatting Rules
 
 ### Declaration Order
 
-Alphabetize declarations.  
-Put declarations in alphabetical order in order to achieve consistent code in a way that is easy to remember and maintain.  
+Alphabetize declarations.
+
+Put declarations in alphabetical order in order to achieve consistent code in a way that is easy to remember and maintain.
+
 Ignore vendor-specific prefixes for sorting purposes. However, multiple vendor-specific prefixes for a certain CSS property should be kept sorted (e.g. -moz prefix comes before -webkit).
 
 ```css
@@ -504,7 +564,8 @@ text-indent: 2em;
 
 ### Block Content Indentation
 
-Indent all block content.  
+Indent all block content.
+
 Indent all [block content](https://www.w3.org/TR/CSS21/syndata.html#block), that is rules within rules as well as declarations, so to reflect hierarchy and improve understanding.  
 
 ```css
@@ -520,7 +581,8 @@ Indent all [block content](https://www.w3.org/TR/CSS21/syndata.html#block), that
 
 ### Declaration Stops
 
-Use a semicolon after every declaration.  
+Use a semicolon after every declaration.
+
 End every declaration with a semicolon for consistency and extensibility reasons.
 
 ```css
@@ -541,7 +603,8 @@ End every declaration with a semicolon for consistency and extensibility reasons
 
 ### Property Name Stops
 
-Use a space after a property name’s colon.  
+Use a space after a property name’s colon.
+
 Always use a single space between property and value (but no space between property and colon) for consistency reasons.
 
 ```css
@@ -559,8 +622,10 @@ h3 {
 
 ### Declaration Block Separation
 
-Use a space between the last selector and the [declaration block](https://www.w3.org/TR/CSS21/syndata.html#rule-sets).  
-Always use a single space between the last selector and the opening brace that begins the declaration block.  
+Use a space between the last selector and the [declaration block](https://www.w3.org/TR/CSS21/syndata.html#rule-sets).
+
+Always use a single space between the last selector and the opening brace that begins the declaration block.
+
 The opening brace should be on the same line as the last selector in a given rule.
 
 ```css
@@ -584,7 +649,8 @@ The opening brace should be on the same line as the last selector in a given rul
 
 ### Selector and Declaration Separation
 
-Separate selectors and declarations by new lines.  
+Separate selectors and declarations by new lines.
+
 Always start a new line for each selector and declaration.
 ```css
 /* Not recommended */
@@ -604,7 +670,8 @@ h3 {
 
 ### Rule Separation
 
-Separate rules by new lines.  
+Separate rules by new lines.
+
 Always put a blank line (two line breaks) between rules.
 
 ```css
@@ -620,8 +687,10 @@ body {
 
 ### CSS Quotation Marks
 
-Use single quotation marks for attribute selectors and property values.  
-Use single (`''`) rather than double (`""`) quotation marks for attribute selectors or property values. Do not use quotation marks in URI values (`url()`).  
+Use single quotation marks for attribute selectors and property values.
+
+Use single (`''`) rather than double (`""`) quotation marks for attribute selectors or property values. Do not use quotation marks in URI values (`url()`).
+
 Exception: If you do need to use the `@charset` rule, use double quotation marks—[single quotation marks are not permitted](https://www.w3.org/TR/CSS21/syndata.html#charset).
 
 ```css
@@ -645,7 +714,8 @@ html {
 
 ### Section Comments
 
-Group sections by a section comment (optional).  
+Group sections by a section comment (optional).
+
 If possible, group style sheet sections together by using comments. Separate sections with new lines.
 
 ```css
@@ -664,6 +734,8 @@ If possible, group style sheet sections together by using comments. Separate sec
 
 ## Parting Words
 
-*Be consistent.*  
-If you’re editing code, take a few minutes to look at the code around you and determine its style. If they use spaces around all their arithmetic operators, you should too. If their comments have little boxes of hash marks around them, make your comments have little boxes of hash marks around them too.  
+*Be consistent.*
+
+If you’re editing code, take a few minutes to look at the code around you and determine its style. If they use spaces around all their arithmetic operators, you should too. If their comments have little boxes of hash marks around them, make your comments have little boxes of hash marks around them too.
+
 The point of having style guidelines is to have a common vocabulary of coding so people can concentrate on what you’re saying rather than on how you’re saying it. We present global style rules here so people know the vocabulary, but local style is also important. If code you add to a file looks drastically different from the existing code around it, it throws readers out of their rhythm when they go to read it. Avoid this.

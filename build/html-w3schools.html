@@ -42,7 +42,8 @@
             <blockquote>
                 <p>Always keep your code tidy, clean, and well-formed.</p>
             </blockquote>
-            <p>Use Correct Document Type Always declare the document type as the first line in your document:</p>
+            <h2 id="use-correct-document-type">Use Correct Document Type</h2>
+            <p>Always declare the document type as the first line in your document:</p>
             <pre><code class="lang-html"><span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
 </code></pre>
             <p>If you want consistency with lower case tags, you can use:</p>
@@ -55,22 +56,25 @@
                 <li>Mixing uppercase and lowercase names is bad</li>
                 <li>Developers normally use lowercase names (as in XHTML)</li>
                 <li>Lowercase look cleaner</li>
-                <li>Lowercase are easier to write Bad:
-                    <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">SECTION</span>&gt;</span> 
-<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is a paragraph.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                <li>Lowercase are easier to write</li>
+            </ul>
+            <p>Bad:</p>
+            <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">SECTION</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is a paragraph.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">SECTION</span>&gt;</span>
-</code></pre> Very Bad:<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">Section</span>&gt;</span> 
-<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is a paragraph.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</code></pre>
+            <p>Very Bad:</p>
+            <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">Section</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is a paragraph.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">SECTION</span>&gt;</span>
-</code></pre> Good:
-                    <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">section</span>&gt;</span> 
-<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is a paragraph.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</code></pre>
+            <p>Good:</p>
+            <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">section</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is a paragraph.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span>
 </code></pre>
-                    <h2 id="close-all-html-elements">Close All HTML Elements</h2>
-                    In HTML5, you don&#39;t have to close all elements (for example the
-                    <p> element).</li>
-            </ul>
+            <h2 id="close-all-html-elements">Close All HTML Elements</h2>
+            <p>In HTML5, you don&#39;t have to close all elements (for example the &lt;p&gt; element).</p>
             <p>We recommend closing all HTML elements.</p>
             <p>Bad:</p>
             <pre><code class="lang-html"><span class="hljs-symbol">&lt;section&gt;</span>
@@ -94,238 +98,237 @@
 </code></pre>
             <p>However, the closing slash (/) is REQUIRED in XHTML and XML.</p>
             <p>If you expect XML software to access your page, it is a good idea to keep the closing slash!</p>
-            <p>Use Lower Case Attribute Names HTML5 allows mixing uppercase and lowercase letters in attribute names.</p>
+            <h2 id="use-lower-case-attribute-names">Use Lower Case Attribute Names</h2>
+            <p>HTML5 allows mixing uppercase and lowercase letters in attribute names.</p>
             <p>We recommend using lowercase attribute names because:</p>
             <ul>
                 <li>Mixing uppercase and lowercase names is bad</li>
                 <li>Developers normally use lowercase names (as in XHTML)</li>
                 <li>Lowercase look cleaner</li>
-                <li>Lowercase are easier to write Bad:
-                    <pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-keyword">CLASS</span>=<span class="hljs-string">"menu"</span>&gt;
-</code></pre> Good:
-                    <pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"menu"</span>&gt;
-</code></pre>
-                    <h2 id="quote-attribute-values">Quote Attribute Values</h2>
-                    HTML5 allows attribute values without quotes.</li>
+                <li>Lowercase are easier to write</li>
             </ul>
+            <p>Bad:</p>
+            <pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-keyword">CLASS</span>=<span class="hljs-string">"menu"</span>&gt;
+</code></pre>
+            <p>Good:</p>
+            <pre><code class="lang-html">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"menu"</span>&gt;
+</code></pre>
+            <h2 id="quote-attribute-values">Quote Attribute Values</h2>
+            <p>HTML5 allows attribute values without quotes.</p>
             <p>We recommend quoting attribute values because:</p>
             <ul>
                 <li>Mixing uppercase and lowercase values is bad</li>
                 <li>Quoted values are easier to read</li>
-                <li>You MUST use quotes if the value contains spaces Very bad: This will not work, because the value contains spaces:<pre><code>```<span class="hljs-selector-tag">html</span>
-&lt;<span class="hljs-selector-tag">table</span> class=<span class="hljs-selector-tag">table</span> striped&gt;
-</code></pre>Bad:<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">class</span>=<span class="hljs-string">striped</span>&gt;</span>
-</code></pre> Good:
-                    <pre><code class="lang-html">&lt;table <span class="hljs-keyword">class</span>=<span class="hljs-string">"striped"</span>&gt;
-</code></pre>
-                    <h2 id="image-attributes">Image Attributes</h2>
-                    Always add the &quot;alt&quot; attribute to images. This attribute is important when the image for some reason cannot be displayed. Also, always define image width and height. It reduces flickering because the browser can reserve space for the image before
-                    loading.</li>
+                <li>You MUST use quotes if the value contains spaces</li>
             </ul>
+            <p>Very bad:<br>This will not work, because the value contains spaces:</p>
+            <pre><code class="lang-html">&lt;<span class="hljs-keyword">table</span> class=<span class="hljs-keyword">table</span> <span class="hljs-comment">striped&gt;</span>
+</code></pre>
+            <p>Bad:</p>
+            <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">class</span>=<span class="hljs-string">striped</span>&gt;</span>
+</code></pre>
+            <p>Good:</p>
+            <pre><code class="lang-html">&lt;table <span class="hljs-keyword">class</span>=<span class="hljs-string">"striped"</span>&gt;
+</code></pre>
+            <h2 id="image-attributes">Image Attributes</h2>
+            <p>Always add the &quot;alt&quot; attribute to images. This attribute is important when the image for some reason cannot be displayed. Also, always define image width and height. It reduces flickering because the browser can reserve space for the image
+                before loading.</p>
             <p>Bad:</p>
             <pre><code class="lang-html">&lt;<span class="hljs-selector-tag">img</span> src=<span class="hljs-string">"html5.gif"</span>&gt;
 </code></pre>
             <p>Good:</p>
             <pre><code class="lang-html">&lt;<span class="hljs-selector-tag">img</span> src=<span class="hljs-string">"html5.gif"</span> alt=<span class="hljs-string">"HTML5"</span> style=<span class="hljs-string">"width:128px;height:128px"</span>&gt;
 </code></pre>
-            <p>Spaces and Equal Signs HTML5 allows spaces around equal signs. But space-less is easier to read, and groups entities better together.</p>
+            <h2 id="spaces-and-equal-signs">Spaces and Equal Signs</h2>
+            <p>HTML5 allows spaces around equal signs. But space-less is easier to read, and groups entities better together.</p>
             <p>Bad:</p>
-            <p>
-                <link rel="stylesheet" href="styles.css"> Good:
-            </p>
-            <p>
-                <link rel="stylesheet" href="styles.css"> Avoid Long Code Lines When using an HTML editor, it is inconvenient to scroll right and left to read the HTML code.</p>
+            <pre><code class="lang-html">&lt;link <span class="hljs-attr">rel</span> = <span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span> = <span class="hljs-string">"styles.css"</span>&gt;
+</code></pre>
+            <p>Good:</p>
+            <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"styles.css"</span>&gt;</span>
+</code></pre>
+            <h2 id="avoid-long-code-lines">Avoid Long Code Lines</h2>
+            <p>When using an HTML editor, it is inconvenient to scroll right and left to read the HTML code.</p>
             <p>Try to avoid code lines longer than 80 characters.</p>
-            <p>Blank Lines and Indentation Do not add blank lines without a reason.</p>
+            <h2 id="blank-lines-and-indentation">Blank Lines and Indentation</h2>
+            <p>Do not add blank lines without a reason.</p>
             <p>For readability, add blank lines to separate large or logical code blocks.</p>
             <p>For readability, add two spaces of indentation. Do not use the tab key.</p>
             <p>Do not use unnecessary blank lines and indentation. It is not necessary to indent every element:</p>
             <p>Unnecessary:</p>
+            <pre><code class="lang-html">&lt;body&gt;
 
-            <body>
+  &lt;h1&gt;Famous Cities&lt;/h1&gt;
 
-                <h1>Famous Cities</h1>
+  &lt;h2&gt;Tokyo&lt;/h2&gt;
 
-                <h2>Tokyo</h2>
+  &lt;p&gt;
+    Tokyo is <span class="hljs-keyword">the</span> capital <span class="hljs-keyword">of</span> Japan, <span class="hljs-keyword">the</span> center <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> Greater Tokyo Area,
+    <span class="hljs-keyword">and</span> <span class="hljs-keyword">the</span> most populous metropolitan area <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> world.
+    It is <span class="hljs-keyword">the</span> seat <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> Japanese government <span class="hljs-keyword">and</span> <span class="hljs-keyword">the</span> Imperial Palace,
+    <span class="hljs-keyword">and</span> <span class="hljs-keyword">the</span> home <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> Japanese Imperial Family.
+  &lt;/p&gt;
 
-                <p>
-                    Tokyo is the capital of Japan, the center of the Greater Tokyo Area, and the most populous metropolitan area in the world. It is the seat of the Japanese government and the Imperial Palace, and the home of the Japanese Imperial Family.
-                </p>
+&lt;/body&gt;
+</code></pre>
+            <p>Better:</p>
+            <pre><code class="lang-html">&lt;body&gt;
 
-            </body>
-            Better:
+&lt;h1&gt;Famous Cities&lt;/h1&gt;
 
-            <body>
+&lt;h2&gt;Tokyo&lt;/h2&gt;
+&lt;p&gt;Tokyo is <span class="hljs-keyword">the</span> capital <span class="hljs-keyword">of</span> Japan, <span class="hljs-keyword">the</span> center <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> Greater Tokyo Area,
+<span class="hljs-keyword">and</span> <span class="hljs-keyword">the</span> most populous metropolitan area <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> world.
+It is <span class="hljs-keyword">the</span> seat <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> Japanese government <span class="hljs-keyword">and</span> <span class="hljs-keyword">the</span> Imperial Palace,
+<span class="hljs-keyword">and</span> <span class="hljs-keyword">the</span> home <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> Japanese Imperial Family.&lt;/p&gt;
 
-                <h1>Famous Cities</h1>
+&lt;/body&gt;
+</code></pre>
+            <p>Table Example:</p>
+            <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">table</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Name<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Description<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>A<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>Description of A<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>B<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>Description of B<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span>
+</code></pre>
+            <p>List Example:</p>
+            <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">ol</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>London<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Paris<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Tokyo<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ol</span>&gt;</span>
+</code></pre>
+            <h2 id="omitting-lt-html-gt-and-lt-body-gt-">Omitting &lt;html&gt; and &lt;body&gt;?</h2>
+            <p>In the HTML5 standard, the &lt;html&gt; tag and the &lt;body&gt; tag can be omitted.</p>
+            <p>The following code will validate as HTML5:</p>
+            <p>Example</p>
+            <pre><code class="lang-html"><span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Page Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
 
-                <h2>Tokyo</h2>
-                <p>Tokyo is the capital of Japan, the center of the Greater Tokyo Area, and the most populous metropolitan area in the world. It is the seat of the Japanese government and the Imperial Palace, and the home of the Japanese Imperial Family.</p>
+<span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>This is a heading<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is a paragraph.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</code></pre>
+            <p><strong>We do not recommend omitting the &lt;html&gt; and &lt;body&gt; tags.</strong></p>
+            <p>The &lt;html&gt; element is the document root. It is the recommended place for specifying the page language:</p>
+            <pre><code class="lang-html"><span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en-US"</span>&gt;</span>
+</code></pre>
+            <p>Declaring a language is important for accessibility applications (screen readers) and search engines.</p>
+            <p>Omitting &lt;html&gt; or &lt;body&gt; can crash DOM and XML software.</p>
+            <p>Omitting &lt;body&gt; can produce errors in older browsers (IE9).</p>
+            <h2 id="omitting-lt-head-gt-">Omitting &lt;head&gt;?</h2>
+            <p>In the HTML5 standard, the &lt;head&gt; tag can also be omitted.</p>
+            <p>By default, browsers will add all elements before &lt;body&gt;, to a default &lt;head&gt; element.</p>
+            <p>You can reduce the complexity of HTML, by omitting the &lt;head&gt; tag:</p>
+            <p>Example</p>
+            <pre><code class="lang-html"><span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Page Title<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
 
-            </body>
-            Table Example:
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                </tr>
-                <tr>
-                    <td>A</td>
-                    <td>Description of A</td>
-                </tr>
-                <tr>
-                    <td>B</td>
-                    <td>Description of B</td>
-                </tr>
-            </table>
-            List Example:
-            <ol>
-                <li>London</li>
-                <li>Paris</li>
-                <li>Tokyo</li>
-            </ol>
-            Omitting
-            <html> and
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>This is a heading<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is a paragraph.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
 
-            <body>? In the HTML5 standard, the
-                <html> tag and the
-
-                <body> tag can be omitted. The following code will validate as HTML5: Example &lt;!DOCTYPE html&gt;
-
-                    <head>
-                        <title>Page Title</title>
-                    </head>
-
-                    <h1>This is a heading</h1>
-                    <p>This is a paragraph.</p>
-                    Try it Yourself » We do not recommend omitting the
-                    <html> and
-
-                    <body> tags. The
-                        <html> element is the document root. It is the recommended place for specifying the page language: &lt;!DOCTYPE html&gt;
-                        <html lang="en-US">
-                        Declaring a language is important for accessibility applications (screen readers) and search engines. Omitting
-                        <html> or
-
-                        <body> can crash DOM and XML software. Omitting
-
-                            <body> can produce errors in older browsers (IE9). Omitting
-
-                                <head>? In the HTML5 standard, the
-
-                                    <head> tag can also be omitted. By default, browsers will add all elements before
-
-                                        <body>, to a default
-
-                                            <head> element. You can reduce the complexity of HTML, by omitting the
-
-                                                <head> tag: Example &lt;!DOCTYPE html&gt;
-                                                    <html>
-                                                    <title>Page Title</title>
-
-                                                    <body>
-                                                        <h1>This is a heading</h1>
-                                                        <p>This is a paragraph.</p>
-                                                    </body>
-
-                                                    <p>
-
-                                                    </html>
-                                                    Try it Yourself » We do not recommend omitting the
-
-                                                    <head> tag.</p>
-                                                        <p>Omitting tags is unfamiliar to web developers. It needs time to be established as a guideline.</p>
-                                                        <p>Meta Data The
-                                                            <title> element is required in HTML5. Make the title as meaningful as possible:</p>
-                                                        <p>
-                                                            <title>HTML5 Syntax and Coding Style</title>
-                                                            To ensure proper interpretation, and correct search engine indexing, both the language and the character encoding should be defined as early as possible in a document:</p>
-                                                        <p>&lt;!DOCTYPE html&gt;</p>
-                                                        <p>
-                                                            <html lang="en-US">
-                                                        </p>
-                                                        <p>
-
-                                                            <head>
-                                                                <meta charset="UTF-8">
-                                                                <title>HTML5 Syntax and Coding Style</title>
-                                                            </head>
-                                                            HTML Comments Short comments should be written on one line, like this:</p>
-                                                        <!-- This is a comment -->
-                                                        <p>Comments that spans more than one line, should be written like this:</p>
-                                                        <!-- 
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+            <p><strong>We do not recommend omitting the &lt;head&gt; tag.</strong></p>
+            <blockquote>
+                <p>Omitting tags is unfamiliar to web developers. It needs time to be established as a guideline.</p>
+            </blockquote>
+            <h2 id="meta-data">Meta Data</h2>
+            <p>The &lt;title&gt; element is required in HTML5. Make the title as meaningful as possible:</p>
+            <pre><code class="lang-html">&lt;<span class="hljs-built_in">title</span>&gt;HTML5 Syntax <span class="hljs-keyword">and</span> Coding Style&lt;/<span class="hljs-built_in">title</span>&gt;
+</code></pre>
+            <p>To ensure proper interpretation, and correct search engine indexing, both the language and the character encoding should be defined as early as possible in a document:</p>
+            <pre><code class="lang-html"><span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en-US"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"UTF-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>HTML5 Syntax and Coding Style<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+</code></pre>
+            <h2 id="html-comments">HTML Comments</h2>
+            <p>Short comments should be written on one line, like this:</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!-- This is a comment --&gt;</span>
+</code></pre>
+            <p>Comments that spans more than one line, should be written like this:</p>
+            <pre><code class="lang-html"><span class="hljs-comment">&lt;!--
   This is a long comment example. This is a long comment example.
   This is a long comment example. This is a long comment example.
--->
-                                                        <p>Long comments are easier to observe if they are indented two spaces.</p>
-                                                        <p>Style Sheets Use simple syntax for linking to style sheets (the type attribute is not necessary):</p>
-                                                        <p>
-                                                            <link rel="stylesheet" href="styles.css"> Short rules can be written compressed, on one line, like this:</p>
-                                                        <p>p.intro {font-family: Verdana; font-size: 16em;} Long rules should be written over multiple lines:</p>
-                                                        <p>body { background-color: lightgrey; font-family: &quot;Arial Black&quot;, Helvetica, sans-serif; font-size: 16em; color: black; } Place the opening bracket on the same line as the selector Use one space
-                                                            before the opening bracket Use two spaces of indentation Use semicolon after each property-value pair, including the last Only use quotes around values if the value contains spaces Place the closing
-                                                            bracket on a new line, without leading spaces Avoid lines over 80 characters Loading JavaScript in HTML Use simple syntax for loading external scripts (the type attribute is not necessary):</p>
-                                                        <p>
-                                                            <script src="myscript.js">
-                                                                Accessing HTML Elements with JavaScript
-                                                                A consequence of using & quot;
-                                                                untidy & quot;
-                                                                HTML styles, might result in JavaScript errors. < /p> <
-                                                                    p > These two JavaScript statements will produce different results: < /p> <
-                                                                    p > Example
-                                                                var obj = getElementById( & quot; Demo & quot;) < /p> <
-                                                                    p >
-                                                                    var obj = getElementById( & quot; demo & quot;)
-                                                                Try it Yourself»
-                                                                Visit the JavaScript Style Guide. < /p> <
-                                                                    p > Use Lower Case File Names
-                                                                Some web servers(Apache, Unix) are
-                                                                case sensitive about file names:
-                                                                    & quot;
-                                                                    london.jpg & quot;
-                                                                    cannot be accessed as & quot;
-                                                                    London.jpg & quot;. < /p> <
-                                                                    p > Other web servers(Microsoft, IIS) are not
-                                                                case sensitive:
-                                                                    & quot;
-                                                                    london.jpg & quot;
-                                                                    can be accessed as & quot;
-                                                                    London.jpg & quot;
-                                                                    or & quot;
-                                                                    london.jpg & quot;. < /p> <
-                                                                    p > If you use a mix of upper and lower
-                                                                case, you have to be extremely consistent. < /p> <
-                                                                p > If you move from a
-                                                                case insensitive to a
-                                                                case sensitive server, even small errors will
-                                                                break your web! < /p> <
-                                                                p > To avoid these problems, always use lower
-                                                                case file names. < /p> <
-                                                                p > File Extensions
-                                                                HTML files should have a.html or.htm extension. < /p> <
-                                                                p > CSS files should have a.css extension. < /p> <
-                                                                p > JavaScript files should have a.js extension. < /p> <
-                                                                p > Differences Between.htm and.html
-                                                                There is no difference between the.htm and.html extensions.Both will be treated as HTML by any web browser or web server. < /p> <
-                                                                p > The differences are cultural:
-                                                                    < /p> <
-                                                                    p > .htm & quot;
-                                                                    smells & quot;
-                                                                    of early DOS systems where the system limited the extensions to 3 characters. < /p> <
-                                                                        p > .html & quot;
-                                                                    smells & quot;
-                                                                    of Unix operating systems that did not have this limitation. < /p> <
-                                                                        p > Technical Differences
-                                                                    When a URL does not specify a filename(like < a href = "http://www.w3schools.com/css/" > http: //www.w3schools.com/css/</a>), the server returns a default filename. Common default filenames are index.html, index.htm, default.html, and default.htm.</p>
-                                                                            <
-                                                                            p > If your server is configured only with & quot; index.html & quot; as
-                                                                            default filename, your file must be named & quot; index.html & quot;, not & quot; index.htm. & quot; < /p> <
-                                                                            p > However, servers can be configured with more than one
-                                                                            default filename, and normally you can set up as many
-                                                                            default filenames as needed. < /p> <
-                                                                            p > Anyway, the full extension
-                                                                            for HTML files is.html, and there & #39;s no reason it should not be used.</p>
+--&gt;</span>
+</code></pre>
+            <p>Long comments are easier to observe if they are indented two spaces.</p>
+            <h2 id="style-sheets">Style Sheets</h2>
+            <p>Use simple syntax for linking to style sheets (the type attribute is not necessary):</p>
+            <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"styles.css"</span>&gt;</span>
+</code></pre>
+            <p>Short rules can be written compressed, on one line, like this:</p>
+            <pre><code class="lang-css"><span class="hljs-selector-tag">p</span><span class="hljs-selector-class">.intro</span> {<span class="hljs-attribute">font-family</span>: Verdana; <span class="hljs-attribute">font-size</span>: <span class="hljs-number">16em</span>;}
+</code></pre>
+            <p>Long rules should be written over multiple lines:</p>
+            <pre><code class="lang-css"><span class="hljs-selector-tag">body</span> {
+  <span class="hljs-attribute">background-color</span>: lightgrey;
+  <span class="hljs-attribute">font-family</span>: <span class="hljs-string">"Arial Black"</span>, Helvetica, sans-serif;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">16em</span>;
+  <span class="hljs-attribute">color</span>: black;
+}
+</code></pre>
+            <ul>
+                <li>Place the opening bracket on the same line as the selector</li>
+                <li>Use one space before the opening bracket</li>
+                <li>Use two spaces of indentation</li>
+                <li>Use semicolon after each property-value pair, including the last</li>
+                <li>Only use quotes around values if the value contains spaces</li>
+                <li>Place the closing bracket on a new line, without leading spaces</li>
+                <li>Avoid lines over 80 characters</li>
+            </ul>
+            <h2 id="loading-javascript-in-html">Loading JavaScript in HTML</h2>
+            <p>Use simple syntax for loading external scripts (the type attribute is not necessary):</p>
+            <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"myscript.js"</span>&gt;</span><span class="undefined"></span>
+</code></pre>
+            <h2 id="accessing-html-elements-with-javascript">Accessing HTML Elements with JavaScript</h2>
+            <p>A consequence of using &quot;untidy&quot; HTML styles, might result in JavaScript errors.</p>
+            <p>These two JavaScript statements will produce different results:</p>
+            <p>Example</p>
+            <pre><code class="lang-javascript"><span class="hljs-selector-tag">var</span> obj = getElementById(<span class="hljs-string">"Demo"</span>)
+
+<span class="hljs-selector-tag">var</span> obj = getElementById(<span class="hljs-string">"demo"</span>)
+</code></pre>
+            <p><a href="#">Visit the JavaScript Style Guide</a>.</p>
+            <h2 id="use-lower-case-file-names">Use Lower Case File Names</h2>
+            <p>Some web servers (Apache, Unix) are case sensitive about file names: &quot;london.jpg&quot; cannot be accessed as &quot;London.jpg&quot;.</p>
+            <p>Other web servers (Microsoft, IIS) are not case sensitive: &quot;london.jpg&quot; can be accessed as &quot;London.jpg&quot; or &quot;london.jpg&quot;.</p>
+            <p>If you use a mix of upper and lower case, you have to be extremely consistent.</p>
+            <p>If you move from a case insensitive to a case sensitive server, even small errors will break your web!</p>
+            <p>To avoid these problems, always use lower case file names.</p>
+            <h2 id="file-extensions">File Extensions</h2>
+            <p>HTML files should have a <strong>.html</strong> or <strong>.htm</strong> extension.</p>
+            <p>CSS files should have a <strong>.css</strong> extension.</p>
+            <p>JavaScript files should have a <strong>.js</strong> extension.</p>
+            <h2 id="differences-between-htm-and-html">Differences Between .htm and .html</h2>
+            <p>There is no difference between the .htm and .html extensions. Both will be treated as HTML by any web browser or web server.</p>
+            <p>The differences are cultural:</p>
+            <p>.htm &quot;smells&quot; of early DOS systems where the system limited the extensions to 3 characters.</p>
+            <p>.html &quot;smells&quot; of Unix operating systems that did not have this limitation.</p>
+            <h2 id="technical-differences">Technical Differences</h2>
+            <p>When a URL does not specify a filename (like <a href="http://www.w3schools.com/css/">http://www.w3schools.com/css/</a>), the server returns a default filename. Common default filenames are index.html, index.htm, default.html, and default.htm.</p>
+            <p>If your server is configured only with &quot;index.html&quot; as default filename, your file must be named &quot;index.html&quot;, not &quot;index.htm.&quot;</p>
+            <p>However, servers can be configured with more than one default filename, and normally you can set up as many default filenames as needed.</p>
+            <p>Anyway, the full extension for HTML files is .html, and there&#39;s no reason it should not be used.</p>
         </article>
     </div>
 </body>
+
 </html>
