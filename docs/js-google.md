@@ -309,24 +309,26 @@ Answer: anything. The local variable `x` could be clobbered by a property of `fo
 ### this
 
 Only in object constructors, methods, and in setting up closures
-The semantics of this can be tricky. At times it refers to the global object (in most places), the scope of the caller (in eval), a node in the DOM tree (when attached using an event handler HTML attribute), a newly created object (in a constructor), or some other object (if function was call()ed or apply()ed).
+
+The semantics of `this` can be tricky. At times it refers to the global object (in most places), the scope of the caller (in `eval`), a node in the DOM tree (when attached using an event handler HTML attribute), a newly created object (in a constructor), or some other object (if function was `call()`ed or `apply()`ed).
 
 Because this is so easy to get wrong, limit its use to those places where it is required:
 
-in constructors
-in methods of objects (including in the creation of closures)
+* in constructors
+* in methods of objects (including in the creation of closures)
 
 ### for-in loop
 
 Only for iterating over keys in an object/map/hash
-for-in loops are often incorrectly used to loop over the elements in an Array. This is however very error prone because it does not loop from 0 to length - 1 but over all the present keys in the object and its prototype chain. Here are a few cases where it fails:
 
+`for-in` loops are often incorrectly used to loop over the elements in an `Array`. This is however very error prone because it does not loop from `0` to `length - 1` but over all the present keys in the object and its prototype chain. Here are a few cases where it fails:
+```javascript
 function printArray(arr) {
   for (var key in arr) {
     print(arr[key]);
   }
 }
-
+```
 printArray([0,1,2,3]);  // This works.
 
 var a = new Array(10);
