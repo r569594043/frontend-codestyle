@@ -273,280 +273,711 @@ D.prototype.method = <span class="hljs-function"><span class="hljs-keyword">func
             <p>Only for iterating over keys in an object/map/hash</p>
             <p><code>for-in</code> loops are often incorrectly used to loop over the elements in an <code>Array</code>. This is however very error prone because it does not loop from <code>0</code> to <code>length - 1</code> but over all the present keys in the
                 object and its prototype chain. Here are a few cases where it fails:</p>
-            <pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">printArray</span><span class="hljs-params">(arr)</span> </span>{
+            <pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">printArray</span>(<span class="hljs-params">arr</span>) </span>{
   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> arr) {
     print(arr[key]);
   }
 }
+
+printArray([<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]);  <span class="hljs-comment">// This works.</span>
+
+<span class="hljs-keyword">var</span> a = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-number">10</span>);
+printArray(a);  <span class="hljs-comment">// This is wrong.</span>
+
+a = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">'*'</span>);
+printArray(a);  <span class="hljs-comment">// This is wrong.</span>
+
+a = [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>];
+a.buhu = <span class="hljs-string">'wine'</span>;
+printArray(a);  <span class="hljs-comment">// This is wrong again.</span>
+
+a = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>;
+a[<span class="hljs-number">3</span>] = <span class="hljs-number">3</span>;
+printArray(a);  <span class="hljs-comment">// This is wrong again.</span>
 </code></pre>
-            <p>printArray([0,1,2,3]); // This works.</p>
-            <p>var a = new Array(10); printArray(a); // This is wrong.</p>
-            <p>a = document.getElementsByTagName(&#39;*&#39;); printArray(a); // This is wrong.</p>
-            <p>a = [0,1,2,3]; a.buhu = &#39;wine&#39;; printArray(a); // This is wrong again.</p>
-            <p>a = new Array; a[3] = 3; printArray(a); // This is wrong again. Always use normal for loops when using arrays.</p>
-            <p>function printArray(arr) { var l = arr.length; for (var i = 0; i &lt; l; i++) { print(arr[i]); } }
-            </p>
+            <p>Always use normal for loops when using arrays.</p>
+            <pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">printArray</span><span class="hljs-params">(arr)</span> {</span>
+  var l = arr.<span class="hljs-built_in">length</span>;
+  <span class="hljs-keyword">for</span> (var <span class="hljs-built_in">i</span> = <span class="hljs-number">0</span>; <span class="hljs-built_in">i</span> &lt; l; <span class="hljs-built_in">i</span>++) {
+    print(arr[i]);
+  }
+}
+</code></pre>
             <h3 id="associative-arrays">Associative Arrays</h3>
-            <p>Never use Array as a map/hash/associative array Associative Arrays are not allowed... or more precisely you are not allowed to use non number indexes for arrays. If you need a map/hash use Object instead of Array in these cases because the features
-                that you want are actually features of Object and not of Array. Array just happens to extend Object (like any other object in JS and therefore you might as well have used Date, RegExp or String).</p>
+            <p>Never use <code>Array</code> as a map/hash/associative array Associative <code>Array</code>s are not allowed... or more precisely you are not allowed to use non number indexes for arrays. If you need a map/hash use <code>Object</code> instead of
+                <code>Array</code> in these cases because the features that you want are actually features of <code>Object</code> and not of <code>Array</code>. Array just happens to extend <code>Object</code> (like any other object in JS and therefore you
+                might as well have used <code>Date</code>, <code>RegExp</code> or <code>String</code>).</p>
             <h3 id="multiline-string-literals">Multiline string literals</h3>
-            <p>No Do not do this:</p>
-            <p>var myString = &#39;A rather long string of English text, an error message \ actually that just keeps going and going -- an error \ message to make the Energizer bunny blush (right through \ those Schwarzenegger shades)! Where was I? Oh yes, \ you\&#39;ve
-                got an error and all the extraneous whitespace is \ just gravy. Have a nice day.&#39;; The whitespace at the beginning of each line can&#39;t be safely stripped at compile time; whitespace after the slash will result in tricky errors.</p>
+            <p>No</p>
+            <p>Do not do this:</p>
+            <pre><code class="lang-javascript">var myString = 'A rather long <span class="hljs-built_in">string</span> <span class="hljs-keyword">of</span> English <span class="hljs-built_in">text</span>, an <span class="hljs-keyword">error</span> message \
+                actually <span class="hljs-keyword">that</span> just keeps going <span class="hljs-keyword">and</span> going <span class="hljs-comment">-- an error \</span>
+                message <span class="hljs-keyword">to</span> make <span class="hljs-keyword">the</span> Energizer bunny blush (right <span class="hljs-keyword">through</span> \
+                those Schwarzenegger shades)! Where was I? Oh yes, \
+                you\'ve got an <span class="hljs-keyword">error</span> <span class="hljs-keyword">and</span> all <span class="hljs-keyword">the</span> extraneous whitespace <span class="hljs-keyword">is</span> \
+                just gravy.  Have a nice <span class="hljs-built_in">day</span>.';
+</code></pre>
+            <p>The whitespace at the beginning of each line can&#39;t be safely stripped at compile time; whitespace after the slash will result in tricky errors.</p>
             <p>Use string concatenation instead:</p>
-            <p>var myString = &#39;A rather long string of English text, an error message &#39; + &#39;actually that just keeps going and going -- an error &#39; + &#39;message to make the Energizer bunny blush (right through &#39; + &#39;those Schwarzenegger
-                shades)! Where was I? Oh yes, &#39; + &#39;you\&#39;ve got an error and all the extraneous whitespace is &#39; + &#39;just gravy. Have a nice day.&#39;;</p>
+            <pre><code class="lang-javascript">var myString = <span class="hljs-comment">'A rather long string of English text, an error message ' +</span>
+    <span class="hljs-comment">'actually that just keeps going and going -- an error ' +</span>
+    <span class="hljs-comment">'message to make the Energizer bunny blush (right through ' +</span>
+    <span class="hljs-comment">'those Schwarzenegger shades)! Where was I? Oh yes, ' +</span>
+    <span class="hljs-comment">'you\'ve got an error and all the extraneous whitespace is ' +</span>
+    <span class="hljs-comment">'just gravy.  Have a nice day.';</span>
+</code></pre>
             <h3 id="array-and-object-literals">Array and Object literals</h3>
-            <p>Yes Use Array and Object literals instead of Array and Object constructors.</p>
+            <p>Yes</p>
+            <p>Use <code>Array</code> and <code>Object</code> literals instead of <code>Array</code> and <code>Object</code> constructors.</p>
             <p>Array constructors are error-prone due to their arguments.</p>
-            <p>// Length is 3. var a1 = new Array(x1, x2, x3);</p>
-            <p>// Length is 2. var a2 = new Array(x1, x2);</p>
-            <p>// If x1 is a number and it is a natural number the length will be x1. // If x1 is a number but not a natural number this will throw an exception. // Otherwise the array will have one element with x1 as its value. var a3 = new Array(x1);</p>
-            <p>// Length is 0. var a4 = new Array(); Because of this, if someone changes the code to pass 1 argument instead of 2 arguments, the array might not have the expected length.</p>
+            <pre><code class="lang-javascript"><span class="hljs-comment">// Length is 3.</span>
+<span class="hljs-keyword">var</span> a1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(x1, x2, x3);
+
+<span class="hljs-comment">// Length is 2.</span>
+<span class="hljs-keyword">var</span> a2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(x1, x2);
+
+<span class="hljs-comment">// If x1 is a number and it is a natural number the length will be x1.</span>
+<span class="hljs-comment">// If x1 is a number but not a natural number this will throw an exception.</span>
+<span class="hljs-comment">// Otherwise the array will have one element with x1 as its value.</span>
+<span class="hljs-keyword">var</span> a3 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(x1);
+
+<span class="hljs-comment">// Length is 0.</span>
+<span class="hljs-keyword">var</span> a4 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>();
+</code></pre>
+            <p>Because of this, if someone changes the code to pass 1 argument instead of 2 arguments, the array might not have the expected length.</p>
             <p>To avoid these kinds of weird cases, always use the more readable array literal.</p>
-            <p>var a = [x1, x2, x3]; var a2 = [x1, x2]; var a3 = [x1]; var a4 = []; Object constructors don&#39;t have the same problems, but for readability and consistency object literals should be used.</p>
-            <p>var o = new Object();</p>
-            <p>var o2 = new Object(); o2.a = 0; o2.b = 1; o2.c = 2; o2[&#39;strange key&#39;] = 3; Should be written as:</p>
-            <p>var o = {};</p>
-            <p>var o2 = { a: 0, b: 1, c: 2, &#39;strange key&#39;: 3 };
-            </p>
+            <pre><code class="lang-javascript">var a = [x1, x2, x3]<span class="hljs-comment">;</span>
+var <span class="hljs-built_in">a2</span> = [x1, x2]<span class="hljs-comment">;</span>
+var <span class="hljs-built_in">a3</span> = [x1]<span class="hljs-comment">;</span>
+var <span class="hljs-built_in">a4</span> = []<span class="hljs-comment">;</span>
+</code></pre>
+            <p>Object constructors don&#39;t have the same problems, but for readability and consistency object literals should be used.</p>
+            <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> o = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();
+
+<span class="hljs-keyword">var</span> o2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();
+o2.a = <span class="hljs-number">0</span>;
+o2.b = <span class="hljs-number">1</span>;
+o2.c = <span class="hljs-number">2</span>;
+o2[<span class="hljs-string">'strange key'</span>] = <span class="hljs-number">3</span>;
+</code></pre>
+            <p>Should be written as:</p>
+            <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> o = {};
+
+<span class="hljs-keyword">var</span> o2 = {
+  a: <span class="hljs-number">0</span>,
+  b: <span class="hljs-number">1</span>,
+  c: <span class="hljs-number">2</span>,
+  <span class="hljs-string">'strange key'</span>: <span class="hljs-number">3</span>
+};
+</code></pre>
             <h3 id="modifying-prototypes-of-builtin-objects">Modifying prototypes of builtin objects</h3>
-            <p>No Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided.</p>
+            <p>No</p>
+            <p>Modifying builtins like <code>Object.prototype</code> and <code>Array.prototype</code> are strictly forbidden. Modifying other builtins like <code>Function.prototype</code> is less dangerous but still leads to hard to debug issues in production
+                and should be avoided.</p>
             <h3 id="internet-explorer-s-conditional-comments">Internet Explorer&#39;s Conditional Comments</h3>
-            <p>No Don&#39;t do this:</p>
-            <p>var f = function () { /
-                <em>@cc_on if (@_jscript) { return 2</em> @<em>/  3; /</em>@ } @*/ }; Conditional Comments hinder automated tools as they can vary the JavaScript syntax tree at runtime.</p>
+            <p>No</p>
+            <p>Don&#39;t do this:</p>
+            <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> f = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">/*<span class="hljs-doctag">@cc</span>_on if (@_jscript) { return 2* @*/</span>  <span class="hljs-number">3</span>; <span class="hljs-comment">/*@ } @*/</span>
+};
+</code></pre>
+            <p>Conditional Comments hinder automated tools as they can vary the JavaScript syntax tree at runtime.</p>
             <h2 id="javascript-style-rules">JavaScript Style Rules</h2>
             <h3 id="naming">Naming</h3>
-            <p>In general, use functionNamesLikeThis, variableNamesLikeThis, ClassNamesLikeThis, EnumNamesLikeThis, methodNamesLikeThis, CONSTANT_VALUES_LIKE_THIS, foo.namespaceNamesLikeThis.bar, and filenameslikethis.js.</p>
-            <p>Properties and methods</p>
-            <p>Private properties and methods should be named with a trailing underscore. Protected properties and methods should be named without a trailing underscore (like public ones). For more information on private and protected, read the section on visibility.</p>
-            <p>Method and function parameter</p>
-            <p>Optional function arguments start with opt_.</p>
-            <p>Functions that take a variable number of arguments should have the last argument named var_args. You may not refer to var_args in the code; use the arguments array.</p>
-            <p>Optional and variable arguments can also be specified in @param annotations. Although either convention is acceptable to the compiler, using both together is preferred.</p>
-            <p>Getters and Setters</p>
-            <p>EcmaScript 5 getters and setters for properties are discouraged. However, if they are used, then getters must not change observable state.</p>
-            <p>/**</p>
+            <p>In general, use <code>functionNamesLikeThis</code>, <code>variableNamesLikeThis</code>, <code>ClassNamesLikeThis</code>, <code>EnumNamesLikeThis</code>, <code>methodNamesLikeThis</code>, <code>CONSTANT_VALUES_LIKE_THIS</code>, <code>foo.namespaceNamesLikeThis.bar</code>,
+                and <code>filenameslikethis.js</code>.</p>
+            <h5 id="properties-and-methods">Properties and methods</h5>
             <ul>
-                <li>WRONG -- Do NOT do this. */ var foo = { get next() { return this.nextId++; } }; Accessor functions</li>
+                <li><em>Private</em> properties and methods should be named with a trailing underscore.</li>
+                <li><em>Protected</em> properties and methods should be named without a trailing underscore (like public ones).</li>
             </ul>
-            <p>Getters and setters methods for properties are not required. However, if they are used, then getters must be named getFoo() and setters must be named setFoo(value). (For boolean getters, isFoo() is also acceptable, and often sounds more natural.)</p>
-            <p>Namespaces</p>
+            <p>For more information on <em>private</em> and <em>protected</em>, read the section on <a href="#">visibility</a>.</p>
+            <h5 id="method-and-function-parameter">Method and function parameter</h5>
+            <p>Optional function arguments start with <code>opt_</code>.</p>
+            <p>Functions that take a variable number of arguments should have the last argument named <code>var_args</code>. You may not refer to <code>var_args</code> in the code; use the <code>arguments</code> array.</p>
+            <p>Optional and variable arguments can also be specified in <code>@param</code> annotations. Although either convention is acceptable to the compiler, using both together is preferred.</p>
+            <h5 id="getters-and-setters">Getters and Setters</h5>
+            <p>EcmaScript 5 getters and setters for properties are discouraged. However, if they are used, then getters must not change observable state.</p>
+            <pre><code class="lang-javascript"><span class="hljs-comment">/**
+ * WRONG -- Do NOT do this.
+ */</span>
+<span class="hljs-keyword">var</span> foo = { <span class="hljs-function"><span class="hljs-keyword">get</span> <span class="hljs-title">next</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.nextId++; } };
+</code></pre>
+            <h5 id="accessor-functions">Accessor functions</h5>
+            <p>Getters and setters methods for properties are not required. However, if they are used, then getters must be named <code>getFoo()</code> and setters must be named <code>setFoo(value)</code>. (For boolean getters, <code>isFoo()</code> is also acceptable,
+                and often sounds more natural.)</p>
+            <h5 id="namespaces">Namespaces</h5>
             <p>JavaScript has no inherent packaging or namespacing support.</p>
             <p>Global name conflicts are difficult to debug, and can cause intractable problems when two projects try to integrate. In order to make it possible to share common JavaScript code, we&#39;ve adopted conventions to prevent collisions.</p>
-            <p>Use namespaces for global code</p>
-            <p>ALWAYS prefix identifiers in the global scope with a unique pseudo namespace related to the project or library. If you are working on &quot;Project Sloth&quot;, a reasonable pseudo namespace would be sloth.*.</p>
-            <p>var sloth = {};</p>
-            <p>sloth.sleep = function() { ... }; Many JavaScript libraries, including the Closure Library and Dojo toolkit give you high-level functions for declaring your namespaces. Be consistent about how you declare your namespaces.</p>
-            <p>goog.provide(&#39;sloth&#39;);</p>
-            <p>sloth.sleep = function() { ... }; Respect namespace ownership</p>
-            <p>When choosing a child-namespace, make sure that the owners of the parent namespace know what you are doing. If you start a project that creates hats for sloths, make sure that the Sloth team knows that you&#39;re using sloth.hats.</p>
-            <p>Use different namespaces for external code and internal code</p>
-            <p>&quot;External code&quot; is code that comes from outside your codebase, and is compiled independently. Internal and external names should be kept strictly separate. If you&#39;re using an external library that makes things available in foo.hats.<em>, your internal code should not define all its symbols in foo.hats.</em>,
-                because it will break if the other team defines new symbols.</p>
-            <p>foo.require(&#39;foo.hats&#39;);</p>
-            <p>/**</p>
-            <ul>
-                <li>WRONG -- Do NOT do this.</li>
-                <li>@constructor</li>
-                <li>@extends {foo.hats.RoundHat} */ foo.hats.BowlerHat = function() { }; If you need to define new APIs on an external namespace, then you should explicitly export the public API functions, and only those functions. Your internal code should call
-                    the internal APIs by their internal names, for consistency and so that the compiler can optimize them better.</li>
-            </ul>
-            <p>foo.provide(&#39;googleyhats.BowlerHat&#39;);</p>
-            <p>foo.require(&#39;foo.hats&#39;);</p>
-            <p>/**</p>
-            <ul>
-                <li>@constructor</li>
-                <li>@extends {foo.hats.RoundHat} */ googleyhats.BowlerHat = function() { ... };
-                </li>
-            </ul>
-            <p>goog.exportSymbol(&#39;foo.hats.BowlerHat&#39;, googleyhats.BowlerHat); Alias long type names to improve readability</p>
+            <h6 id="use-namespaces-for-global-code">Use namespaces for global code</h6>
+            <p>ALWAYS prefix identifiers in the global scope with a unique pseudo namespace related to the project or library. If you are working on &quot;Project Sloth&quot;, a reasonable pseudo namespace would be <code>sloth.*</code>.</p>
+            <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> sloth = {};
+
+sloth.sleep = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  ...
+};
+</code></pre>
+            <p>Many JavaScript libraries, including <a href="#">the Closure Library</a> and <a href="#">Dojo toolkit</a> give you high-level functions for declaring your namespaces. Be consistent about how you declare your namespaces.</p>
+            <pre><code class="lang-javascript">goog.provide(<span class="hljs-string">'sloth'</span>);
+
+sloth.sleep = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  ...
+};
+</code></pre>
+            <h6 id="respect-namespace-ownership">Respect namespace ownership</h6>
+            <p>When choosing a child-namespace, make sure that the owners of the parent namespace know what you are doing. If you start a project that creates hats for sloths, make sure that the Sloth team knows that you&#39;re using <code>sloth.hats</code>.</p>
+            <h6 id="use-different-namespaces-for-external-code-and-internal-code">Use different namespaces for external code and internal code</h6>
+            <p>&quot;External code&quot; is code that comes from outside your codebase, and is compiled independently. Internal and external names should be kept strictly separate. If you&#39;re using an external library that makes things available in <code>foo.hats.*</code>,
+                your internal code should not define all its symbols in <code>foo.hats.*</code>, because it will break if the other team defines new symbols.</p>
+            <pre><code class="lang-javascript">foo.<span class="hljs-keyword">require</span>(<span class="hljs-string">'foo.hats'</span>);
+
+<span class="hljs-comment">/**
+ * WRONG -- Do NOT do this.
+ * <span class="hljs-doctag">@constructor</span>
+ * <span class="hljs-doctag">@extends</span> {foo.hats.RoundHat}
+ */</span>
+foo.hats.BowlerHat = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+};
+</code></pre>
+            <p>If you need to define new APIs on an external namespace, then you should explicitly export the public API functions, and only those functions. Your internal code should call the internal APIs by their internal names, for consistency and so that
+                the compiler can optimize them better.</p>
+            <pre><code class="lang-javascript">foo.provide(<span class="hljs-string">'googleyhats.BowlerHat'</span>);
+
+foo.<span class="hljs-keyword">require</span>(<span class="hljs-string">'foo.hats'</span>);
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@constructor</span>
+ * <span class="hljs-doctag">@extends</span> {foo.hats.RoundHat}
+ */</span>
+googleyhats.BowlerHat = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  ...
+};
+
+goog.exportSymbol(<span class="hljs-string">'foo.hats.BowlerHat'</span>, googleyhats.BowlerHat);
+</code></pre>
+            <h6 id="alias-long-type-names-to-improve-readability">Alias long type names to improve readability</h6>
             <p>Use local aliases for fully-qualified types if doing so improves readability. The name of a local alias should match the last part of the type.</p>
-            <p>/**</p>
-            <ul>
-                <li>@constructor */ some.long.namespace.MyClass = function() { };
-                </li>
-            </ul>
-            <p>/**</p>
-            <ul>
-                <li>@param {some.long.namespace.MyClass} a */ some.long.namespace.MyClass.staticHelper = function(a) { ... };
-                </li>
-            </ul>
-            <p>myapp.main = function() { var MyClass = some.long.namespace.MyClass; var staticHelper = some.long.namespace.MyClass.staticHelper; staticHelper(new MyClass()); }; Do not create local aliases of namespaces. Namespaces should only be aliased using
-                goog.scope.</p>
-            <p>myapp.main = function() { var namespace = some.long.namespace; namespace.MyClass.staticHelper(new namespace.MyClass()); }; Avoid accessing properties of an aliased type, unless it is an enum.</p>
-            <p>/<em>* @enum {string} </em>/ some.long.namespace.Fruit = { APPLE: &#39;a&#39;, BANANA: &#39;b&#39; };
-            </p>
-            <p>myapp.main = function() { var Fruit = some.long.namespace.Fruit; switch (fruit) { case Fruit.APPLE: ... case Fruit.BANANA: ... } }; myapp.main = function() { var MyClass = some.long.namespace.MyClass; MyClass.staticHelper(null); }; Never create
-                aliases in the global scope. Use them only in function blocks.</p>
-            <p>Filenames</p>
+            <pre><code class="lang-javascript"><span class="hljs-comment">/**
+ * <span class="hljs-doctag">@constructor</span>
+ */</span>
+some.<span class="hljs-keyword">long</span>.namespace.MyClass = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+};
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> {some.long.namespace.MyClass} a
+ */</span>
+some.<span class="hljs-keyword">long</span>.namespace.MyClass.staticHelper = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span> </span>{
+  ...
+};
+
+myapp.main = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> MyClass = some.<span class="hljs-keyword">long</span>.namespace.MyClass;
+  <span class="hljs-keyword">var</span> staticHelper = some.<span class="hljs-keyword">long</span>.namespace.MyClass.staticHelper;
+  staticHelper(<span class="hljs-keyword">new</span> MyClass());
+};
+</code></pre>
+            <p>Do not create local aliases of namespaces. Namespaces should only be aliased using <a href="#">goog.scope</a>.</p>
+            <pre><code class="lang-javascript">myapp.main = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> <span class="hljs-keyword">namespace</span> = some.long.namespace;
+  <span class="hljs-keyword">namespace</span>.MyClass.staticHelper(<span class="hljs-keyword">new</span> <span class="hljs-keyword">namespace</span>.MyClass());
+};
+</code></pre>
+            <p>Avoid accessing properties of an aliased type, unless it is an enum.</p>
+            <pre><code class="lang-javascript">/** @<span class="hljs-class"><span class="hljs-keyword">enum</span> {<span class="hljs-title">string</span>} */</span>
+some.long.namespace.Fruit = {
+  <span class="hljs-symbol">APPLE:</span> <span class="hljs-string">'a'</span>,
+  <span class="hljs-symbol">BANANA:</span> <span class="hljs-string">'b'</span>
+};
+
+myapp.main = function() {
+  var Fruit = some.long.namespace.Fruit;
+  switch (fruit) {
+    <span class="hljs-keyword">case</span> Fruit.<span class="hljs-symbol">APPLE:</span>
+      ...
+    <span class="hljs-keyword">case</span> Fruit.<span class="hljs-symbol">BANANA:</span>
+      ...
+  }
+};
+</code></pre>
+            <pre><code class="lang-javascript">myapp.main = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">var</span> MyClass = some.<span class="hljs-keyword">long</span>.namespace.MyClass;
+  MyClass.staticHelper(<span class="hljs-keyword">null</span>);
+};
+</code></pre>
+            <p>Never create aliases in the global scope. Use them only in function blocks.</p>
+            <h5 id="filenames">Filenames</h5>
             <p>Filenames should be all lowercase in order to avoid confusion on case-sensitive platforms. Filenames should end in .js, and should contain no punctuation except for - or <em> (prefer - to </em>).</p>
             <h3 id="custom-tostring-methods">Custom toString() methods</h3>
-            <p>Must always succeed without side effects. You can control how your objects string-ify themselves by defining a custom toString() method. This is fine, but you need to ensure that your method (1) always succeeds and (2) does not have side-effects.
-                If your method doesn&#39;t meet these criteria, it&#39;s very easy to run into serious problems. For example, if toString() calls a method that does an assert, assert might try to output the name of the object in which it failed, which of course
-                requires calling toString().</p>
+            <p>Must always succeed without side effects. You can control how your objects string-ify themselves by defining a custom <code>toString()</code> method. This is fine, but you need to ensure that your method (1) always succeeds and (2) does not have
+                side-effects. If your method doesn&#39;t meet these criteria, it&#39;s very easy to run into serious problems. For example, if <code>toString()</code> calls a method that does an <code>assert</code>, <code>assert</code> might try to output the
+                name of the object in which it failed, which of course requires calling <code>toString()</code>.</p>
             <h3 id="deferred-initialization">Deferred initialization</h3>
-            <p>OK It isn&#39;t always possible to initialize variables at the point of declaration, so deferred initialization is fine.</p>
+            <p>OK</p>
+            <p>It isn&#39;t always possible to initialize variables at the point of declaration, so deferred initialization is fine.</p>
             <h3 id="explicit-scope">Explicit scope</h3>
-            <p>Always Always use explicit scope - doing so increases portability and clarity. For example, don&#39;t rely on window being in the scope chain. You might want to use your function in another application for which window is not the content window.</p>
+            <p>Always</p>
+            <p>Always use explicit scope - doing so increases portability and clarity. For example, don&#39;t rely on <code>window</code> being in the scope chain. You might want to use your function in another application for which <code>window</code> is not
+                the content window.</p>
             <h3 id="code-formatting">Code formatting</h3>
-            <p>Expand for more information. We follow the C++ formatting rules in spirit, with the following additional clarifications.</p>
-            <p>Curly Braces</p>
+            <p>Expand for more information. We follow the <a href="#">C++ formatting rules</a> in spirit, with the following additional clarifications.</p>
+            <h5 id="curly-braces">Curly Braces</h5>
             <p>Because of implicit semicolon insertion, always start your curly braces on the same line as whatever they&#39;re opening. For example:</p>
-            <p>if (something) { // ... } else { // ... } Array and Object Initializers</p>
+            <pre><code class="lang-javascript"><span class="hljs-keyword">if</span> (something) {
+  <span class="hljs-comment">// ...</span>
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+            <h5 id="array-and-object-initializers">Array and Object Initializers</h5>
             <p>Single-line array and object initializers are allowed when they fit on a line:</p>
-            <p>var arr = [1, 2, 3]; // No space after [ or before ]. var obj = {a: 1, b: 2, c: 3}; // No space after { or before }. Multiline array initializers and object initializers are indented 2 spaces, with the braces on their own line, just like blocks.</p>
-            <p>// Object initializer. var inset = { top: 10, right: 20, bottom: 15, left: 12 };
-            </p>
-            <p>// Array initializer. this.rows_ = [ &#39;&quot;Slartibartfast&quot; <a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#x3a;&#102;&#106;&#111;&#x72;&#x64;&#109;&#97;&#115;&#116;&#101;&#x72;&#64;&#x6d;&#97;&#x67;&#x72;&#x61;&#x74;&#104;&#101;&#x61;&#46;&#99;&#111;&#x6d;">&#102;&#106;&#111;&#x72;&#x64;&#109;&#97;&#115;&#116;&#101;&#x72;&#64;&#x6d;&#97;&#x67;&#x72;&#x61;&#x74;&#104;&#101;&#x61;&#46;&#99;&#111;&#x6d;</a>&#39;,
-                &#39;&quot;Zaphod Beeblebrox&quot; <a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#58;&#x74;&#104;&#101;&#x70;&#x72;&#101;&#x7a;&#x40;&#117;&#x6e;&#105;&#x76;&#x65;&#x72;&#115;&#x65;&#46;&#103;&#111;&#118;">&#x74;&#104;&#101;&#x70;&#x72;&#101;&#x7a;&#x40;&#117;&#x6e;&#105;&#x76;&#x65;&#x72;&#115;&#x65;&#46;&#103;&#111;&#118;</a>&#39;,
-                &#39;&quot;Ford Prefect&quot; <a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#58;&#102;&#111;&#x72;&#100;&#x40;&#x74;&#x68;&#x65;&#x67;&#x75;&#x69;&#100;&#101;&#x2e;&#99;&#x6f;&#109;">&#102;&#111;&#x72;&#100;&#x40;&#x74;&#x68;&#x65;&#x67;&#x75;&#x69;&#100;&#101;&#x2e;&#99;&#x6f;&#109;</a>&#39;,
-                &#39;&quot;Arthur Dent&quot; <a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#x3a;&#104;&#97;&#x73;&#x2e;&#x6e;&#111;&#46;&#116;&#101;&#x61;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;">&#104;&#97;&#x73;&#x2e;&#x6e;&#111;&#46;&#116;&#101;&#x61;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;</a>&#39;,
-                &#39;&quot;Marvin the Paranoid Android&quot; <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#109;&#x61;&#x72;&#118;&#64;&#x67;&#x6f;&#111;&#x67;&#108;&#x65;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#111;&#109;">&#109;&#x61;&#x72;&#118;&#64;&#x67;&#x6f;&#111;&#x67;&#108;&#x65;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#111;&#109;</a>&#39;,
-                &#39;the.mice@magrathea.com&#39; ];
-            </p>
-            <p>// Used in a method call. goog.dom.createDom(goog.dom.TagName.DIV, { id: &#39;foo&#39;, className: &#39;some-css-class&#39;, style: &#39;display:none&#39; }, &#39;Hello, world!&#39;); Long identifiers or values present problems for aligned initialization
-                lists, so always prefer non-aligned initialization. For example:</p>
-            <p>CORRECT_Object.prototype = { a: 0, b: 1, lengthyName: 2 }; Not like this:</p>
-            <p>WRONG_Object.prototype = { a : 0, b : 1, lengthyName: 2 }; Function Arguments</p>
+            <pre><code class="lang-javascript"><span class="hljs-built_in">var</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];  // No <span class="hljs-built_in">space</span> after [ <span class="hljs-keyword">or</span> before ].
+<span class="hljs-built_in">var</span> obj = {a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span>, c: <span class="hljs-number">3</span>};  // No <span class="hljs-built_in">space</span> after { <span class="hljs-keyword">or</span> before }.
+</code></pre>
+            <p>Multiline array initializers and object initializers are indented 2 spaces, with the braces on their own line, just like blocks.</p>
+            <pre><code class="lang-javascript"><span class="hljs-comment">// Object initializer.</span>
+<span class="hljs-keyword">var</span> inset = {
+  top: <span class="hljs-number">10</span>,
+  right: <span class="hljs-number">20</span>,
+  bottom: <span class="hljs-number">15</span>,
+  left: <span class="hljs-number">12</span>
+};
+
+<span class="hljs-comment">// Array initializer.</span>
+<span class="hljs-keyword">this</span>.rows_ = [
+  '<span class="hljs-string">"Slartibartfast"</span> &lt;fjordmaster<span class="hljs-meta">@magrathea</span>.com&gt;',
+  '<span class="hljs-string">"Zaphod Beeblebrox"</span> &lt;theprez<span class="hljs-meta">@universe</span>.gov&gt;',
+  '<span class="hljs-string">"Ford Prefect"</span> &lt;ford<span class="hljs-meta">@theguide</span>.com&gt;',
+  '<span class="hljs-string">"Arthur Dent"</span> &lt;has.no.tea<span class="hljs-meta">@gmail</span>.com&gt;',
+  '<span class="hljs-string">"Marvin the Paranoid Android"</span> &lt;marv<span class="hljs-meta">@googlemail</span>.com&gt;',
+  <span class="hljs-symbol">'the</span>.mice<span class="hljs-meta">@magrathea</span>.com'
+];
+
+<span class="hljs-comment">// Used in a method call.</span>
+goog.dom.createDom(goog.dom.<span class="hljs-type">TagName</span>.<span class="hljs-type">DIV</span>, {
+  id: <span class="hljs-symbol">'fo</span>o',
+  className: <span class="hljs-symbol">'some</span>-css-<span class="hljs-class"><span class="hljs-keyword">class</span>',</span>
+  style: <span class="hljs-symbol">'display</span>:none'
+}, <span class="hljs-symbol">'Hello</span>, world!');
+</code></pre>
+            <p>Long identifiers or values present problems for aligned initialization lists, so always prefer non-aligned initialization. For example:</p>
+            <pre><code class="lang-javascript">CORRECT_Object.prototype = {
+<span class="hljs-symbol">  a:</span> <span class="hljs-number">0</span>,
+<span class="hljs-symbol">  b:</span> <span class="hljs-number">1</span>,
+<span class="hljs-symbol">  lengthyName:</span> <span class="hljs-number">2</span>
+};
+</code></pre>
+            <p>Not like this:</p>
+            <pre><code class="lang-javascript"><span class="hljs-type">WRONG_Object</span>.proto<span class="hljs-keyword">type</span> = {
+  a          : 0,
+  b          : 1,
+  lengthyName: 2
+};
+</code></pre>
+            <h5 id="function-arguments">Function Arguments</h5>
             <p>When possible, all function arguments should be listed on the same line. If doing so would exceed the 80-column limit, the arguments must be line-wrapped in a readable way. To save space, you may wrap as close to 80 as possible, or put each argument
                 on its own line to enhance readability. The indentation may be either four spaces, or aligned to the parenthesis. Below are the most common patterns for argument wrapping:</p>
-            <p>// Four-space, wrap at 80. Works with very long function names, survives // renaming without reindenting, low on space. goog.foo.bar.doThingThatIsVeryDifficultToExplain = function( veryDescriptiveArgumentNumberOne, veryDescriptiveArgumentTwo, tableModelEventHandlerProxy,
-                artichokeDescriptorAdapterIterator) { // ... };
-            </p>
-            <p>// Four-space, one argument per line. Works with long function names, // survives renaming, and emphasizes each argument. goog.foo.bar.doThingThatIsVeryDifficultToExplain = function( veryDescriptiveArgumentNumberOne, veryDescriptiveArgumentTwo,
-                tableModelEventHandlerProxy, artichokeDescriptorAdapterIterator) { // ... };
-            </p>
-            <p>// Parenthesis-aligned indentation, wrap at 80. Visually groups arguments, // low on space. function foo(veryDescriptiveArgumentNumberOne, veryDescriptiveArgumentTwo, tableModelEventHandlerProxy, artichokeDescriptorAdapterIterator) { // ... }
-            </p>
-            <p>// Parenthesis-aligned, one argument per line. Emphasizes each // individual argument. function bar(veryDescriptiveArgumentNumberOne, veryDescriptiveArgumentTwo, tableModelEventHandlerProxy, artichokeDescriptorAdapterIterator) { // ... } When the
-                function call is itself indented, you&#39;re free to start the 4-space indent relative to the beginning of the original statement or relative to the beginning of the current function call. The following are all acceptable indentation styles.</p>
-            <p>if (veryLongFunctionNameA( veryLongArgumentName) || veryLongFunctionNameB( veryLongArgumentName)) { veryLongFunctionNameC(veryLongFunctionNameD( veryLongFunctioNameE( veryLongFunctionNameF))); } Passing Anonymous Functions</p>
+            <pre><code class="lang-javascript"><span class="hljs-comment">// Four-space, wrap at 80.  Works with very long function names, survives</span>
+<span class="hljs-comment">// renaming without reindenting, low on space.</span>
+goog.foo.bar.doThingThatIsVeryDifficultToExplain = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(
+    veryDescriptiveArgumentNumberOne, veryDescriptiveArgumentTwo,
+    tableModelEventHandlerProxy, artichokeDescriptorAdapterIterator)</span> </span>{
+  <span class="hljs-comment">// ...</span>
+};
+
+<span class="hljs-comment">// Four-space, one argument per line.  Works with long function names,</span>
+<span class="hljs-comment">// survives renaming, and emphasizes each argument.</span>
+goog.foo.bar.doThingThatIsVeryDifficultToExplain = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(
+    veryDescriptiveArgumentNumberOne,
+    veryDescriptiveArgumentTwo,
+    tableModelEventHandlerProxy,
+    artichokeDescriptorAdapterIterator)</span> </span>{
+  <span class="hljs-comment">// ...</span>
+};
+
+<span class="hljs-comment">// Parenthesis-aligned indentation, wrap at 80.  Visually groups arguments,</span>
+<span class="hljs-comment">// low on space.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span><span class="hljs-params">(veryDescriptiveArgumentNumberOne, veryDescriptiveArgumentTwo,
+             tableModelEventHandlerProxy, artichokeDescriptorAdapterIterator)</span> </span>{
+  <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-comment">// Parenthesis-aligned, one argument per line.  Emphasizes each</span>
+<span class="hljs-comment">// individual argument.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bar</span><span class="hljs-params">(veryDescriptiveArgumentNumberOne,
+             veryDescriptiveArgumentTwo,
+             tableModelEventHandlerProxy,
+             artichokeDescriptorAdapterIterator)</span> </span>{
+  <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+            <p>When the function call is itself indented, you&#39;re free to start the 4-space indent relative to the beginning of the original statement or relative to the beginning of the current function call. The following are all acceptable indentation styles.</p>
+            <pre><code class="lang-javascript"><span class="hljs-keyword">if</span> (veryLongFunctionNameA(
+        veryLongArgumentName) |<span class="hljs-type">|
+    veryLongFunctionNameB</span>(
+    veryLongArgumentName)) {
+  veryLongFunctionNameC(veryLongFunctionNameD(
+      veryLongFunctioNameE(
+          veryLongFunctionNameF)));
+}
+</code></pre>
+            <h5 id="passing-anonymous-functions">Passing Anonymous Functions</h5>
             <p>When declaring an anonymous function in the list of arguments for a function call, the body of the function is indented two spaces from the left edge of the statement, or two spaces from the left edge of the function keyword. This is to make the
                 body of the anonymous function easier to read (i.e. not be all squished up into the right half of the screen).</p>
-            <p>prefix.something.reallyLongFunctionName(&#39;whatever&#39;, function(a1, a2) { if (a1.equals(a2)) { someOtherLongFunctionName(a1); } else { andNowForSomethingCompletelyDifferent(a2.parrot); } });
-            </p>
-            <p>var names = prefix.something.myExcellentMapFunction( verboselyNamedCollectionOfItems, function(item) { return item.name; }); Aliasing with goog.scope</p>
-            <p>goog.scope may be used to shorten references to namespaced symbols in programs using the Closure Library.</p>
-            <p>Only one goog.scope invocation may be added per file. Always place it in the global scope.</p>
-            <p>The opening goog.scope(function() { invocation must be preceded by exactly one blank line and follow any goog.provide statements, goog.require statements, or top-level comments. The invocation must be closed on the last line in the file. Append
-                // goog.scope to the closing statement of the scope. Separate the comment from the semicolon by two spaces.</p>
+            <pre><code class="lang-javascript"><span class="hljs-symbol">prefix.something.reallyLongFunctionName</span>(<span class="hljs-string">'whatever'</span>, <span class="hljs-meta">function</span>(<span class="hljs-built_in">a1</span>, <span class="hljs-built_in">a2</span>) {
+  <span class="hljs-meta">if</span> (<span class="hljs-built_in">a1</span>.equals(<span class="hljs-built_in">a2</span>)) {
+    someOtherLongFunctionName(<span class="hljs-built_in">a1</span>)<span class="hljs-comment">;</span>
+  } <span class="hljs-meta">else</span> {
+    <span class="hljs-keyword">andNowForSomethingCompletelyDifferent(a2.parrot);
+</span>  }
+})<span class="hljs-comment">;</span>
+
+<span class="hljs-symbol">var</span> names = prefix.something.myExcellentMapFunction(
+    verboselyNamedCollectionOfItems,
+    <span class="hljs-meta">function</span>(<span class="hljs-keyword">item) </span>{
+      return <span class="hljs-keyword">item.name;
+</span>    })<span class="hljs-comment">;</span>
+</code></pre>
+            <h5 id="aliasing-with-goog-scope">Aliasing with goog.scope</h5>
+            <p><a href="#"><code>goog.scope</code></a> may be used to shorten references to namespaced symbols in programs using <a href="#">the Closure Library</a>.</p>
+            <p>Only one <code>goog.scope</code> invocation may be added per file. Always place it in the global scope.</p>
+            <p>The opening <code>goog.scope(function() {</code> invocation must be preceded by exactly one blank line and follow any <code>goog.provide</code> statements, <code>goog.require</code> statements, or top-level comments. The invocation must be closed
+                on the last line in the file. Append <code>// goog.scope</code> to the closing statement of the scope. Separate the comment from the semicolon by two spaces.</p>
             <p>Similar to C++ namespaces, do not indent under goog.scope declarations. Instead, continue from the 0 column.</p>
             <p>Only alias names that will not be re-assigned to another object (e.g., most constructors, enums, and namespaces). Do not do this (see below for how to alias a constructor):</p>
-            <p>goog.scope(function() { var Button = goog.ui.Button;</p>
-            <p>Button = function() { ... }; ... Names must be the same as the last property of the global that they are aliasing.</p>
-            <p>goog.provide(&#39;my.module.SomeType&#39;);</p>
-            <p>goog.require(&#39;goog.dom&#39;); goog.require(&#39;goog.ui.Button&#39;);
-            </p>
-            <p>goog.scope(function() { var Button = goog.ui.Button; var dom = goog.dom;</p>
-            <p>// Alias new types after the constructor declaration. my.module.SomeType = function() { ... }; var SomeType = my.module.SomeType;</p>
-            <p>// Declare methods on the prototype as usual: SomeType.prototype.findButton = function() { // Button as aliased above. this.button = new Button(dom.getElement(&#39;my-button&#39;)); }; ... }); // goog.scope Indenting wrapped lines</p>
-            <p>Except for array literals, object literals, and anonymous functions, all wrapped lines should be indented either left-aligned to a sibling expression above, or four spaces (not two spaces) deeper than a parent expression (where &quot;sibling&quot;
+            <pre><code class="lang-javascript">goog.scope(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+<span class="hljs-keyword">var</span> Button = goog.ui.Button;
+
+Button = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ ... };
+...
+</code></pre>
+            <p>Names must be the same as the last property of the global that they are aliasing.</p>
+            <pre><code class="lang-javascript">goog.provide(<span class="hljs-string">'my.module.SomeType'</span>);
+
+goog.<span class="hljs-keyword">require</span>(<span class="hljs-string">'goog.dom'</span>);
+goog.<span class="hljs-keyword">require</span>(<span class="hljs-string">'goog.ui.Button'</span>);
+
+goog.scope(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+<span class="hljs-keyword">var</span> Button = goog.ui.Button;
+<span class="hljs-keyword">var</span> dom = goog.dom;
+
+<span class="hljs-comment">// Alias new types after the constructor declaration.</span>
+my.module.SomeType = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ ... };
+<span class="hljs-keyword">var</span> SomeType = my.module.SomeType;
+
+<span class="hljs-comment">// Declare methods on the prototype as usual:</span>
+SomeType.prototype.findButton = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// Button as aliased above.</span>
+  this.button = <span class="hljs-keyword">new</span> Button(dom.getElement(<span class="hljs-string">'my-button'</span>));
+};
+...
+});  <span class="hljs-comment">// goog.scope</span>
+</code></pre>
+            <h5 id="indenting-wrapped-lines">Indenting wrapped lines</h5>
+            <p>Except for <a href="#">array literals, object literals</a>, and anonymous functions, all wrapped lines should be indented either left-aligned to a sibling expression above, or four spaces (not two spaces) deeper than a parent expression (where &quot;sibling&quot;
                 and &quot;parent&quot; refer to parenthesis nesting level).</p>
-            <p>someWonderfulHtml = &#39;&#39; + getEvenMoreHtml(someReallyInterestingValues, moreValues, evenMoreParams, &#39;a duck&#39;, true, 72, slightlyMoreMonkeys(0xfff)) + &#39;&#39;;
-            </p>
-            <p>thisIsAVeryLongVariableName = hereIsAnEvenLongerOtherFunctionNameThatWillNotFitOnPrevLine();
-            </p>
-            <p>thisIsAVeryLongVariableName = siblingOne + siblingTwo + siblingThree + siblingFour + siblingFive + siblingSix + siblingSeven + moreSiblingExpressions + allAtTheSameIndentationLevel;</p>
-            <p>thisIsAVeryLongVariableName = operandOne + operandTwo + operandThree + operandFour + operandFive * ( aNestedChildExpression + shouldBeIndentedMore);</p>
-            <p>someValue = this.foo( shortArg, &#39;Some really long string arg - this is a pretty common case, actually.&#39;, shorty2, this.bar());
-            </p>
-            <p>if (searchableCollection(allYourStuff).contains(theStuffYouWant) &amp;&amp; !ambientNotification.isActive() &amp;&amp; (client.isAmbientSupported() || client.alwaysTryAmbientAnyways())) { ambientNotification.activate(); } Blank lines</p>
+            <pre><code class="lang-javascript">someWonderfulHtml = <span class="hljs-string">''</span> +
+                    getEvenMoreHtml(someReallyInterestingValues, moreValues,
+                                    evenMoreParams, <span class="hljs-string">'a duck'</span>, <span class="hljs-keyword">true</span>, <span class="hljs-number">72</span>,
+                                    slightlyMoreMonkeys(<span class="hljs-number">0xfff</span>)) +
+                    <span class="hljs-string">''</span>;
+
+thisIsAVeryLongVariableName =
+    hereIsAnEvenLongerOtherFunctionNameThatWillNotFitOnPrevLine();
+
+thisIsAVeryLongVariableName = siblingOne + siblingTwo + siblingThree +
+    siblingFour + siblingFive + siblingSix + siblingSeven +
+    moreSiblingExpressions + allAtTheSameIndentationLevel;
+
+thisIsAVeryLongVariableName = operandOne + operandTwo + operandThree +
+    operandFour + operandFive * (
+        aNestedChildExpression + shouldBeIndentedMore);
+
+someValue = <span class="hljs-keyword">this</span>.foo(
+    shortArg,
+    <span class="hljs-string">'Some really long string arg - this is a pretty common case, actually.'</span>,
+    shorty2,
+    <span class="hljs-keyword">this</span>.bar());
+
+<span class="hljs-keyword">if</span> (searchableCollection(allYourStuff).contains(theStuffYouWant) &amp;&amp;
+    !ambientNotification.isActive() &amp;&amp; (<span class="hljs-keyword">client</span>.isAmbientSupported() ||
+                                        <span class="hljs-keyword">client</span>.alwaysTryAmbientAnyways())) {
+  ambientNotification.activate();
+}
+</code></pre>
+            <p>Blank lines</p>
             <p>Use newlines to group logically related pieces of code. For example:</p>
-            <p>doSomethingTo(x); doSomethingElseTo(x); andThen(x);
-            </p>
-            <p>nowDoSomethingWith(y);</p>
-            <p>andNowWith(z); Binary and Ternary Operators</p>
+            <pre><code class="lang-javascript">doSomethingTo(<span class="hljs-name">x</span>)<span class="hljs-comment">;</span>
+doSomethingElseTo(<span class="hljs-name">x</span>)<span class="hljs-comment">;</span>
+andThen(<span class="hljs-name">x</span>)<span class="hljs-comment">;</span>
+
+nowDoSomethingWith(<span class="hljs-name">y</span>)<span class="hljs-comment">;</span>
+
+andNowWith(<span class="hljs-name">z</span>)<span class="hljs-comment">;</span>
+</code></pre>
+            <h5 id="binary-and-ternary-operators">Binary and Ternary Operators</h5>
             <p>Always put the operator on the preceding line. Otherwise, line breaks and indentation follow the same rules as in other Google style guides. This operator placement was initially agreed upon out of concerns about automatic semicolon insertion. In
                 fact, semicolon insertion cannot happen before a binary operator, but new code should stick to this style for consistency.</p>
-            <p>var x = a ? b : c; // All on one line if it will fit.</p>
-            <p>// Indentation +4 is OK. var y = a ? longButSimpleOperandB : longButSimpleOperandC;</p>
-            <p>// Indenting to the line position of the first operand is also OK. var z = a ? moreComplicatedB : moreComplicatedC; This includes the dot operator.</p>
-            <p>var x = foo.bar(). doSomething(). doSomethingElse();
-            </p>
+            <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> x = a ? b : <span class="hljs-built_in">c</span>;  <span class="hljs-comment">// All on one line if it will fit.</span>
+
+<span class="hljs-comment">// Indentation +4 is OK.</span>
+<span class="hljs-keyword">var</span> y = a ?
+    longButSimpleOperandB : longButSimpleOperandC;
+
+<span class="hljs-comment">// Indenting to the line position of the first operand is also OK.</span>
+<span class="hljs-keyword">var</span> z = a ?
+        moreComplicatedB :
+        moreComplicatedC;
+<span class="hljs-type">This</span> includes the dot <span class="hljs-keyword">operator</span>.
+
+<span class="hljs-keyword">var</span> x = foo.bar().
+    doSomething().
+    doSomethingElse();
+</code></pre>
             <h3 id="parentheses">Parentheses</h3>
-            <p>Only where required Use sparingly and in general only where required by the syntax and semantics.</p>
-            <p>Never use parentheses for unary operators such as delete, typeof and void or after keywords such as return, throw as well as others (case, in or new).</p>
+            <p>Only where required</p>
+            <p>Use sparingly and in general only where required by the syntax and semantics.</p>
+            <p>Never use parentheses for unary operators such as <code>delete</code>, <code>typeof</code> and <code>void</code> or after keywords such as <code>return</code>, <code>throw</code> as well as others (<code>case</code>, <code>in</code> or <code>new</code>).</p>
             <h3 id="strings">Strings</h3>
-            <p>Prefer &#39; over &quot; For consistency single-quotes (&#39;) are preferred to double-quotes (&quot;). This is helpful when creating strings that include HTML:</p>
-            <p>var msg = &#39;This is some HTML&#39;;</p>
+            <p>Prefer &#39; over &quot;</p>
+            <p>For consistency single-quotes (&#39;) are preferred to double-quotes (&quot;). This is helpful when creating strings that include HTML:</p>
+            <pre><code class="lang-javascript">var msg = <span class="hljs-symbol">'This</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">some</span> HTML';
+</code></pre>
             <h3 id="visibility-private-and-protected-fields-">Visibility (private and protected fields)</h3>
-            <p>Encouraged, use JSDoc annotations @private and @protected We recommend the use of the JSDoc annotations @private and @protected to indicate visibility levels for classes, functions, and properties.</p>
-            <p>The --jscomp_warning=visibility compiler flag turns on compiler warnings for visibility violations. See Closure Compiler Warnings.</p>
-            <p>@private global variables and functions are only accessible to code in the same file.</p>
-            <p>Constructors marked @private may only be instantiated by code in the same file and by their static and instance members. @private constructors may also be accessed anywhere in the same file for their public static properties and by the instanceof
-                operator.</p>
-            <p>Global variables, functions, and constructors should never be annotated @protected.</p>
-            <p>// File 1. // AA<em>PrivateClass</em> and AA<em>init</em> are accessible because they are global // and in the same file.</p>
-            <p>/**</p>
-            <ul>
-                <li>@private</li>
-                <li>@constructor */ AA
-                    <em>PrivateClass</em> = function() { };
-                </li>
-            </ul>
-            <p>/<em>* @private </em>/ function AA<em>init</em>() { return new AA<em>PrivateClass</em>(); }
-            </p>
-            <p>AA<em>init</em>(); @private properties are accessible to all code in the same file, plus all static methods and instance methods of that class that &quot;owns&quot; the property, if the property belongs to a class. They cannot be accessed or overridden
+            <p>Encouraged, use JSDoc annotations <code>@private</code> and <code>@protected</code></p>
+            <p>We recommend the use of the JSDoc annotations <code>@private</code> and <code>@protected</code> to indicate visibility levels for classes, functions, and properties.</p>
+            <p>The --jscomp_warning=visibility compiler flag turns on compiler warnings for visibility violations. See <a href="#">Closure Compiler Warnings</a>.</p>
+            <p><code>@private</code> global variables and functions are only accessible to code in the same file.</p>
+            <p>Constructors marked <code>@private</code> may only be instantiated by code in the same file and by their static and instance members. <code>@private</code> constructors may also be accessed anywhere in the same file for their public static properties
+                and by the <code>instanceof</code> operator.</p>
+            <p>Global variables, functions, and constructors should never be annotated <code>@protected</code>.</p>
+            <pre><code class="lang-javascript"><span class="hljs-comment">// File 1.</span>
+<span class="hljs-comment">// AA_PrivateClass_ and AA_init_ are accessible because they are global</span>
+<span class="hljs-comment">// and in the same file.</span>
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@private</span>
+ * <span class="hljs-doctag">@constructor</span>
+ */</span>
+AA_PrivateClass_ = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+};
+
+<span class="hljs-comment">/** <span class="hljs-doctag">@private</span> */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">AA_init_</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> AA_PrivateClass_();
+}
+
+AA_init_();
+</code></pre>
+            <p><code>@private</code> properties are accessible to all code in the same file, plus all static methods and instance methods of that class that &quot;owns&quot; the property, if the property belongs to a class. They cannot be accessed or overridden
                 from a subclass in a different file.</p>
-            <p>@protected properties are accessible to all code in the same file, plus any static methods and instance methods of any subclass of a class that &quot;owns&quot; the property.</p>
+            <p><code>@protected</code> properties are accessible to all code in the same file, plus any static methods and instance methods of any subclass of a class that &quot;owns&quot; the property.</p>
             <p>Note that these semantics differ from those of C++ and Java, in that they grant private and protected access to all code in the same file, not just in the same class or class hierarchy. Also, unlike in C++, private properties cannot be overridden
                 by a subclass.</p>
-            <p>// File 1.</p>
-            <p>/<strong> @constructor */
-AA_PublicClass = function() {
-  /</strong> @private */ this.privateProp_ = 2;</p>
-            <p> /<em>* @protected </em>/ this.protectedProp = 4; };
-            </p>
-            <p>/<em>* @private </em>/ AA
-                <em>PublicClass.staticPrivateProp</em> = 1;</p>
-            <p>/<em>* @protected </em>/ AA_PublicClass.staticProtectedProp = 31;</p>
-            <p>/<em>* @private </em>/ AA
-                <em>PublicClass.prototype.privateMethod</em> = function() {};</p>
-            <p>/<em>* @protected </em>/ AA_PublicClass.prototype.protectedMethod = function() {};</p>
-            <p>// File 2.</p>
-            <p>/**</p>
-            <ul>
-                <li>@return {number} The number of ducks we&#39;ve arranged in a row. */ AA
-                    <em>PublicClass.prototype.method = function() {
-// Legal accesses of these two properties.
-return this.privateProp</em> + AA<em>PublicClass.staticPrivateProp</em>; };
-                </li>
-            </ul>
-            <p>// File 3.</p>
-            <p>/**</p>
-            <ul>
-                <li>@constructor</li>
-                <li>@extends {AA_PublicClass} */ AA_SubClass = function() { // Legal access of a protected static property. AA_PublicClass.staticProtectedProp = this.method(); }; goog.inherits(AA_SubClass, AA_PublicClass);</li>
-            </ul>
-            <p>/**</p>
-            <ul>
-                <li>@return {number} The number of ducks we&#39;ve arranged in a row. */ AA_SubClass.prototype.method = function() { // Legal access of a protected instance property. return this.protectedProp; }; Notice that in JavaScript, there is no distinction
-                    between a type (like AA<em>PrivateClass</em>) and the constructor for that type. There is no way to express both that a type is public and its constructor is private (because the constructor could easily be aliased in a way that would defeat
-                    the privacy check).</li>
-            </ul>
+            <pre><code class="lang-javascript"><span class="hljs-comment">// File 1.</span>
+
+<span class="hljs-comment">/** <span class="hljs-doctag">@constructor</span> */</span>
+AA_PublicClass = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">/** <span class="hljs-doctag">@private</span> */</span>
+  this.privateProp_ = <span class="hljs-number">2</span>;
+
+  <span class="hljs-comment">/** <span class="hljs-doctag">@protected</span> */</span>
+  this.protectedProp = <span class="hljs-number">4</span>;
+};
+
+<span class="hljs-comment">/** <span class="hljs-doctag">@private</span> */</span>
+AA_PublicClass.staticPrivateProp_ = <span class="hljs-number">1</span>;
+
+<span class="hljs-comment">/** <span class="hljs-doctag">@protected</span> */</span>
+AA_PublicClass.staticProtectedProp = <span class="hljs-number">31</span>;
+
+<span class="hljs-comment">/** <span class="hljs-doctag">@private</span> */</span>
+AA_PublicClass.prototype.privateMethod_ = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{};
+
+<span class="hljs-comment">/** <span class="hljs-doctag">@protected</span> */</span>
+AA_PublicClass.prototype.protectedMethod = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{};
+
+<span class="hljs-comment">// File 2.</span>
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@return</span> {number} The number of ducks we've arranged in a row.
+ */</span>
+AA_PublicClass.prototype.method = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// Legal accesses of these two properties.</span>
+  <span class="hljs-keyword">return</span> this.privateProp_ + AA_PublicClass.staticPrivateProp_;
+};
+
+<span class="hljs-comment">// File 3.</span>
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@constructor</span>
+ * <span class="hljs-doctag">@extends</span> {AA_PublicClass}
+ */</span>
+AA_SubClass = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// Legal access of a protected static property.</span>
+  AA_PublicClass.staticProtectedProp = this.method();
+};
+goog.inherits(AA_SubClass, AA_PublicClass);
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@return</span> {number} The number of ducks we've arranged in a row.
+ */</span>
+AA_SubClass.prototype.method = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// Legal access of a protected instance property.</span>
+  <span class="hljs-keyword">return</span> this.protectedProp;
+};
+</code></pre>
+            <p>Notice that in JavaScript, there is no distinction between a type (like <code>AA_PrivateClass_</code>) and the constructor for that type. There is no way to express both that a type is public and its constructor is private (because the constructor
+                could easily be aliased in a way that would defeat the privacy check).</p>
             <h3 id="javascript-types">JavaScript Types</h3>
-            <p>Encouraged and enforced by the compiler. When documenting a type in JSDoc, be as specific and accurate as possible. The types we support are based on the EcmaScript 4 spec.</p>
-            <p>The JavaScript Type Language</p>
+            <p>Encouraged and enforced by the compiler. When documenting a type in JSDoc, be as specific and accurate as possible. The types we support are based on the <a href="#">EcmaScript 4 spec</a>.</p>
+            <h5 id="the-javascript-type-language">The JavaScript Type Language</h5>
             <p>The ES4 proposal contained a language for specifying JavaScript types. We use this language in JsDoc to express the types of function parameters and return values.</p>
             <p>As the ES4 proposal has evolved, this language has changed. The compiler still supports old syntaxes for types, but those syntaxes are deprecated.</p>
-            <p>Syntax Name Syntax Description Deprecated Syntaxes Primitive Type There are 5 primitive types in JavaScript: {null}, {undefined}, {boolean}, {number}, and {string}. Simply the name of a type.<br>Instance Type {Object} An instance of Object or null.
-                {Function} An instance of Function or null. {EventTarget} An instance of a constructor that implements the EventTarget interface, or null. An instance of a constructor or interface function. Constructor functions are functions defined with the
-                @constructor JSDoc tag. Interface functions are functions defined with the @interface JSDoc tag. By default, instance types will accept null. This is the only type syntax that makes the type nullable. Other type syntaxes in this table will not
-                accept null. Enum Type {goog.events.EventType} One of the properties of the object literal initializer of goog.events.EventType. An enum must be initialized as an object literal, or as an alias of another enum, annotated with the @enum JSDoc
-                tag. The properties of this literal are the instances of the enum. The syntax of the enum is defined below. Note that this is one of the few things in our type system that were not in the ES4 spec.<br>Type Application {Array.
-                <string>} An array of strings. {Object.
-                    <string, number>} An object in which the keys are strings and the values are numbers. Parameterizes a type, by applying a set of type arguments to that type. The idea is analogous to generics in Java.<br>Type Union {(number|boolean)} A number or a boolean.
-                        Indicates that a value might have type A OR type B. The parentheses may be omitted at the top-level expression, but the parentheses should be included in sub-expressions to avoid ambiguity. {number|boolean} {function(): (number|boolean)}
-                        {(number,boolean)}, {(number||boolean)} Nullable type {?number} A number or null. Shorthand for the union of the null type with any other type. This is just syntactic sugar. {number?} Non-nullable type {!Object} An Object, but never
-                        the null value. Filters null out of nullable types. Most often used with instance types, which are nullable by default. {Object!} Record Type {{myNum: number, myObject}} An anonymous type with the given type members.<br>Indicates that
-                        the value has the specified members with the specified types. In this case, myNum with a type number and myObject with any type.</p>
-            <p>Notice that the braces are part of the type syntax. For example, to denote an Array of objects that have a length property, you might write Array.&lt;{length}&gt;.</p>
-            <p>Function Type {function(string, boolean)} A function that takes two arguments (a string and a boolean), and has an unknown return value. Specifies a function.<br>Function Return Type {function(): number} A function that takes no arguments and returns
-                a number. Specifies a function return type.<br>Function this Type {function(this:goog.ui.Menu, string)} A function that takes one argument (a string), and executes in the context of a goog.ui.Menu. Specifies the context type of a function type.<br>Function
-                new Type {function(new:goog.ui.Menu, string)} A constructor that takes one argument (a string), and creates a new instance of goog.ui.Menu when called with the &#39;new&#39; keyword. Specifies the constructed type of a constructor.<br>Variable
-                arguments {function(string, ...[number]): number} A function that takes one argument (a string), and then a variable number of arguments that must be numbers. Specifies variable arguments to a function. Variable arguments (in @param annotations)
+            <table>
+                <thead>
+                    <tr>
+                        <th>Syntax Name</th>
+                        <th>Syntax</th>
+                        <th>Description</th>
+                        <th>Deprecated Syntaxes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Primitive Type</td>
+                        <td>There are 5 primitive types in JavaScript: <code>{null}</code>, <code>{undefined}</code>, <code>{boolean}</code>, <code>{number}</code>, and <code>{string}</code>.</td>
+                        <td>Simply the name of a type.</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Instance Type</td>
+                        <td>
+                            <code>{Object}</code><br>An instance of Object or null.
+                            <br>
+                            <br>
+                            <code>{Function}</code><br>An instance of Function or null.
+                            <br>
+                            <br>
+                            <code>{EventTarget}</code><br>An instance of a constructor that implements the EventTarget interface, or null.
+                        </td>
+                        <td>
+                            An instance of a constructor or interface function.
+                            <br>
+                            <br> Constructor functions are functions defined with the <code>@constructor</code> JSDoc tag. Interface functions are functions defined with the <code>@interface</code> JSDoc tag.
+                            <br>
+                            <br> By default, instance types will accept null. This is the only type syntax that makes the type nullable. Other type syntaxes in this table will not accept null.
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Enum Type</td>
+                        <td>
+                            <code>{goog.events.EventType}</code><br>One of the properties of the object literal initializer of <code>goog.events.EventType</code>.
+                        </td>
+                        <td>
+                            An enum must be initialized as an object literal, or as an alias of another enum, annotated with the <code>@enum</code> JSDoc tag. The properties of this literal are the instances of the enum. The syntax of the enum is defined
+                            <a
+                                href="#">below</a>.
+                                <br>
+                                <br> Note that this is one of the few things in our type system that were not in the ES4 spec.
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Type Application</td>
+                        <td>
+                            <code>{Array.&lt;string&gt;}</code><br>An array of strings.
+                            <br>
+                            <br>
+                            <code>{Object.&lt;string, number&gt;}</code> An object in which the keys are strings and the values are numbers.
+                        </td>
+                        <td>Parameterizes a type, by applying a set of type arguments to that type. The idea is analogous to generics in Java.</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Type Union</td>
+                        <td>
+                            <code>{(number|boolean)}</code><br>A number or a boolean.
+                        </td>
+                        <td>
+                            Indicates that a value might have type A OR type B.
+                            <br>
+                            <br> The parentheses may be omitted at the top-level expression, but the parentheses should be included in sub-expressions to avoid ambiguity.<br><code>{number|boolean}</code><br><code>{function(): (number|boolean)}</code>
+                        </td>
+                        <td>
+                            <code>{(number,boolean)}</code>,<br><code>{(number||boolean)}</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nullable type</td>
+                        <td>
+                            {?number}<br>A number or null.
+                        </td>
+                        <td>Shorthand for the union of the null type with any other type. This is just syntactic sugar.</td>
+                        <td><code>{number?}</code></td>
+                    </tr>
+                    <tr>
+                        <td>Non-nullable type</td>
+                        <td>
+                            <code>{!Object}</code><br>An Object, but never the null value.
+                        </td>
+                        <td>Filters null out of nullable types. Most often used with instance types, which are nullable by default.</td>
+                        <td><code>{Object!}</code></td>
+                    </tr>
+                    <tr>
+                        <td>Record Type</td>
+                        <td>
+                            <code>{{myNum: number, myObject}}</code><br>An anonymous type with the given type members.
+                        </td>
+                        <td>
+                            Indicates that the value has the specified members with the specified types. In this case, <code>myNum</code> with a type <code>number</code> and <code>myObject</code> with any type.
+                            <br>
+                            <br> Notice that the braces are part of the type syntax. For example, to denote an <code>Array</code> of objects that have a <code>length</code> property, you might write <code>Array.&lt;{length}&gt;</code>.
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Function Type</td>
+                        <td>
+                            <code>{function(string, boolean)}</code><br>A function that takes two arguments (a string and a boolean), and has an unknown return value.
+                        </td>
+                        <td>Specifies a function.</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Function Return Type</td>
+                        <td>
+                            <code>{function(): number}</code><br>A function that takes no arguments and returns a number.
+                        </td>
+                        <td>Specifies a function return type.</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Function <code>this</code> Type</td>
+                        <td>
+                            <code>{function(this:goog.ui.Menu, string)}</code><br>A function that takes one argument (a string), and executes in the context of a goog.ui.Menu.
+                        </td>
+                        <td>Specifies the context type of a function type.</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Function <code>new</code> Type</td>
+                        <td>
+                            <code>{function(new:goog.ui.Menu, string)}</code><br>A constructor that takes one argument (a string), and creates a new instance of goog.ui.Menu when called with the &#39;new&#39; keyword.
+                        </td>
+                        <td>Specifies the constructed type of a constructor.</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Variable arguments {function(string, ...[number]): number} A function that takes one argument (a string), and then a variable number of arguments that must be numbers. Specifies variable arguments to a function. Variable arguments (in @param annotations)
                 @param {...number} var_args A variable number of arguments to an annotated function. Specifies that the annotated function accepts a variable number of arguments.<br>Function optional arguments {function(?string=, number=)} A function that takes
                 one optional, nullable string and one optional number as arguments. The = syntax is only for function type declarations. Specifies optional arguments to a function. Function optional arguments (in @param annotations) @param {number=} opt_argument
                 An optional parameter of type number. Specifies that the annotated function accepts an optional argument. The ALL type {*} Indicates that the variable can take on any type.<br>The UNKNOWN type {?} Indicates that the variable can take on any

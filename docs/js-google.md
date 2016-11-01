@@ -328,7 +328,7 @@ function printArray(arr) {
     print(arr[key]);
   }
 }
-```
+
 printArray([0,1,2,3]);  // This works.
 
 var a = new Array(10);
@@ -344,49 +344,54 @@ printArray(a);  // This is wrong again.
 a = new Array;
 a[3] = 3;
 printArray(a);  // This is wrong again.
+```
 Always use normal for loops when using arrays.
-
+```javascript
 function printArray(arr) {
   var l = arr.length;
   for (var i = 0; i < l; i++) {
     print(arr[i]);
   }
 }
-
+```
 ### Associative Arrays
 
-Never use Array as a map/hash/associative array
-Associative Arrays are not allowed... or more precisely you are not allowed to use non number indexes for arrays. If you need a map/hash use Object instead of Array in these cases because the features that you want are actually features of Object and not of Array. Array just happens to extend Object (like any other object in JS and therefore you might as well have used Date, RegExp or String).
+Never use `Array` as a map/hash/associative array
+Associative `Array`s are not allowed... or more precisely you are not allowed to use non number indexes for arrays. If you need a map/hash use `Object` instead of `Array` in these cases because the features that you want are actually features of `Object` and not of `Array`. Array just happens to extend `Object` (like any other object in JS and therefore you might as well have used `Date`, `RegExp` or `String`).
 
 ### Multiline string literals
 
 No
-Do not do this:
 
+Do not do this:
+```javascript
 var myString = 'A rather long string of English text, an error message \
                 actually that just keeps going and going -- an error \
                 message to make the Energizer bunny blush (right through \
                 those Schwarzenegger shades)! Where was I? Oh yes, \
                 you\'ve got an error and all the extraneous whitespace is \
                 just gravy.  Have a nice day.';
+```
 The whitespace at the beginning of each line can't be safely stripped at compile time; whitespace after the slash will result in tricky errors.
 
 Use string concatenation instead:
-
+```javascript
 var myString = 'A rather long string of English text, an error message ' +
     'actually that just keeps going and going -- an error ' +
     'message to make the Energizer bunny blush (right through ' +
     'those Schwarzenegger shades)! Where was I? Oh yes, ' +
     'you\'ve got an error and all the extraneous whitespace is ' +
     'just gravy.  Have a nice day.';
+```
 
 ### Array and Object literals
 
 Yes
-Use Array and Object literals instead of Array and Object constructors.
+
+Use `Array` and `Object` literals instead of `Array` and `Object` constructors.
 
 Array constructors are error-prone due to their arguments.
-
+```javascript
 // Length is 3.
 var a1 = new Array(x1, x2, x3);
 
@@ -400,16 +405,18 @@ var a3 = new Array(x1);
 
 // Length is 0.
 var a4 = new Array();
+```
 Because of this, if someone changes the code to pass 1 argument instead of 2 arguments, the array might not have the expected length.
 
 To avoid these kinds of weird cases, always use the more readable array literal.
-
+```javascript
 var a = [x1, x2, x3];
 var a2 = [x1, x2];
 var a3 = [x1];
 var a4 = [];
+```
 Object constructors don't have the same problems, but for readability and consistency object literals should be used.
-
+```javascript
 var o = new Object();
 
 var o2 = new Object();
@@ -417,8 +424,9 @@ o2.a = 0;
 o2.b = 1;
 o2.c = 2;
 o2['strange key'] = 3;
+```
 Should be written as:
-
+```javascript
 var o = {};
 
 var o2 = {
@@ -427,84 +435,91 @@ var o2 = {
   c: 2,
   'strange key': 3
 };
-
+```
 ### Modifying prototypes of builtin objects
 
 No
-Modifying builtins like Object.prototype and Array.prototype are strictly forbidden. Modifying other builtins like Function.prototype is less dangerous but still leads to hard to debug issues in production and should be avoided.
+
+Modifying builtins like `Object.prototype` and `Array.prototype` are strictly forbidden. Modifying other builtins like `Function.prototype` is less dangerous but still leads to hard to debug issues in production and should be avoided.
 
 ### Internet Explorer's Conditional Comments
 
 No
-Don't do this:
 
+Don't do this:
+```javascript
 var f = function () {
     /*@cc_on if (@_jscript) { return 2* @*/  3; /*@ } @*/
 };
+```
 Conditional Comments hinder automated tools as they can vary the JavaScript syntax tree at runtime.
 
 ## JavaScript Style Rules
 
 ### Naming
 
-In general, use functionNamesLikeThis, variableNamesLikeThis, ClassNamesLikeThis, EnumNamesLikeThis, methodNamesLikeThis, CONSTANT_VALUES_LIKE_THIS, foo.namespaceNamesLikeThis.bar, and filenameslikethis.js.
+In general, use `functionNamesLikeThis`, `variableNamesLikeThis`, `ClassNamesLikeThis`, `EnumNamesLikeThis`, `methodNamesLikeThis`, `CONSTANT_VALUES_LIKE_THIS`, `foo.namespaceNamesLikeThis.bar`, and `filenameslikethis.js`.
 
-Properties and methods
+##### Properties and methods
 
-Private properties and methods should be named with a trailing underscore.
-Protected properties and methods should be named without a trailing underscore (like public ones).
-For more information on private and protected, read the section on visibility.
+* _Private_ properties and methods should be named with a trailing underscore.
+* _Protected_ properties and methods should be named without a trailing underscore (like public ones).
 
-Method and function parameter
+For more information on *private* and *protected*, read the section on [visibility](#).
 
-Optional function arguments start with opt_.
+##### Method and function parameter
 
-Functions that take a variable number of arguments should have the last argument named var_args. You may not refer to var_args in the code; use the arguments array.
+Optional function arguments start with `opt_`.
 
-Optional and variable arguments can also be specified in @param annotations. Although either convention is acceptable to the compiler, using both together is preferred.
+Functions that take a variable number of arguments should have the last argument named `var_args`. You may not refer to `var_args` in the code; use the `arguments` array.
 
-Getters and Setters
+Optional and variable arguments can also be specified in `@param` annotations. Although either convention is acceptable to the compiler, using both together is preferred.
+
+##### Getters and Setters
 
 EcmaScript 5 getters and setters for properties are discouraged. However, if they are used, then getters must not change observable state.
-
+```javascript
 /**
  * WRONG -- Do NOT do this.
  */
 var foo = { get next() { return this.nextId++; } };
-Accessor functions
+```
+##### Accessor functions
 
-Getters and setters methods for properties are not required. However, if they are used, then getters must be named getFoo() and setters must be named setFoo(value). (For boolean getters, isFoo() is also acceptable, and often sounds more natural.)
+Getters and setters methods for properties are not required. However, if they are used, then getters must be named `getFoo()` and setters must be named `setFoo(value)`. (For boolean getters, `isFoo()` is also acceptable, and often sounds more natural.)
 
-Namespaces
+##### Namespaces
 
 JavaScript has no inherent packaging or namespacing support.
 
 Global name conflicts are difficult to debug, and can cause intractable problems when two projects try to integrate. In order to make it possible to share common JavaScript code, we've adopted conventions to prevent collisions.
 
-Use namespaces for global code
+###### Use namespaces for global code
 
-ALWAYS prefix identifiers in the global scope with a unique pseudo namespace related to the project or library. If you are working on "Project Sloth", a reasonable pseudo namespace would be sloth.*.
-
+ALWAYS prefix identifiers in the global scope with a unique pseudo namespace related to the project or library. If you are working on "Project Sloth", a reasonable pseudo namespace would be `sloth.*`.
+```javascript
 var sloth = {};
 
 sloth.sleep = function() {
   ...
 };
-Many JavaScript libraries, including the Closure Library and Dojo toolkit give you high-level functions for declaring your namespaces. Be consistent about how you declare your namespaces.
-
+```
+Many JavaScript libraries, including [the Closure Library](#) and [Dojo toolkit](#) give you high-level functions for declaring your namespaces. Be consistent about how you declare your namespaces.
+```javascript
 goog.provide('sloth');
 
 sloth.sleep = function() {
   ...
 };
-Respect namespace ownership
+```
+###### Respect namespace ownership
 
-When choosing a child-namespace, make sure that the owners of the parent namespace know what you are doing. If you start a project that creates hats for sloths, make sure that the Sloth team knows that you're using sloth.hats.
+When choosing a child-namespace, make sure that the owners of the parent namespace know what you are doing. If you start a project that creates hats for sloths, make sure that the Sloth team knows that you're using `sloth.hats`.
 
-Use different namespaces for external code and internal code
+###### Use different namespaces for external code and internal code
 
-"External code" is code that comes from outside your codebase, and is compiled independently. Internal and external names should be kept strictly separate. If you're using an external library that makes things available in foo.hats.*, your internal code should not define all its symbols in foo.hats.*, because it will break if the other team defines new symbols.
-
+"External code" is code that comes from outside your codebase, and is compiled independently. Internal and external names should be kept strictly separate. If you're using an external library that makes things available in `foo.hats.*`, your internal code should not define all its symbols in `foo.hats.*`, because it will break if the other team defines new symbols.
+```javascript
 foo.require('foo.hats');
 
 /**
@@ -514,8 +529,9 @@ foo.require('foo.hats');
  */
 foo.hats.BowlerHat = function() {
 };
+```
 If you need to define new APIs on an external namespace, then you should explicitly export the public API functions, and only those functions. Your internal code should call the internal APIs by their internal names, for consistency and so that the compiler can optimize them better.
-
+```javascript
 foo.provide('googleyhats.BowlerHat');
 
 foo.require('foo.hats');
@@ -529,10 +545,11 @@ googleyhats.BowlerHat = function() {
 };
 
 goog.exportSymbol('foo.hats.BowlerHat', googleyhats.BowlerHat);
-Alias long type names to improve readability
+```
+###### Alias long type names to improve readability
 
 Use local aliases for fully-qualified types if doing so improves readability. The name of a local alias should match the last part of the type.
-
+```javascript
 /**
  * @constructor
  */
@@ -551,14 +568,16 @@ myapp.main = function() {
   var staticHelper = some.long.namespace.MyClass.staticHelper;
   staticHelper(new MyClass());
 };
-Do not create local aliases of namespaces. Namespaces should only be aliased using goog.scope.
-
+```
+Do not create local aliases of namespaces. Namespaces should only be aliased using [goog.scope](#).
+```javascript
 myapp.main = function() {
   var namespace = some.long.namespace;
   namespace.MyClass.staticHelper(new namespace.MyClass());
 };
+```
 Avoid accessing properties of an aliased type, unless it is an enum.
-
+```javascript
 /** @enum {string} */
 some.long.namespace.Fruit = {
   APPLE: 'a',
@@ -574,53 +593,60 @@ myapp.main = function() {
       ...
   }
 };
+```
+```javascript
 myapp.main = function() {
   var MyClass = some.long.namespace.MyClass;
   MyClass.staticHelper(null);
 };
+```
 Never create aliases in the global scope. Use them only in function blocks.
 
-Filenames
+##### Filenames
 
 Filenames should be all lowercase in order to avoid confusion on case-sensitive platforms. Filenames should end in .js, and should contain no punctuation except for - or _ (prefer - to _).
 
 ### Custom toString() methods
 
 Must always succeed without side effects.
-You can control how your objects string-ify themselves by defining a custom toString() method. This is fine, but you need to ensure that your method (1) always succeeds and (2) does not have side-effects. If your method doesn't meet these criteria, it's very easy to run into serious problems. For example, if toString() calls a method that does an assert, assert might try to output the name of the object in which it failed, which of course requires calling toString().
+You can control how your objects string-ify themselves by defining a custom `toString()` method. This is fine, but you need to ensure that your method (1) always succeeds and (2) does not have side-effects. If your method doesn't meet these criteria, it's very easy to run into serious problems. For example, if `toString()` calls a method that does an `assert`, `assert` might try to output the name of the object in which it failed, which of course requires calling `toString()`.
 
 ### Deferred initialization
 
 OK
+
 It isn't always possible to initialize variables at the point of declaration, so deferred initialization is fine.
 
 ### Explicit scope
 
 Always
-Always use explicit scope - doing so increases portability and clarity. For example, don't rely on window being in the scope chain. You might want to use your function in another application for which window is not the content window.
+
+Always use explicit scope - doing so increases portability and clarity. For example, don't rely on `window` being in the scope chain. You might want to use your function in another application for which `window` is not the content window.
 
 ### Code formatting
 
 Expand for more information.
-We follow the C++ formatting rules in spirit, with the following additional clarifications.
+We follow the [C++ formatting rules](#) in spirit, with the following additional clarifications.
 
-Curly Braces
+##### Curly Braces
 
 Because of implicit semicolon insertion, always start your curly braces on the same line as whatever they're opening. For example:
-
+```javascript
 if (something) {
   // ...
 } else {
   // ...
 }
-Array and Object Initializers
+```
+##### Array and Object Initializers
 
 Single-line array and object initializers are allowed when they fit on a line:
-
+```javascript
 var arr = [1, 2, 3];  // No space after [ or before ].
 var obj = {a: 1, b: 2, c: 3};  // No space after { or before }.
+```
 Multiline array initializers and object initializers are indented 2 spaces, with the braces on their own line, just like blocks.
-
+```javascript
 // Object initializer.
 var inset = {
   top: 10,
@@ -645,24 +671,27 @@ goog.dom.createDom(goog.dom.TagName.DIV, {
   className: 'some-css-class',
   style: 'display:none'
 }, 'Hello, world!');
+```
 Long identifiers or values present problems for aligned initialization lists, so always prefer non-aligned initialization. For example:
-
+```javascript
 CORRECT_Object.prototype = {
   a: 0,
   b: 1,
   lengthyName: 2
 };
+```
 Not like this:
-
+```javascript
 WRONG_Object.prototype = {
   a          : 0,
   b          : 1,
   lengthyName: 2
 };
-Function Arguments
+```
+##### Function Arguments
 
 When possible, all function arguments should be listed on the same line. If doing so would exceed the 80-column limit, the arguments must be line-wrapped in a readable way. To save space, you may wrap as close to 80 as possible, or put each argument on its own line to enhance readability. The indentation may be either four spaces, or aligned to the parenthesis. Below are the most common patterns for argument wrapping:
-
+```javascript
 // Four-space, wrap at 80.  Works with very long function names, survives
 // renaming without reindenting, low on space.
 goog.foo.bar.doThingThatIsVeryDifficultToExplain = function(
@@ -696,8 +725,9 @@ function bar(veryDescriptiveArgumentNumberOne,
              artichokeDescriptorAdapterIterator) {
   // ...
 }
+```
 When the function call is itself indented, you're free to start the 4-space indent relative to the beginning of the original statement or relative to the beginning of the current function call. The following are all acceptable indentation styles.
-
+```javascript
 if (veryLongFunctionNameA(
         veryLongArgumentName) ||
     veryLongFunctionNameB(
@@ -706,10 +736,11 @@ if (veryLongFunctionNameA(
       veryLongFunctioNameE(
           veryLongFunctionNameF)));
 }
-Passing Anonymous Functions
+```
+##### Passing Anonymous Functions
 
 When declaring an anonymous function in the list of arguments for a function call, the body of the function is indented two spaces from the left edge of the statement, or two spaces from the left edge of the function keyword. This is to make the body of the anonymous function easier to read (i.e. not be all squished up into the right half of the screen).
-
+```javascript
 prefix.something.reallyLongFunctionName('whatever', function(a1, a2) {
   if (a1.equals(a2)) {
     someOtherLongFunctionName(a1);
@@ -723,25 +754,27 @@ var names = prefix.something.myExcellentMapFunction(
     function(item) {
       return item.name;
     });
-Aliasing with goog.scope
+```
+##### Aliasing with goog.scope
 
-goog.scope may be used to shorten references to namespaced symbols in programs using the Closure Library.
+[`goog.scope`](#) may be used to shorten references to namespaced symbols in programs using [the Closure Library](#).
 
-Only one goog.scope invocation may be added per file. Always place it in the global scope.
+Only one `goog.scope` invocation may be added per file. Always place it in the global scope.
 
-The opening goog.scope(function() { invocation must be preceded by exactly one blank line and follow any goog.provide statements, goog.require statements, or top-level comments. The invocation must be closed on the last line in the file. Append // goog.scope to the closing statement of the scope. Separate the comment from the semicolon by two spaces.
+The opening `goog.scope(function() {` invocation must be preceded by exactly one blank line and follow any `goog.provide` statements, `goog.require` statements, or top-level comments. The invocation must be closed on the last line in the file. Append `// goog.scope` to the closing statement of the scope. Separate the comment from the semicolon by two spaces.
 
 Similar to C++ namespaces, do not indent under goog.scope declarations. Instead, continue from the 0 column.
 
 Only alias names that will not be re-assigned to another object (e.g., most constructors, enums, and namespaces). Do not do this (see below for how to alias a constructor):
-
+```javascript
 goog.scope(function() {
 var Button = goog.ui.Button;
 
 Button = function() { ... };
 ...
+```
 Names must be the same as the last property of the global that they are aliasing.
-
+```javascript
 goog.provide('my.module.SomeType');
 
 goog.require('goog.dom');
@@ -762,10 +795,11 @@ SomeType.prototype.findButton = function() {
 };
 ...
 });  // goog.scope
-Indenting wrapped lines
+```
+##### Indenting wrapped lines
 
-Except for array literals, object literals, and anonymous functions, all wrapped lines should be indented either left-aligned to a sibling expression above, or four spaces (not two spaces) deeper than a parent expression (where "sibling" and "parent" refer to parenthesis nesting level).
-
+Except for [array literals, object literals](#), and anonymous functions, all wrapped lines should be indented either left-aligned to a sibling expression above, or four spaces (not two spaces) deeper than a parent expression (where "sibling" and "parent" refer to parenthesis nesting level).
+```javascript
 someWonderfulHtml = '' +
                     getEvenMoreHtml(someReallyInterestingValues, moreValues,
                                     evenMoreParams, 'a duck', true, 72,
@@ -794,10 +828,11 @@ if (searchableCollection(allYourStuff).contains(theStuffYouWant) &&
                                         client.alwaysTryAmbientAnyways())) {
   ambientNotification.activate();
 }
+```
 Blank lines
 
 Use newlines to group logically related pieces of code. For example:
-
+```javascript
 doSomethingTo(x);
 doSomethingElseTo(x);
 andThen(x);
@@ -805,10 +840,11 @@ andThen(x);
 nowDoSomethingWith(y);
 
 andNowWith(z);
-Binary and Ternary Operators
+```
+##### Binary and Ternary Operators
 
 Always put the operator on the preceding line. Otherwise, line breaks and indentation follow the same rules as in other Google style guides. This operator placement was initially agreed upon out of concerns about automatic semicolon insertion. In fact, semicolon insertion cannot happen before a binary operator, but new code should stick to this style for consistency.
-
+```javascript
 var x = a ? b : c;  // All on one line if it will fit.
 
 // Indentation +4 is OK.
@@ -824,34 +860,37 @@ This includes the dot operator.
 var x = foo.bar().
     doSomething().
     doSomethingElse();
-
+```
 ### Parentheses
 
 Only where required
+
 Use sparingly and in general only where required by the syntax and semantics.
 
-Never use parentheses for unary operators such as delete, typeof and void or after keywords such as return, throw as well as others (case, in or new).
+Never use parentheses for unary operators such as `delete`, `typeof` and `void` or after keywords such as `return`, `throw` as well as others (`case`, `in` or `new`).
 
 ### Strings
 
 Prefer ' over "
+
 For consistency single-quotes (') are preferred to double-quotes ("). This is helpful when creating strings that include HTML:
-
+```javascript
 var msg = 'This is some HTML';
-
+```
 ### Visibility (private and protected fields)
 
-Encouraged, use JSDoc annotations @private and @protected
-We recommend the use of the JSDoc annotations @private and @protected to indicate visibility levels for classes, functions, and properties.
+Encouraged, use JSDoc annotations `@private` and `@protected`
 
-The --jscomp_warning=visibility compiler flag turns on compiler warnings for visibility violations. See Closure Compiler Warnings.
+We recommend the use of the JSDoc annotations `@private` and `@protected` to indicate visibility levels for classes, functions, and properties.
 
-@private global variables and functions are only accessible to code in the same file.
+The --jscomp_warning=visibility compiler flag turns on compiler warnings for visibility violations. See [Closure Compiler Warnings](#).
 
-Constructors marked @private may only be instantiated by code in the same file and by their static and instance members. @private constructors may also be accessed anywhere in the same file for their public static properties and by the instanceof operator.
+`@private` global variables and functions are only accessible to code in the same file.
 
-Global variables, functions, and constructors should never be annotated @protected.
+Constructors marked `@private` may only be instantiated by code in the same file and by their static and instance members. `@private` constructors may also be accessed anywhere in the same file for their public static properties and by the `instanceof` operator.
 
+Global variables, functions, and constructors should never be annotated `@protected`.
+```javascript
 // File 1.
 // AA_PrivateClass_ and AA_init_ are accessible because they are global
 // and in the same file.
@@ -869,12 +908,13 @@ function AA_init_() {
 }
 
 AA_init_();
-@private properties are accessible to all code in the same file, plus all static methods and instance methods of that class that "owns" the property, if the property belongs to a class. They cannot be accessed or overridden from a subclass in a different file.
+```
+`@private` properties are accessible to all code in the same file, plus all static methods and instance methods of that class that "owns" the property, if the property belongs to a class. They cannot be accessed or overridden from a subclass in a different file.
 
-@protected properties are accessible to all code in the same file, plus any static methods and instance methods of any subclass of a class that "owns" the property.
+`@protected` properties are accessible to all code in the same file, plus any static methods and instance methods of any subclass of a class that "owns" the property.
 
 Note that these semantics differ from those of C++ and Java, in that they grant private and protected access to all code in the same file, not just in the same class or class hierarchy. Also, unlike in C++, private properties cannot be overridden by a subclass.
-
+```javascript
 // File 1.
 
 /** @constructor */
@@ -927,62 +967,183 @@ AA_SubClass.prototype.method = function() {
   // Legal access of a protected instance property.
   return this.protectedProp;
 };
-Notice that in JavaScript, there is no distinction between a type (like AA_PrivateClass_) and the constructor for that type. There is no way to express both that a type is public and its constructor is private (because the constructor could easily be aliased in a way that would defeat the privacy check).
+```
+Notice that in JavaScript, there is no distinction between a type (like `AA_PrivateClass_`) and the constructor for that type. There is no way to express both that a type is public and its constructor is private (because the constructor could easily be aliased in a way that would defeat the privacy check).
 
 ### JavaScript Types
 
 Encouraged and enforced by the compiler.
-When documenting a type in JSDoc, be as specific and accurate as possible. The types we support are based on the EcmaScript 4 spec.
+When documenting a type in JSDoc, be as specific and accurate as possible. The types we support are based on the [EcmaScript 4 spec](#).
 
-The JavaScript Type Language
+##### The JavaScript Type Language
 
 The ES4 proposal contained a language for specifying JavaScript types. We use this language in JsDoc to express the types of function parameters and return values.
 
 As the ES4 proposal has evolved, this language has changed. The compiler still supports old syntaxes for types, but those syntaxes are deprecated.
-
-Syntax Name Syntax  Description Deprecated Syntaxes
-Primitive Type  There are 5 primitive types in JavaScript: {null}, {undefined}, {boolean}, {number}, and {string}.  Simply the name of a type.  
-Instance Type   {Object}
+<table>
+  <thead>
+    <tr>
+      <th>Syntax Name</th>
+      <th>Syntax</th>
+      <th>Description</th>
+      <th>Deprecated Syntaxes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Primitive Type</td>
+      <td>There are 5 primitive types in JavaScript: `{null}`, `{undefined}`, `{boolean}`, `{number}`, and `{string}`.</td>
+      <td>Simply the name of a type.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Instance Type</td>
+      <td>
+`{Object}`  
 An instance of Object or null.
-{Function}
+<br>
+<br>
+`{Function}`  
 An instance of Function or null.
-{EventTarget}
-An instance of a constructor that implements the EventTarget interface, or null.    An instance of a constructor or interface function.
-Constructor functions are functions defined with the @constructor JSDoc tag. Interface functions are functions defined with the @interface JSDoc tag.
+<br>
+<br>
+`{EventTarget}`  
+An instance of a constructor that implements the EventTarget interface, or null.
+      </td>
+      <td>
+An instance of a constructor or interface function.
+<br>
+<br>
+Constructor functions are functions defined with the `@constructor` JSDoc tag. Interface functions are functions defined with the `@interface` JSDoc tag.
+<br>
+<br>
 By default, instance types will accept null. This is the only type syntax that makes the type nullable. Other type syntaxes in this table will not accept null.
-Enum Type   {goog.events.EventType}
-One of the properties of the object literal initializer of goog.events.EventType.   An enum must be initialized as an object literal, or as an alias of another enum, annotated with the @enum JSDoc tag. The properties of this literal are the instances of the enum. The syntax of the enum is defined below.
-Note that this is one of the few things in our type system that were not in the ES4 spec.   
-Type Application    {Array.<string>}
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Enum Type</td>
+      <td>
+`{goog.events.EventType}`  
+One of the properties of the object literal initializer of `goog.events.EventType`.
+      </td>
+      <td>
+An enum must be initialized as an object literal, or as an alias of another enum, annotated with the `@enum` JSDoc tag. The properties of this literal are the instances of the enum. The syntax of the enum is defined [below](#).
+<br>
+<br>
+Note that this is one of the few things in our type system that were not in the ES4 spec.
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Type Application</td>
+      <td>
+`{Array.<string>}`  
 An array of strings.
-{Object.<string, number>}
-An object in which the keys are strings and the values are numbers. Parameterizes a type, by applying a set of type arguments to that type. The idea is analogous to generics in Java.  
-Type Union  {(number|boolean)}
-A number or a boolean.  Indicates that a value might have type A OR type B.
-The parentheses may be omitted at the top-level expression, but the parentheses should be included in sub-expressions to avoid ambiguity.
-{number|boolean}
-{function(): (number|boolean)}  {(number,boolean)},
-{(number||boolean)}
-Nullable type   {?number}
-A number or null.   Shorthand for the union of the null type with any other type. This is just syntactic sugar. {number?}
-Non-nullable type   {!Object}
-An Object, but never the null value.    Filters null out of nullable types. Most often used with instance types, which are nullable by default. {Object!}
-Record Type {{myNum: number, myObject}}
-An anonymous type with the given type members.  
-Indicates that the value has the specified members with the specified types. In this case, myNum with a type number and myObject with any type.
-
-Notice that the braces are part of the type syntax. For example, to denote an Array of objects that have a length property, you might write Array.<{length}>.
-
-Function Type   {function(string, boolean)}
+<br>
+<br>
+`{Object.<string, number>}`
+An object in which the keys are strings and the values are numbers.
+      </td>
+      <td>Parameterizes a type, by applying a set of type arguments to that type. The idea is analogous to generics in Java.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Type Union</td>
+      <td>
+`{(number|boolean)}`  
+A number or a boolean.
+      </td>
+      <td>
+Indicates that a value might have type A OR type B.
+<br>
+<br>
+The parentheses may be omitted at the top-level expression, but the parentheses should be included in sub-expressions to avoid ambiguity.  
+`{number|boolean}`  
+`{function(): (number|boolean)}`
+      </td>
+      <td>
+`{(number,boolean)}`,  
+`{(number||boolean)}`
+      </td>
+    </tr>
+    <tr>
+      <td>Nullable type</td>
+      <td>
+{?number}  
+A number or null.
+      </td>
+      <td>Shorthand for the union of the null type with any other type. This is just syntactic sugar.</td>
+      <td>`{number?}`</td>
+    </tr>
+    <tr>
+      <td>Non-nullable type</td>
+      <td>
+`{!Object}`  
+An Object, but never the null value.
+      </td>
+      <td>Filters null out of nullable types. Most often used with instance types, which are nullable by default.</td>
+      <td>`{Object!}`</td>
+    </tr>
+    <tr>
+      <td>Record Type</td>
+      <td>
+`{{myNum: number, myObject}}`  
+An anonymous type with the given type members.
+      </td>
+      <td>
+Indicates that the value has the specified members with the specified types. In this case, `myNum` with a type `number` and `myObject` with any type.
+<br>
+<br>
+Notice that the braces are part of the type syntax. For example, to denote an `Array` of objects that have a `length` property, you might write `Array.<{length}>`.
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Function Type</td>
+      <td>
+`{function(string, boolean)}`  
 A function that takes two arguments (a string and a boolean), and has an unknown return value.
-Specifies a function.   
-Function Return Type    {function(): number}
+      </td>
+      <td>Specifies a function.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Function Return Type</td>
+      <td>
+`{function(): number}`  
 A function that takes no arguments and returns a number.
-Specifies a function return type.   
-Function this Type  {function(this:goog.ui.Menu, string)}
-A function that takes one argument (a string), and executes in the context of a goog.ui.Menu.   Specifies the context type of a function type.  
-Function new Type   {function(new:goog.ui.Menu, string)}
-A constructor that takes one argument (a string), and creates a new instance of goog.ui.Menu when called with the 'new' keyword.    Specifies the constructed type of a constructor.    
+      </td>
+      <td>Specifies a function return type.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Function `this` Type</td>
+      <td>
+`{function(this:goog.ui.Menu, string)}`  
+A function that takes one argument (a string), and executes in the context of a goog.ui.Menu.
+      </td>
+      <td>Specifies the context type of a function type.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Function `new` Type</td>
+      <td>
+`{function(new:goog.ui.Menu, string)}`  
+A constructor that takes one argument (a string), and creates a new instance of goog.ui.Menu when called with the 'new' keyword.
+      </td>
+      <td>Specifies the constructed type of a constructor.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
 Variable arguments  {function(string, ...[number]): number}
 A function that takes one argument (a string), and then a variable number of arguments that must be numbers.    Specifies variable arguments to a function.
 Variable arguments (in @param annotations)  @param {...number} var_args
